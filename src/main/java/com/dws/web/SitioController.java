@@ -1,18 +1,17 @@
 package com.dws.web;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
 public class SitioController {
-    private Map<Long, Sitio> sitios = new ConcurrentHashMap<>();
-    private AtomicLong lastID = new AtomicLong();
 
-    public void addSitio (Sitio sitio){
-        long id = sitio.incrementAndGetId();  //incrementar por que?
-        sitio.setIdSitio(id);
-        sitios.put(id, sitio);
+    @Autowired
+    SitioHolder sitioHolder;
+
+    @GetMapping("/")
+    public String getSitios(Model model){
+        model.addAttribute("sitios", sitioHolder);
+        return "tablon";  //da error aqui no sabemos por que
     }
-
-
 }
