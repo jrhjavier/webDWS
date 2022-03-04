@@ -1,0 +1,18 @@
+h1{
+    color:red;
+}
+
+h2 {
+    color: Blue;
+    text-align: left;
+}
+
+body {
+    background-color: lightblue;
+}
+
+p {
+    font-family: verdana;
+    font-size: 20px;
+    font-color: Red;
+}
