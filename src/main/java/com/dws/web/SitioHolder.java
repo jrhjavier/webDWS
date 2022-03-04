@@ -8,7 +8,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Service
-public class SitioHolder {
+public class SitioHolder {  //gestor de sitios -> acciones con los sitios
     private Map<Long, Sitio> sitios = new ConcurrentHashMap<>();
     private AtomicLong lastID = new AtomicLong();  //por ahora esto no sirve para nada, lo tenia el profe
 

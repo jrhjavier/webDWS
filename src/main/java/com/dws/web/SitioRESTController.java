@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/api")
 @RestController
-public class SitioRESTController {
+public class SitioRESTController {  //union entre java y web
     @Autowired
     SitioHolder sitioHolder;
 
