@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/api")
 @RestController
-public class SitioRESTController {  //union entre java y web
+public class PlaceRESTController {  //union entre java y web
     @Autowired
-    SitioHolder sitioHolder;
+    PlaceHolder placeHolder;
 
     @PostMapping("/sitio")
-    public ResponseEntity<Sitio> create(@RequestBody Sitio sitio){
-        this.sitioHolder.addSitio(sitio);
-        return new ResponseEntity<>(sitio, HttpStatus.CREATED);
+    public ResponseEntity<Place> create(@RequestBody Place place){
+        this.placeHolder.addSitio(place);
+        return new ResponseEntity<>(place, HttpStatus.CREATED);
     }
 }

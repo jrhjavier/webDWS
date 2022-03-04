@@ -2,7 +2,7 @@ package com.dws.web;
 
 import java.util.Objects;
 
-public class Sitio {
+public class Place {
     private long idSitio;
     private String nombre;
     private String descripcion;
@@ -11,10 +11,10 @@ public class Sitio {
     private int ValoracionMedia = 0;
 
 
-    public Sitio() {
+    public Place() {
     }
 
-    public Sitio(long idSitio, String nombre, String descripcion, String precio, String categoria) {
+    public Place(long idSitio, String nombre, String descripcion, String precio, String categoria) {
         this.idSitio = idSitio;
         this.nombre=nombre;
         this.precio=precio;
@@ -87,9 +87,9 @@ public class Sitio {
     public boolean equals(Object o) {  //Comparamos los sitios por su id
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Sitio sitio = (Sitio) o;
-        System.out.println(idSitio + " " + sitio.idSitio);
-        return idSitio == sitio.idSitio;
+        Place place = (Place) o;
+        System.out.println(idSitio + " " + place.idSitio);
+        return idSitio == place.idSitio;
     }
 
     @Override

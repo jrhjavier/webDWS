@@ -8,21 +8,21 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Service
-public class SitioHolder {  //gestor de sitios -> acciones con los sitios
-    private Map<Long, Sitio> sitios = new ConcurrentHashMap<>();
+public class PlaceHolder {  //gestor de sitios -> acciones con los sitios
+    private Map<Long, Place> sitios = new ConcurrentHashMap<>();
     private AtomicLong lastID = new AtomicLong();  //por ahora esto no sirve para nada, lo tenia el profe
 
-    public void addSitio (Sitio sitio){
-        long id = sitio.incrementAndGetId();  //incrementar por que?
-        sitio.setIdSitio(id);
-        sitios.put(id, sitio);
+    public void addSitio (Place place){
+        long id = place.incrementAndGetId();  //incrementar por que?
+        place.setIdSitio(id);
+        sitios.put(id, place);
     }
 
-    public Collection<Sitio> getSitios(){
+    public Collection<Place> getSitios(){
         return sitios.values();
     }
 
-    public Sitio getSitio(long id){
+    public Place getSitio(long id){
         return sitios.get(id);
     }
 

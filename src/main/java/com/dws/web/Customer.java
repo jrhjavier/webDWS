@@ -1,6 +1,6 @@
 package com.dws.web;
 
-public class Cliente {
+public class Customer {
     //Change 3
     private long idCliente;
     private String nombre;
