@@ -1,5 +1,5 @@
 package com.dws.web;
 
-public class Turismo extends Place {
+public class Tourism extends Place {
     //Prueba
 }
