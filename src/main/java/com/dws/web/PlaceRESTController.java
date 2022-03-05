@@ -21,23 +21,7 @@ public class PlaceRESTController {  //union entre java y web
 
 
 
-    @GetMapping("/tourism")
-    public String tourism(Model model, @RequestParam String tourism){
-        model.addAttribute("turismo", tourism);
-        return "tourism_greeting";
-    }
 
-    @GetMapping("/restaurants")
-    public String restaurant(Model model, @RequestParam String restauracion){
-        model.addAttribute("restauracion",restauracion);
-        return "restaurants_greeting";
-    }
-
-    @GetMapping("/leisure")
-    public String leisure(Model model, @RequestParam String ocio){
-        model.addAttribute("ocio",ocio);
-        return "leisure_greeting";
-    }
 
 
 }

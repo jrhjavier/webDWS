@@ -3,24 +3,25 @@
 <head>
     <link type="text/css" href="css/styleProyect.css" rel="stylesheet">
     <meta charset="UTF-8">
-    <title>Indice Principal</title>
+    <title>Primary Index</title>
 </head>
 <body>
-
-
-<h1>Red text</h1>
-<h2>Blue text</h2>
-
-<label for="select">Elige una opción</label>
-
-<select id="select">
-    <option name='turismo'>Turismo</option>
-    <option name='restauracion'>Restauracion</option>
-    <option name='ocio'>Ocio</option>
-</select>
-
-
-
-
+   <header>
+       <nav class="browser">
+           <ul class="menu">
+               <li><a href="#">INICIO</a></li>
+               <li><a href="#">SITIOS</a>
+               <!--Desplegable de sitios-->
+                   <ul class="submenu">
+                       <li><a href="place/tourism">Turismo</a></li>
+                       <li><a href="place/restaurants">Restauración</a>
+                       <li><a href="place/leisure">Ocio</a></li>
+                   </ul>
+               </li>
+               <li><a href="#">CALENDARIO</a></li>
+               <li><a href="#">USUARIOS</a></li>
+           </ul>
+       </nav>
+   </header>
 </body>
 </html>
