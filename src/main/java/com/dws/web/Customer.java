@@ -1,41 +1,40 @@
 package com.dws.web;
 
 public class Customer {
-    //Change 3
     private long idCliente;
-    private String nombre;
-    private String apellido;
+    private String name;
+    private String surname;
     private String email;
-    private String telefono;
+    private String phoneNumber;
     private String passwd;
-    private String direccion;
+    private String address;
 
     public void setIdCliente(long idCliente) {
         this.idCliente = idCliente;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public void setEmail(String email) {
         this.email = email;
     }
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public void setPasswd(String passwd) {
         this.passwd = passwd;
     }
 
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
 
@@ -43,39 +42,39 @@ public class Customer {
         return this.idCliente;
     }
 
-    public String getNombre() {
-        return this.nombre;
+    public String getName() {
+        return this.name;
     }
 
-    public String getApellido() {
-        return this.apellido;
+    public String getSurname() {
+        return this.surname;
     }
 
     public String getEmail() {
         return this.email;
     }
 
-    public String getTelefono() {
-        return this.telefono;
+    public String getPhoneNumber() {
+        return this.phoneNumber;
     }
 
     public String getPasswd() {
         return this.passwd;
     }
 
-    public String getDireccion() {
-        return this.direccion;
+    public String getAddress() {
+        return this.address;
     }
 
     @Override
     public String toString() {
         return "Datos del cliente :" + "\n" +
                 "idCliente = " + this.idCliente + "\n" +
-                "Nombre : " + this.nombre + "\n" +
-                "Apellido : " + this.apellido + "\n" +
+                "Nombre : " + this.name + "\n" +
+                "Apellido : " + this.surname + "\n" +
                 "Email : " + this.email + "\n" +
-                "Telefono : " + this.telefono + "\n" +
+                "Telefono : " + this.phoneNumber + "\n" +
                 "Password : " + this.passwd + "\n" +
-                "Direccion : " + this.direccion + "\n";
+                "Direccion : " + this.address + "\n";
     }
 }

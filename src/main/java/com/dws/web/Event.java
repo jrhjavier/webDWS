@@ -93,7 +93,7 @@ public class Event {
         if (o == null || getClass() != o.getClass()) return false;
         Event event = (Event) o;
         System.out.println(idEvent + " " + event.idEvent);
-        return idEvent == event.idEvent;
+        return this.idEvent == event.idEvent;
     }
 
     @Override

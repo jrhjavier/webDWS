@@ -4,83 +4,94 @@ import java.util.Objects;
 
 public class Place {
     private long idSitio;
-    private String nombre;
-    private String descripcion;
-    private String precio;
-    private String categoria;
-    private int ValoracionMedia = 0;
+    private String name;
+    private String description;
+    private String price;
+    private String category;
+    private String location;  //ubicacion
+    private int starsAverage = 0;
 
 
     public Place() {
     }
 
-    public Place(long idSitio, String nombre, String descripcion, String precio, String categoria) {
+    public Place(long idSitio, String name, String description, String price, String category, String location) {
         this.idSitio = idSitio;
-        this.nombre=nombre;
-        this.precio=precio;
-        this.descripcion=descripcion;
-        this.categoria = categoria;
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.category = category;
+        this.location = location;
     }
 
     public long getIdSitio() {
         return this.idSitio;
     }
 
-    public String getNombre() {
-        return this.nombre;
+    public String getName() {
+        return this.name;
     }
 
-    public String getDescripcion() {
-        return this.descripcion;
+    public String getDescription() {
+        return this.description;
     }
 
-    public String getPrecio() {
-        return this.precio;
+    public String getPrice() {
+        return this.price;
     }
 
-    public String getCategoria() {
-        return this.categoria;
+    public String getCategory() {
+        return this.category;
     }
 
     public int getStarsAverage() {
-        return this.ValoracionMedia;
+        return this.starsAverage;
+    }
+
+    public String getLocation() {
+        return location;
     }
 
     public long incrementAndGetId(){  //el increment no sabemos por que es, habra que incrementar algo
         return this.idSitio;
     }
 
+
     public void setIdSitio(long idSitio) {
         this.idSitio = idSitio;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public void setPrecio(String precio) {
-        this.precio = precio;
+    public void setPrice(String price) {
+        this.price = price;
     }
 
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public void setStarsAverage(int ValoracionMedia) {
-        this.ValoracionMedia = ValoracionMedia;
+        this.starsAverage = ValoracionMedia;
     }
 
 
     @Override
     public String toString() {
         return "Sitio:" + "\n" + "IdSitio: " + this.idSitio + "\n" + "Nombre: " +
-                this.nombre + "\n" + "Descripcion: " + this.descripcion + "\n" +
-                "Precio: " + this.precio + "\n" +
-                "Valoracion Media: " + this.ValoracionMedia;
+                this.name + "\n" + "Descripcion: " + this.description + "\n" +
+                "Precio: " + this.price + "\n" +
+                "Valoracion Media: " + this.starsAverage;
     }
 
     @Override
