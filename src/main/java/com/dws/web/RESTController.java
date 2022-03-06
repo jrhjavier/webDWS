@@ -29,11 +29,13 @@ public class RESTController {
         return new ResponseEntity<>(eventHolder.getEvent(id), HttpStatus.OK);
     }
 
-    /*@PostMapping("/events/{id}")  //Add an event to the planning
-    public Collection<Event> addEventToPlanningAPI(@PathVariable)
+    @PostMapping("/events/{id}")  //Add an event to the planning
+    public Collection<Event> addEventToPlanningAPI(@PathVariable long id){
+        Event e = eventHolder.getEvent(id);
+        return Customer.addPlanning();  //no se como hacer esto
+    }
 
 
-    @GetMapping()*/
 
     /*@PostMapping("/sitio")
     public ResponseEntity<Event> create(@RequestBody Event event){
