@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class EventHolder {
 
     private Map<Long, Event> events = new ConcurrentHashMap<>();
-    private AtomicLong lastID = new AtomicLong();  //por ahora esto no sirve para nada, lo tenia el profe
+    private AtomicLong lastID = new AtomicLong();
 
     public void addEvent (Event event){
         long id = this.lastID.incrementAndGet();
