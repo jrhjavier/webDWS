@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.*;
 public class PlaceController {
 
     @Autowired
-    PlaceHolder placeHolder;
+    EventHolder eventHolder;
 
     @GetMapping("/")
     public String getSitios(Model model){
-        model.addAttribute("sitios", placeHolder);
+        model.addAttribute("sitios", eventHolder);
         return "tablon";  //da error aqui no sabemos por que
     }
 
