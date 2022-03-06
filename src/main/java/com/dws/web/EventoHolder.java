@@ -25,7 +25,7 @@ public class EventoHolder {
         return eventos.values();
     }
 
-    public Evento getEvento(long id){
+    public Evento getEvento(long id){ //Gabriel Medrano Disfruton
         return eventos.get(id);
     }
 
