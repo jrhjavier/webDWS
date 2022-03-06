@@ -24,6 +24,7 @@ public class Place {
         this.location = location;
     }
 
+    
     public long getIdSitio() {
         return this.idSitio;
     }

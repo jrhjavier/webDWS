@@ -16,7 +16,7 @@ public class EventHolder {
     private AtomicLong lastID = new AtomicLong();  //por ahora esto no sirve para nada, lo tenia el profe
 
     public void addEvent (Event event){
-        long id=this.lastID.incrementAndGet();
+        long id = this.lastID.incrementAndGet();
         event.setIdEvent(id);
         this.events.put(id, event);
     }
@@ -30,6 +30,7 @@ public class EventHolder {
     }
 
     public Event deleteEvent(long id){
+        Event event = this.events.get(id);
         this.events.remove(id);
         return event;  //el return para que?
     }

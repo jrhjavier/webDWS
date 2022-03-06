@@ -8,7 +8,5 @@ public class WebApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(WebApplication.class, args);
-		System.out.println("Aplicación ejecutada con éxito!!!!!!!!!");
-		System.out.println("2 - Aplicación ejecutada con éxito!!!!!!!!!");
 	}
 }
