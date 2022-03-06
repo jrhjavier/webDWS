@@ -11,13 +11,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/api")
 @RestController
-public class SitioRESTController {
+public class RESTController {
     @Autowired
-    SitioHolder sitioHolder;
+    EventoHolder eventoHolder;
 
     @PostMapping("/sitio")
-    public ResponseEntity<Sitio> create(@RequestBody Sitio sitio){
-        this.sitioHolder.addSitio(sitio);
-        return new ResponseEntity<>(sitio, HttpStatus.CREATED);
+    public ResponseEntity<Evento> create(@RequestBody Evento evento){
+        this.eventoHolder.addEvento(evento);
+        return new ResponseEntity<>(evento, HttpStatus.CREATED);
     }
+
+
 }
