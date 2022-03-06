@@ -1,5 +1,8 @@
 package com.dws.web;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 public class Customer {
     private long idCliente;
     private String name;
@@ -8,6 +11,7 @@ public class Customer {
     private String phoneNumber;
     private String passwd;
     private String address;
+    private Map<Long, Event> planning = new ConcurrentHashMap<>();
 
     public void setIdCliente(long idCliente) {
         this.idCliente = idCliente;
@@ -76,5 +80,14 @@ public class Customer {
                 "Telefono : " + this.phoneNumber + "\n" +
                 "Password : " + this.passwd + "\n" +
                 "Direccion : " + this.address + "\n";
+    }
+
+    public void addPlanning (Event e){
+        if (!this.planning.containsKey(e.getId())){
+            this.planning.put(e.getId(),e);
+        }
+        else{
+            //no se que poner aqui, un error??
+        }
     }
 }
