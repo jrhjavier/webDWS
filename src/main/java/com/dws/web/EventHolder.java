@@ -67,6 +67,10 @@ public class EventHolder {
         this.events.put(id, event);
     }
 
+    public void addUpdatedEvent(Event e){
+        this.events.put(e.getId(), e);
+    }
+
     public Collection<Event> getEvents(){
         return this.events.values();
     }

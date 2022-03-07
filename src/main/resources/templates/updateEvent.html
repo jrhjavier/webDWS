@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Modificar evento</title>
+
+    <link href="/css/styleNewEvent.css" rel="stylesheet"></head>
+
+<body class="">
+
+
+<div class="card">
+    <div class="card-block">
+        <h2>Modificar evento</h2>
+        <form action="/events/{{idEvent}}/update" class="reveal-content" method="post">
+
+            <div class="form-group">
+                <input type="text" class="form-control" name="name" placeholder="Nombre">
+            </div>
+
+            <div class="form-group">
+                <input type="text" class="form-control" name="description" placeholder="Descripcion">
+            </div>
+
+            <div class="form-group">
+                <input type="text" class="form-control" name="price" placeholder="Precio">
+            </div>
+
+            <div class="form-group">
+                <input type="text" class="form-control" name="category" placeholder="Categoria">
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Modificar evento"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+</body>
+
+</html>
