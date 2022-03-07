@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 @RequestMapping("/api")
@@ -13,20 +14,74 @@ import java.util.Collection;
 public class RESTController {
     @Autowired
     EventHolder eventHolder;
+    @Autowired
+    ReviewHolder reviewHolder;
+    @Autowired
+    CustomerHolder customerHolder;
 
-    @GetMapping("/events")  //All events
-    public Collection<Event> getEventsAPI(){
-        return eventHolder.getEvents();
+    @GetMapping("/events/{id}")
+    public ResponseEntity<Event> getEvent(@PathVariable long id) {
+        Event event = eventHolder.getEvent(id);
+        if (event != null) {
+            return new ResponseEntity<>(event, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(event, HttpStatus.NOT_FOUND);
+        }
     }
 
-    @GetMapping("/events/category/{category}")  //Events by category
-    public Collection<Event> getEventsByCategoryAPI(@PathVariable String category){
-        return eventHolder.getEventsFilteredByCategory(category);
+    @GetMapping("/events/{category}")  //Events by category
+    public ResponseEntity<Collection> getEventsByCategoryAPI(@PathVariable String category){
+        Collection<Event> events =eventHolder.getEventsFilteredByCategory(category);
+        if (events!=null){
+            return new ResponseEntity<>(events, HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>(events, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping("/events/{id}")
+    public ResponseEntity<Event> borrarEvent(@PathVariable long id) {
+        Event event = eventHolder.deleteEvent(id);
+        if (event != null) {
+            return new ResponseEntity<>(event, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping("/events/{id}")
+    public ResponseEntity<Event> updateEvent(@PathVariable long id, @RequestBody Event updatedEvent) {
+        Event event = eventHolder.getEvent(id);
+        if (event != null) {
+            updatedEvent.setIdEvent(id);
+            eventHolder.addEvent(updatedEvent);
+            return new ResponseEntity<>(updatedEvent, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/events/")
+    public ResponseEntity<Event> nuevoEvent(@RequestBody Event event) {
+        long id = eventHolder.getLastID().incrementAndGet();
+        event.setIdEvent(id);
+        eventHolder.addEvent(event);
+        return new ResponseEntity<>(event, HttpStatus.CREATED);
     }
 
     @GetMapping("/events/{id}")  //Products by id
     public ResponseEntity<Event> getEventAPI(@PathVariable long id){
-        return new ResponseEntity<>(eventHolder.getEvent(id), HttpStatus.OK);
+
+        Event e= eventHolder.getEvent(id);
+
+        if (e!=null){
+            return new ResponseEntity<>(e, HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
     }
 
     /*@PostMapping("/events/{id}")  //Add an event to the planning
@@ -42,6 +97,51 @@ public class RESTController {
         this.eventHolder.addEvent(event);
         return new ResponseEntity<>(event, HttpStatus.CREATED);
     }*/
+
+    @GetMapping("/reviews/{id}") //Reviews de un cliente
+    public ResponseEntity<Collection> getReviewsOfAClientAPI(@PathVariable long id){
+        Customer c= customerHolder.getCustomer(id);
+        Collection<Review> reviews = reviewHolder.getReviewsOfAClient(c);
+        if (reviews!=null){
+            return new ResponseEntity<>(reviews, HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+    }
+
+    @GetMapping("/reviews/{id}") //
+    public ResponseEntity<Collection> getReviewsOfAnEventAPI(@PathVariable long id){
+        Event e= eventHolder.getEvent(id);
+        Collection<Review> reviews = reviewHolder.getReviewsOfAnEvent(e);
+        if (reviews!=null){
+            return new ResponseEntity<>(reviews, HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping ("/reviews")
+    public ResponseEntity<Collection> getAllReviewsAPI(){
+        Collection<Review> reviews = reviewHolder.getAllReviews();
+        if (reviews!=null){
+            return new ResponseEntity<>(reviews, HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+   /* @PostMapping("/events/{id}") //Adding item by id to cart and returning products in cart, not units
+    public Collection<Event> addToPlanningAPI(@PathVariable long id){
+        Event e = eventHolder.getEvent(id);
+        product_Service.reduceStock(id, 1);
+        lCustomer.addToCart(p1, 1);
+        return lCustomer.getCart().keySet();
+    }
+*/
 
 
 }

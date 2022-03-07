@@ -23,68 +23,33 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping("/catalogue")
+    @GetMapping("/events")
     public String catalogue(Model model, HttpServletRequest request) {
         model.addAttribute("logged", request.isUserInRole("USER"));
         model.addAttribute("admin", request.isUserInRole("ADMIN"));
-        model.addAttribute("productos", eventHolder.getEvents());
-        return "catalogue";
+        model.addAttribute("events", eventHolder.getEvents());
+        return "events";
     }
 
-    @GetMapping("/catalogue/{category}")
+    @GetMapping("/events/{category}")
     public String catalogueFilteredByCategory(Model model, @PathVariable String category, HttpServletRequest request) {
-        if (category.equals("ocio") || category.equals("restauracion") || category.equals("turismo")) {
+        if (category.equalsIgnoreCase("ocio")||category.equalsIgnoreCase("restauracion")||category.equalsIgnoreCase("turismo")) {
             model.addAttribute("logged", request.isUserInRole("USER"));
             model.addAttribute("admin", request.isUserInRole("ADMIN"));
-            model.addAttribute("productos", eventHolder.getEventsFilteredByCategory(category));
+            model.addAttribute("events", eventHolder.getEventsFilteredByCategory(category));
             return "catalogue";
-        } else {
+        }
+        else{
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
 
     }
 
-    @PostMapping("/events/")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Event nuevoEvent(@RequestBody Event event) {
-        long id = eventHolder.getLastID().incrementAndGet();
-        event.setIdEvent(id);
-        eventHolder.addEvent(event);
-        return event;
-    }
 
-    @GetMapping("/events/{id}")
-    public ResponseEntity<Event> getEvent(@PathVariable long id) {
-        Event event = eventHolder.getEvent(id);
-        if (event != null) {
-            return new ResponseEntity<>(event, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(event, HttpStatus.NOT_FOUND);
-        }
-    }
 
-    @DeleteMapping("/events/{id}")
-    public ResponseEntity<Event> borrarEvent(@PathVariable long id) {
-        Event event = eventHolder.deleteEvent(id);
-        if (event != null) {
-            return new ResponseEntity<>(event, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
 
-    @PutMapping("/events/{id}")
-    public ResponseEntity<Event> updateEvent(@PathVariable long id, @RequestBody Event updatedEvent) {
-        Event event = eventHolder.getEvent(id);
-        if (event != null) {
-            updatedEvent.setIdEvent(id);
-            eventHolder.addEvent(updatedEvent);
-            return new ResponseEntity<>(updatedEvent, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
 
-    }
+
 
 
 
