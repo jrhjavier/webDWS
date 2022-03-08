@@ -46,8 +46,8 @@ public class EventHolder {
         return this.lastID;
     }
 
-    public List<Event> getEventsFilteredByCategory(String category){  //eventos filtrados por categoria
-        List<Event> l=null;
+    public Collection<Event> getEventsFilteredByCategory(String category){  //eventos filtrados por categoria
+        Collection<Event> l=null;
         for (Event e : this.events.values()){
             if (e.sameCategory(category)){
                 l.add(e);
@@ -95,7 +95,8 @@ public class EventHolder {
         }
     }
 
-    public Review getReview(Event e, Review r){
+    public Review getReview(Event e, long id){
+        Review r=e.getReview(id);
         return e.getReview(r);
     }
 
@@ -110,7 +111,21 @@ public class EventHolder {
         }
         return l;
     }
+/*
+    public Collection<Review> getReviewsOfAnEventCategory(String category){
+        Collection<Event> eventsFilteredByCategory=this.getEventsFilteredByCategory(category);
 
+
+        for (Event e : ){
+            if (r.reviewOfAnEvent(e)){
+                l.add(r);
+            }
+        }
+        return l;
+    }
+
+
+ */
     public Collection<Review> getReviewsOfAClient(Event e, Customer c){
 
         Collection<Review> l= null;

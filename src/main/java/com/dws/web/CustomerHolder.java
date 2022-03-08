@@ -40,4 +40,7 @@ public class CustomerHolder {
     }
 
 
+    /*
+    public void addEventToPlanning
+     */
 }

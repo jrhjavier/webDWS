@@ -104,6 +104,10 @@ public class Event {
         return this.reviews.get(r.getIdReview());
     }
 
+    public Review getReview(long id){
+        return this.reviews.get(id);
+    }
+
     @Override
     public String toString() {
         return "Sitio:" + "\n" + "IdSitio: " + this.idEvent + "\n" + "name: " +
