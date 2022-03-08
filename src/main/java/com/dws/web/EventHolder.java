@@ -27,7 +27,11 @@ public class EventHolder {
 
     public Event getEvent(long id){
         return this.events.get(id);
-    }
+    } //Por id
+
+    public Long getEvent(Event e){
+        return e.getId();
+    } //Por evento
 
     public Event deleteEvent(long id){
         Event event = this.events.get(id);
@@ -48,6 +52,8 @@ public class EventHolder {
         }
         return l;
     }
+
+
 
 
 }
