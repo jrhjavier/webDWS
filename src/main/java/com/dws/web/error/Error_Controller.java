@@ -31,9 +31,9 @@ public class Error_Controller implements ErrorController {
         return "error";
     }
 
-    @Override
+    /*@Override
     public String getErrorPath() {
         return null;
-    }
+    }*/
 
 }
