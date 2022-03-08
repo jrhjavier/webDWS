@@ -1,5 +1,6 @@
 package com.dws.web;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -82,28 +83,20 @@ public class Customer {
                 "Direccion : " + this.address + "\n";
     }
 
-    public void addPlanning (Event e){
-        if (!this.planning.containsKey(e.getId())){
-            this.planning.put(e.getId(),e);
-        }
-        else{
-            //no se que poner aqui, un error??
-        }
-    }
-/*
-    public void addToPlanning(Event e){
-        Event inn = inPlanning(e);
-        this.planning.put(inn.getId(), inn);
+
+    public void addToPlanning(Event e1){
+        Event e = inPlanning(e1);
+        this.planning.put(e.getId(), e);
     }
 
-    public Map<Long, Event> getPlanning(){
-        return this.planning;
+    public Collection<Event> getPlanning(){
+        return this.planning.values();
     }
 
-    public void deleteEvent(Event r){
-        Event inn = inPlanning(r);
-        if(inn != null){
-            this.planning.remove(inn);
+    public void deleteEvent(Event e1){
+        Event e = inPlanning(e1);
+        if(e != null){
+            this.planning.remove(e);
         }
     }
 
@@ -111,35 +104,17 @@ public class Customer {
         this.planning.clear();
     }
 
-    public void updatePlanningInOne(Event r){
-        Event inn = inPlanning(r);
-        if(inn != null){
-            this.planning.put(inn, this.planning.get(inn));
-        }
-    }
-    public void updatePlanningInOneLess(Event r){
-        Event inn = inPlanning(r);
-        if(inn != null){
-            this.planning.put(inn, this.planning.get(inn));
-        }
-    }
 
-    public  getPlanningEventNumber(Event e){
-        Event inn = inPlanning(e);
-        return this.planning.get(inn);
-    }
-
-    public boolean containsPlanning(Event e){
-        Event inn = inPlanning(e);
-        return inn != null;
+    public boolean containsPlanning(Event e1){
+        Event e = inPlanning(e1);
+        return e != null;
     }
 
     private Event inPlanning(Event e1){
-        for(Event e : this.planning.keySet()){
+        for(Event e : this.planning.values()){
             if(e.getId() == e1.getId()) return e;
         }
         return null;
     }
 
- */
 }

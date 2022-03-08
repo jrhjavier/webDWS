@@ -1,6 +1,7 @@
 package com.dws.web;
 
-import java.util.Objects;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Event {
     private long idEvent;
@@ -10,15 +11,16 @@ public class Event {
     private String category;
     private int averageRating = 0;  //valoracion media
 
+    private Map<Long, Review> reviews = new ConcurrentHashMap<>();
 
     public Event() {
     }
 
     public Event(long idPlace, String name, String description, String price, String category) {
         this.idEvent = idPlace;
-        this.name=name;
-        this.price=price;
-        this.description=description;
+        this.name = name;
+        this.price = price;
+        this.description = description;
         this.category = category;
     }
 
@@ -46,7 +48,7 @@ public class Event {
         return this.averageRating;
     }
 
-    public long incrementAndGetId(){  //el increment no sabemos por que es, habra que incrementar algo
+    public long incrementAndGetId() {  //el increment no sabemos por que es, habra que incrementar algo
         return this.idEvent;
     }
 
@@ -74,6 +76,33 @@ public class Event {
         this.averageRating = averageRating;
     }
 
+    public long getIdEvent() {
+        return idEvent;
+    }
+
+    public int getAverageRating() {
+        return averageRating;
+    }
+
+    public void setAverageRating(int averageRating) {
+        this.averageRating = averageRating;
+    }
+
+    public Collection<Review> getReviews() {
+        return this.reviews.values();
+    }
+
+    public void setReviews(Map<Long, Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public void setReview (Review r){
+        this.reviews.put(r.getIdReview(), r);
+    }
+
+    public Review getReview(Review r){
+        return this.reviews.get(r.getIdReview());
+    }
 
     @Override
     public String toString() {
@@ -83,7 +112,7 @@ public class Event {
                 "Valoracion Media: " + this.averageRating;
     }
 
-    public boolean sameCategory(String category){
+    public boolean sameCategory(String category) {
         return Objects.equals(this.category, category);
     }
 
@@ -100,4 +129,26 @@ public class Event {
     public int hashCode() {
         return Objects.hash(idEvent);
     }
+
+
+    public Review eventContainsReview(Review r1){
+
+        for (Review r : this.reviews.values()){
+            if (r1.equals(r)){
+                return r;
+            }
+        }
+
+        return null;
+    }
+
+    public void cleanReviews(){
+        this.reviews.clear();
+    }
+
+    public void deleteReviewOfAnEvent(Review r){
+        this.reviews.remove(r.getIdReview());
+    }
+
+
 }
