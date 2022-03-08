@@ -19,6 +19,22 @@ public class EventController {
         return "index";
     }
 
+    @GetMapping("/index/leisure")
+    public String leisure(Model model) {
+        return "leisure_template";
+    }
+
+    @GetMapping("/index/restaurants")
+    public String restaurants(Model model) {
+        return "restaurants_template";
+    }
+
+    @GetMapping("/index/tourism")
+    public String tourism(Model model) {
+        return "tourism_template";
+    }
+
+
     @DeleteMapping("/events/delete")
     public String deleteEvent(@RequestBody Event e) {
         long id=eventHolder.getEvent(e);
