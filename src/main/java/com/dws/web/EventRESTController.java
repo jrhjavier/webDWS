@@ -81,7 +81,7 @@ public class EventRESTController {
     }
 
 
-    @GetMapping("/events/{id}reviews/{id}") //Reviews de un Evento
+    @GetMapping("/events/{id}/reviews") //Reviews de un Evento
     public ResponseEntity<Collection> getReviewsOfAnEventAPI(@PathVariable long id){
         Event e= eventHolder.getEvent(id);
         Collection<Review> reviews = this.eventHolder.getReviewsOfAnEvent(e);
