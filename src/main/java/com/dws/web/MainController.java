@@ -44,19 +44,10 @@ public class MainController {
 
     }
 
-    @PostMapping("/createEvent/")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Event newEvent(@RequestBody Event e) {
+    @PostMapping("/event/new")
+    public String newEvent(@RequestBody Event e) {
         eventHolder.addEvent(e);
-        return e;
+        return "saved_event";
     }
-
-
-
-
-
-
-
-
 
 }
