@@ -22,6 +22,12 @@ public class MainController {
         return "index";
     }
 
+    @GetMapping("/index")
+    public String index(Model model) {
+        model.addAttribute("event", eventHolder.getEvents());
+        return "index";
+    }
+
     @GetMapping("/events")
     public String catalogue(Model model, HttpServletRequest request) {
         model.addAttribute("logged", request.isUserInRole("USER"));
@@ -49,5 +55,7 @@ public class MainController {
         eventHolder.addEvent(e);
         return "saved_event";
     }
+
+
 
 }
