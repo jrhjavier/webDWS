@@ -15,16 +15,6 @@ public class EventRESTController {
     EventHolder eventHolder;
 
 
-    @GetMapping("/events/{id}")
-    public ResponseEntity<Event> getEvent(@PathVariable long id) {
-        Event event = eventHolder.getEvent(id);
-        if (event != null) {
-            return new ResponseEntity<>(event, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(event, HttpStatus.NOT_FOUND);
-        }
-    }
-
     @GetMapping("/events/{category}")  //Events by category
     public ResponseEntity<Collection> getEventsByCategoryAPI(@PathVariable String category){
         Collection<Event> events =eventHolder.getEventsFilteredByCategory(category);
@@ -37,7 +27,7 @@ public class EventRESTController {
     }
 
     @DeleteMapping("/events/{id}")
-    public ResponseEntity<Event> borrarEvent(@PathVariable long id) {
+    public ResponseEntity<Event> deleteEvent(@PathVariable long id) {
         Event event = eventHolder.deleteEvent(id);
         if (event != null) {
             return new ResponseEntity<>(event, HttpStatus.OK);
@@ -59,7 +49,7 @@ public class EventRESTController {
     }
 
     @PostMapping("/events/")
-    public ResponseEntity<Event> nuevoEvent(@RequestBody Event event) {
+    public ResponseEntity<Event> newEvent(@RequestBody Event event) {
         long id = eventHolder.getLastID().incrementAndGet();
         event.setIdEvent(id);
         eventHolder.addEvent(event);
