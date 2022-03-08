@@ -2,6 +2,7 @@ package com.dws.web;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class Review {
 
@@ -12,6 +13,8 @@ public class Review {
     private Customer client=new Customer();
 
     private Event event=new Event();
+
+    private AtomicLong lastID = new AtomicLong();
 
     public Review(){
     }
@@ -65,6 +68,13 @@ public class Review {
         this.event = event;
     }
 
+    public AtomicLong getLastID() {
+        return lastID;
+    }
+
+    public void setLastID(AtomicLong lastID) {
+        this.lastID = lastID;
+    }
 
     public boolean reviewOfAnEvent(Event e){
         return this.event.equals(e);

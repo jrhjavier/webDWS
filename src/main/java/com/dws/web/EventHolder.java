@@ -15,6 +15,9 @@ public class EventHolder {
     private Map<Long, Event> events = new ConcurrentHashMap<>();
     private AtomicLong lastID = new AtomicLong();
 
+    private AtomicLong lastIDReview = new AtomicLong();
+
+
     public void addEvent (Event event){
         long id = this.lastID.incrementAndGet();
         event.setIdEvent(id);
@@ -53,7 +56,85 @@ public class EventHolder {
         return l;
     }
 
+    public void addReview(Event e, Review r){
+        long id = r.getLastID().incrementAndGet();
+        r.setIdReview(id);
+        e.setReview(r);
+    }
 
+    public Collection<Review> getAllReviews(Event e) {
+        return e.getReviews();
+    }
+
+    public void deleteReview(Event e, Review r1) {
+        e.eventContainsReview(r1);
+        if (e != null) {
+            e.deleteReviewOfAnEvent(r1);
+        }
+    }
+
+    public void cleanReviews(Event e) {
+        e.cleanReviews();
+    }
+
+
+    public boolean containsReview(Event e, Review r1) {
+        e.eventContainsReview(r1);
+        return r1!=null;
+    }
+
+    private Review inReviews(Event e, Review r1) {
+
+        e.eventContainsReview(r1);
+
+        if (e!=null){
+            return r1;
+        }
+        else{
+            return null;
+        }
+    }
+
+    public Review getReview(Event e, Review r){
+        return e.getReview(r);
+    }
+
+
+    public Collection<Review> getReviewsOfAnEvent(Event e){
+        Collection<Review> l=null;
+
+        for (Review r : e.getReviews()){
+            if (r.reviewOfAnEvent(e)){
+                l.add(r);
+            }
+        }
+        return l;
+    }
+
+    public Collection<Review> getReviewsOfAClient(Event e, Customer c){
+
+        Collection<Review> l= null;
+
+        for (Review r : e.getReviews()){
+            if (r.reviewOfAClient(c)){
+                l.add(r);
+            }
+        }
+        return l;
+    }
+
+    public int eventStarsAverage(Event e){
+
+        Collection<Review> reviewsOfAnEvent=this.getReviewsOfAnEvent(e);
+
+        int suma=0;
+
+        for (Review r : reviewsOfAnEvent){
+            suma+=r.getStars();
+        }
+
+        return suma/reviewsOfAnEvent.size();
+    }
 
 
 }

@@ -14,6 +14,7 @@ public class EventRESTController {
     @Autowired
     EventHolder eventHolder;
 
+
     @GetMapping("/events/{id}")
     public ResponseEntity<Event> getEvent(@PathVariable long id) {
         Event event = eventHolder.getEvent(id);
@@ -78,6 +79,21 @@ public class EventRESTController {
         }
 
     }
+
+
+    @GetMapping("/events/{id}reviews/{id}") //Reviews de un Evento
+    public ResponseEntity<Collection> getReviewsOfAnEventAPI(@PathVariable long id){
+        Event e= eventHolder.getEvent(id);
+        Collection<Review> reviews = this.eventHolder.getReviewsOfAnEvent(e);
+        if (reviews!=null){
+            return new ResponseEntity<>(reviews, HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
 
     /*@PostMapping("/events/{id}")  //Add an event to the planning
     public Collection<Event> addEventToPlanningAPI(@PathVariable long id){
