@@ -64,7 +64,7 @@ public class EventController {
     public String catalogueFilteredByCategory(Model model, @PathVariable String category) {
         if (category.equalsIgnoreCase("ocio")||category.equalsIgnoreCase("restauracion")||category.equalsIgnoreCase("turismo")) {
             model.addAttribute("events", eventHolder.getEventsFilteredByCategory(category));
-            return "catalogue";
+            return "events";
         }
         else{
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -76,6 +76,21 @@ public class EventController {
     public String catalogue(Model model) {
         model.addAttribute("events", eventHolder.getEvents());
         return "events";
+    }
+
+
+    @GetMapping("/events/reviews/{id}")
+    public String showReviews(Model model, @PathVariable long id) {
+        Event e=eventHolder.getEvent(id);
+        model.addAttribute("reviews", eventHolder.getReviewsOfAnEvent(e));
+        return "show_reviews";
+    }
+
+    @PostMapping("/events/{id}/review/add")
+    public String newReview(@PathVariable long id, @RequestBody Review r){
+        Event e=eventHolder.getEvent(id);
+        eventHolder.addReview(e, r);
+        return "added_review";
     }
 
 }

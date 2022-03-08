@@ -70,7 +70,6 @@ public class EventRESTController {
 
     }
 
-
     @GetMapping("/events/{id}/reviews") //Reviews de un Evento
     public ResponseEntity<Collection> getReviewsOfAnEventAPI(@PathVariable long id){
         Event e= eventHolder.getEvent(id);
@@ -83,29 +82,20 @@ public class EventRESTController {
         }
     }
 
-
-
-    /*@PostMapping("/events/{id}")  //Add an event to the planning
-    public Collection<Event> addEventToPlanningAPI(@PathVariable long id){
-        Event e = eventHolder.getEvent(id);
-        return Customer.addPlanning();  //no se como hacer esto
-    }*/
-
-
-
-    /*@PostMapping("/sitio")
-    public ResponseEntity<Event> create(@RequestBody Event event){
-        this.eventHolder.addEvent(event);
-        return new ResponseEntity<>(event, HttpStatus.CREATED);
-    }*/
-
-       /* @PostMapping("/events/{id}") //Adding item by id to cart and returning products in cart, not units
-    public Collection<Event> addToPlanningAPI(@PathVariable long id){
-        Event e = eventHolder.getEvent(id);
-        product_Service.reduceStock(id, 1);
-        lCustomer.addToCart(p1, 1);
-        return lCustomer.getCart().keySet();
+    @PostMapping("/events/{id}/review/add")
+    public ResponseEntity<Review> newReviewAPI(@PathVariable long id, @RequestBody Review r){
+        Event e=eventHolder.getEvent(id);
+        eventHolder.addReview(e, r);
+        return new ResponseEntity<>(r, HttpStatus.CREATED);
     }
-*/
+
+    @PostMapping("/events/{id}/review/add")
+    public ResponseEntity<Review> deleteReviewAPI(@PathVariable long idEvent, @RequestBody long idReview){
+        Event e=eventHolder.getEvent(idEvent);
+        Review r=eventHolder.getReview(e, idReview);
+        eventHolder.addReview(e, r);
+        return new ResponseEntity<>(r, HttpStatus.CREATED);
+    }
+
 
 }
