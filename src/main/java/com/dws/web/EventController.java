@@ -75,7 +75,7 @@ public class EventController {
     @GetMapping("/events")
     public String catalogue(Model model) {
         model.addAttribute("events", eventHolder.getEvents());
-        return "events";
+        return "catalogue";
     }
 
 }
