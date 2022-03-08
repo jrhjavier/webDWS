@@ -2,7 +2,7 @@ html{
   font-family: 'ZCOOL XiaoWei', serif !important;
 }
 .first {
-  background-image: url(/static/images/madrid.jpeg);
+  background-image: url(/static/images/index/madrid.jpeg);
   background-repeat: no-repeat;
   background-size: cover;
   height:700px;
@@ -105,7 +105,7 @@ a:hover {
 }
 
 .four {
-  background-image: url(/static/images/plazaMayor.jpeg);
+  background-image: url(/static/images/index/plazaMayor.jpeg);
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -164,7 +164,7 @@ a:hover {
 }
 
 .letter{
-  background-image: url(/static/images/torres.jpeg);
+  background-image: url(/static/images/index/torres.jpeg);
   background-size: cover;
   background-repeat: no-repeat;
   height: 400px;
