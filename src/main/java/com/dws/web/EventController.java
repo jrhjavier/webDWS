@@ -16,7 +16,7 @@ public class EventController {
     @GetMapping("/index")
     public String index(Model model) {
         model.addAttribute("event", eventHolder.getEvents());
-        return "index";
+        return "index_template";
     }
 
     @GetMapping("/index/leisure")
