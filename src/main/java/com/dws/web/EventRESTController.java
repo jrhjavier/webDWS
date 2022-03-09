@@ -89,7 +89,7 @@ public class EventRESTController {
         return new ResponseEntity<>(r, HttpStatus.CREATED);
     }
 
-    @PostMapping("/events/{id}/review/add")
+    @PostMapping("/events/{id}/review/delete")
     public ResponseEntity<Review> deleteReviewAPI(@PathVariable long idEvent, @RequestBody long idReview){
         Event e=eventHolder.getEvent(idEvent);
         Review r=eventHolder.getReview(e, idReview);
