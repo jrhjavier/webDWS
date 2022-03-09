@@ -13,23 +13,23 @@ public class EventController {
     @Autowired
     EventHolder eventHolder;
 
-    @GetMapping("/index")
+    /*@GetMapping("/index")
     public String index(Model model) {
         model.addAttribute("event", eventHolder.getEvents());
         return "index_template";
     }
-
-    @GetMapping("/index/leisure")
+*/
+    @GetMapping("/leisure")
     public String leisure(Model model) {
         return "leisure_template";
     }
 
-    @GetMapping("/index/restaurants")
+    @GetMapping("/restaurants")
     public String restaurants(Model model) {
         return "restaurants_template";
     }
 
-    @GetMapping("/index/tourism")
+    @GetMapping("/tourism")
     public String tourism(Model model) {
         return "tourism_template";
     }
