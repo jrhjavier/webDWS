@@ -86,11 +86,18 @@ public class EventController {
         return "show_reviews";
     }
 
-    @PostMapping("/events/{id}/review/add")
+    @PostMapping("/events/{id}/review/added")
     public String newReview(@PathVariable long id, @RequestBody Review r){
         Event e=eventHolder.getEvent(id);
         eventHolder.addReview(e, r);
         return "added_review";
+    }
+
+    @PostMapping("/events/{id}/review/add")
+    public String addReview(Model model, @PathVariable long id){
+        Event e=eventHolder.getEvent(id);
+        model.addAttribute("reviews", eventHolder.getReviewsOfAnEvent(e));
+        return "add_review";
     }
 
 }

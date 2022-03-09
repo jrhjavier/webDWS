@@ -50,7 +50,7 @@ public class EventRESTController {
 
     @PostMapping("/events/")
     public ResponseEntity<Event> newEvent(@RequestBody Event event) {
-        long id = eventHolder.getLastID().incrementAndGet();
+        long id = eventHolder.getLastIDEvent().incrementAndGet();
         event.setIdEvent(id);
         eventHolder.addEvent(event);
         return new ResponseEntity<>(event, HttpStatus.CREATED);
@@ -89,12 +89,25 @@ public class EventRESTController {
         return new ResponseEntity<>(r, HttpStatus.CREATED);
     }
 
-    @PostMapping("/events/{id}/review/add")
+    @DeleteMapping("/events/{id}/review/delete")
     public ResponseEntity<Review> deleteReviewAPI(@PathVariable long idEvent, @RequestBody long idReview){
         Event e=eventHolder.getEvent(idEvent);
         Review r=eventHolder.getReview(e, idReview);
         eventHolder.addReview(e, r);
         return new ResponseEntity<>(r, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/events/{id}/review/update")
+    public ResponseEntity<Review> updateReview(@PathVariable long idEvent, @RequestParam long idReview, @RequestBody Review updatedReview) {
+        Event event = eventHolder.getEvent(idEvent);
+        Review r=eventHolder.getReview(event, idReview);
+        if (r != null) {
+            updatedReview.setIdReview(idReview);
+            eventHolder.addReview(event, updatedReview);
+            return new ResponseEntity<>(updatedReview, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
 

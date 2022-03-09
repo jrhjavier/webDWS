@@ -11,7 +11,6 @@ public class CustomerController {
 
     @Autowired
     CustomerHolder customerHolder;
-
     /*
     @PostMapping("/events/add")  //Add an event to the planning
     public String addEventToPlanningAPI(@RequestBody Event e){
@@ -20,4 +19,6 @@ public class CustomerController {
 
 
      */
+
+
 }
