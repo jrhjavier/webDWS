@@ -34,6 +34,10 @@ public class EventController {
         return "tourism_template";
     }
 
+    @GetMapping("/addEvent")
+    public String addEvent(Model model) {
+        return "newEvent";
+    }
 
     @DeleteMapping("/events/delete")
     public String deleteEvent(@RequestBody Event e) {
@@ -43,10 +47,20 @@ public class EventController {
     }
 
     @PostMapping("/events/new")
-    public String newEvent(@RequestBody Event e) {
+    public String newEvent(Model model, Event e) {
         eventHolder.addEvent(e);
-        return "saved_event";
+        model.addAttribute("event",e);
+        return "savedEvent";
     }
+
+
+    @GetMapping("/events/new")
+    public String newEvent(@RequestParam Event e) {
+        eventHolder.addEvent(e);
+        return "savedEvent";
+    }
+
+
 
     @PutMapping("/events/update")
     public String updateEvent(@RequestParam long id, @RequestBody Event updatedEvent) {

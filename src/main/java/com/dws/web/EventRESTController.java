@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/api")
 @RestController
@@ -55,6 +57,10 @@ public class EventRESTController {
         eventHolder.addEvent(event);
         return new ResponseEntity<>(event, HttpStatus.CREATED);
     }
+
+
+
+
 
     @GetMapping("/events/{id}")  //Products by id
     public ResponseEntity<Event> getEventAPI(@PathVariable long id){
