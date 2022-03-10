@@ -12,7 +12,15 @@ public class Customer {
     private String phoneNumber;
     private String passwd;
     private String address;
+
     private Map<Long, Event> planning = new ConcurrentHashMap<>();
+
+    public Customer(){
+    }
+
+    public Customer (String email){
+        this.email=email;
+    }
 
     public void setIdClient(long idClient) {
         this.idClient = idClient;
@@ -84,8 +92,7 @@ public class Customer {
     }
 
 
-    public void addToPlanning(Event e1){
-        Event e = inPlanning(e1);
+    public void addToPlanning(Event e){
         this.planning.put(e.getId(), e);
     }
 
@@ -93,11 +100,8 @@ public class Customer {
         return this.planning.values();
     }
 
-    public void deleteEvent(Event e1){
-        Event e = inPlanning(e1);
-        if(e != null){
-            this.planning.remove(e);
-        }
+    public void deleteEvent(long idEvent){
+        this.planning.remove(idEvent);
     }
 
     public void cleanEvent(){
@@ -115,6 +119,18 @@ public class Customer {
             if(e.getId() == e1.getId()) return e;
         }
         return null;
+    }
+
+    public Collection<Event> getAllEvents(){
+        return this.planning.values();
+    }
+
+    public Event getAnEvent(long idEvent){
+        return this.planning.get(idEvent);
+    }
+
+    public void cleanPlanning(){
+        this.planning.clear();
     }
 
 }

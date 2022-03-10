@@ -78,6 +78,7 @@ public class EventController {
         return "events";
     }
 
+    /*
 
     @GetMapping("/events/reviews/{id}")
     public String showReviews(Model model, @PathVariable long id) {
@@ -100,4 +101,6 @@ public class EventController {
         return "add_review";
     }
 
+
+     */
 }

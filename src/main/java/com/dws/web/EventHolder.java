@@ -57,7 +57,7 @@ public class EventHolder {
     }
 
 
-
+/*
 
     public void addReview(Event e, Review r){
         long id = r.getLastID().incrementAndGet();
@@ -114,7 +114,7 @@ public class EventHolder {
         }
         return l;
     }
-/*
+
     public Collection<Review> getReviewsOfAnEventCategory(String category){
         Collection<Event> eventsFilteredByCategory=this.getEventsFilteredByCategory(category);
 
@@ -128,7 +128,6 @@ public class EventHolder {
     }
 
 
- */
     public Collection<Review> getReviewsOfAClient(Event e, Customer c){
 
         Collection<Review> l= null;
@@ -154,5 +153,7 @@ public class EventHolder {
         return suma/reviewsOfAnEvent.size();
     }
 
+
+ */
 
 }

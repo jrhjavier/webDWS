@@ -14,7 +14,6 @@ public class EventRESTController {
     @Autowired
     EventHolder eventHolder;
 
-
     @GetMapping("/events/{category}")  //Events by category
     public ResponseEntity<Collection> getEventsByCategoryAPI(@PathVariable String category){
         Collection<Event> events =eventHolder.getEventsFilteredByCategory(category);
@@ -48,6 +47,16 @@ public class EventRESTController {
         }
     }
 
+    @GetMapping("/events")
+    public ResponseEntity<Collection> getAllEvent() {
+        Collection<Event> events = eventHolder.getEvents();
+        if (events != null) {
+            return new ResponseEntity<>(events, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @PostMapping("/events/")
     public ResponseEntity<Event> newEvent(@RequestBody Event event) {
         long id = eventHolder.getLastIDEvent().incrementAndGet();
@@ -70,6 +79,7 @@ public class EventRESTController {
 
     }
 
+    /*
     @GetMapping("/events/{id}/reviews") //Reviews de un Evento
     public ResponseEntity<Collection> getReviewsOfAnEventAPI(@PathVariable long id){
         Event e= eventHolder.getEvent(id);
@@ -111,4 +121,5 @@ public class EventRESTController {
     }
 
 
+     */
 }
