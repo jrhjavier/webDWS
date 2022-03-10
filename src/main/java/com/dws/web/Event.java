@@ -1,8 +1,11 @@
 package com.dws.web;
 
+import lombok.Data;
+
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Data
 public class Event {
     private long idEvent;
     private String name;

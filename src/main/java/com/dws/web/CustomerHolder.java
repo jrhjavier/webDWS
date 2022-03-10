@@ -16,6 +16,12 @@ public class CustomerHolder {
 
     private AtomicLong lastIDEvent = new AtomicLong();
 
+    public CustomerHolder(){
+        Customer admin= new Customer("admin");
+        long l=0;
+        this.customers.put(l,admin);
+    }
+
     public void addClient(Customer c) {
         long id = this.lastID.incrementAndGet();
         c.setIdClient(id);
@@ -74,11 +80,21 @@ public class CustomerHolder {
     }
 
     public Collection<Event> getAllEventsOfACustomer(Customer c){
+
         return c.getAllEvents();
     }
 
     public Event getAnEvent(Customer c, long idEvent){
         return c.getAnEvent(idEvent);
+    }
+
+    public Event getAnEventByNoun(Customer c,String name){
+        for(Event e : getAllEventsOfACustomer(c)){
+            if(e.getName().equalsIgnoreCase(name)){
+                return e;
+            }
+        }
+        return null;
     }
 
     public void cleanPlanning(Customer c){

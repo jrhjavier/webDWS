@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,14 @@ public class EventRESTController {
 
     @Autowired
     EventHolder eventHolder;
+
+    /*
+    @PostConstruct
+    public void init() {
+        Event e1= new Event()
+    }
+
+     */
 
     @GetMapping("/events/{category}")  //Events by category
     public ResponseEntity<Collection> getEventsByCategoryAPI(@PathVariable String category){

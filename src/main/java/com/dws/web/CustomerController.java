@@ -27,21 +27,31 @@ public class CustomerController {
     }*/
 
     @PostMapping("/planning/new")  //Add an event to the planning
-    public String addEventToPlanningAPI(Model model, @RequestParam String email,  @RequestParam String name, @RequestParam String category, @RequestParam String description, @RequestParam int price){
-        Customer c= new Customer(email);
-        Event e= new Event(name,category,description,price);
+    public String addEventToPlanningAPI(Model model,Event e){
+        //Customer c= new Customer(email);
+        Customer c= customerHolder.getCustomer("admin");
         customerHolder.addEventToPlanning(c, e);
         model.addAttribute("event",e);
         return "savedEvent";
     }
 
-    @GetMapping("/planning/new/{name}/{category}/{description}/{price}")
-    public String newEvent2(Model model, @PathVariable String email, @PathVariable String name,@PathVariable String category, @PathVariable String description, @PathVariable int price) {
-        Event e= new Event(name,category,description,price);
-        Customer c= new Customer(email);
+
+    @GetMapping("/planning/new/{name}")
+    public String newEvent2(Model model, @PathVariable String name) {
+        Customer c= customerHolder.getCustomer("admin");
+        Event e = customerHolder.getAnEventByNoun(c, name);
         customerHolder.addEventToPlanning(c,e);
         model.addAttribute("event",e);
         return "savedEvent";
+    }
+
+
+
+    @GetMapping("/servidor/{num}")
+    public String enlace(Model model, @PathVariable int num){
+        model.addAttribute("numV",num);
+        model.addAttribute("palabra");
+        return "servidor_templates";
     }
 
     @DeleteMapping("/planning/delete")
@@ -57,7 +67,8 @@ public class CustomerController {
     }
 
     @GetMapping("/planning")
-    public String planning(Model model, @RequestBody Customer c) {
+    public String planning(Model model) {
+        Customer c= customerHolder.getCustomer("admin");
         model.addAttribute("events", customerHolder.getAllEventsOfACustomer(c));
         return "planning";
     }

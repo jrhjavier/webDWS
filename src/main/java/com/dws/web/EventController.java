@@ -2,13 +2,10 @@ package com.dws.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.Collection;
 
 @Controller
 public class EventController {
@@ -24,25 +21,7 @@ public class EventController {
 */
 
 
-    @GetMapping("/leisure")
-    public String leisure(Model model) {
-        return "leisure_template";
-    }
 
-    @GetMapping("/restaurants")
-    public String restaurants(Model model) {
-        return "restaurants_template";
-    }
-
-    @GetMapping("/tourism")
-    public String tourism(Model model) {
-        return "tourism_template";
-    }
-
-    @GetMapping("/addEvent")
-    public String addEvent(Model model) {
-        return "newEvent";
-    }
 
     @DeleteMapping("/events/delete")
     public String deleteEvent(@RequestBody Event e) {

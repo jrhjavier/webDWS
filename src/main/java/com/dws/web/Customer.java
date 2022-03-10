@@ -1,10 +1,14 @@
 package com.dws.web;
 
+import jdk.jfr.DataAmount;
+import lombok.Data;
+
 import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Data
 public class Customer {
     private long idClient;
     private String name;
@@ -123,7 +127,8 @@ public class Customer {
     }
 
     public Collection<Event> getAllEvents(){
-        return this.planning.values();
+        Collection c = this.planning.values();
+        return c;
     }
 
     public Event getAnEvent(long idEvent){
@@ -142,4 +147,5 @@ public class Customer {
     public int hashCode() {
         return Objects.hash(email);
     }
+
 }
