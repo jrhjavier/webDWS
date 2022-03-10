@@ -2,21 +2,38 @@ package com.dws.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collection;
 
+@Controller
 public class CustomerController {
 
     @Autowired
     CustomerHolder customerHolder;
 
+
+
     @PostMapping("/planning/new")  //Add an event to the planning
-    public String addEventToPlanningAPI(@RequestBody Customer c, @RequestBody Event e){
-            customerHolder.addEventToPlanning(c, e);
-            return "saved_event";
+    public String addEventToPlanningAPI(Model model, @RequestParam String email,  @RequestParam String name, @RequestParam String description, @RequestParam String price,@RequestParam String category){
+        Customer c= new Customer(email);
+        Event e= new Event(name,description,price,category);
+        customerHolder.addEventToPlanning(c, e);
+        model.addAttribute("event",e);
+        return "savedEvent";
+    }
+
+
+    @GetMapping("/planning/new")
+    public String newEvent2(Model model, @RequestParam String email, @RequestParam String name, @RequestParam String description, @RequestParam String price,@RequestParam String category) {
+        Event e= new Event(name,description,price,category);
+        Customer c= new Customer(email);
+        customerHolder.addEventToPlanning(c,e);
+        model.addAttribute("event",e);
+        return "savedEvent";
     }
 
     @DeleteMapping("/planning/delete")

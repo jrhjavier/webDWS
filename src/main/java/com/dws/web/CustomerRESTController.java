@@ -14,7 +14,7 @@ public class CustomerRESTController {
 
     @Autowired
     EventHolder customerHolder;
-
+/*
     @PostMapping("/events/")
     public ResponseEntity<Event> newEvent(@RequestBody Event event) {
         long id = eventHolder.getLastIDEvent().incrementAndGet();
@@ -22,4 +22,6 @@ public class CustomerRESTController {
         eventHolder.addEvent(event);
         return new ResponseEntity<>(event, HttpStatus.CREATED);
     }
+
+ */
 }

@@ -98,6 +98,7 @@ public class EventController {
         return "events";
     }
 
+    /*
 
     @GetMapping("/events/reviews/{id}")
     public String showReviews(Model model, @PathVariable long id) {
@@ -113,19 +114,7 @@ public class EventController {
         return "added_review";
     }
 
-    @GetMapping("/planning")
-    public String planning(Model model) {
-        // IMPLEMENTAR AQUI LO DE PLANNING
-        return "planning";
-    }
 
-
-
-    @GetMapping("/eventssss")
-    public ResponseEntity<Collection> eventssss(){
-
-        return new ResponseEntity<>(eventHolder.getEvents(),HttpStatus.OK);
-
-    }
+     */
 
 }
