@@ -17,6 +17,15 @@ public class CustomerController {
 
 
 
+   /* @PostMapping("/planning/new")  //Add an event to the planning
+    public String addEventToPlanningAPI(Model model, @RequestParam String email,  @RequestParam String name, @RequestParam String description, @RequestParam String price,@RequestParam String category){
+        Customer c= new Customer(email);
+        Event e= new Event(name,description,price,category);
+        customerHolder.addEventToPlanning(c, e);
+        model.addAttribute("event",e);
+        return "savedEvent";
+    }*/
+
     @PostMapping("/planning/new")  //Add an event to the planning
     public String addEventToPlanningAPI(Model model, @RequestParam String email,  @RequestParam String name, @RequestParam String category, @RequestParam String description, @RequestParam int price){
         Customer c= new Customer(email);
@@ -25,7 +34,6 @@ public class CustomerController {
         model.addAttribute("event",e);
         return "savedEvent";
     }
-
 
     @GetMapping("/planning/new")
     public String newEvent2(Model model, @RequestParam String email, @RequestParam String name,@RequestParam String category, @RequestParam String description, @RequestParam int price) {

@@ -22,6 +22,8 @@ public class EventController {
         return "index_template";
     }
 */
+
+
     @GetMapping("/leisure")
     public String leisure(Model model) {
         return "leisure_template";
@@ -100,7 +102,7 @@ public class EventController {
 
     /*
 
-    @GetMapping("/events/reviews/{id}")
+    /*@GetMapping("/events/reviews/{id}")
     public String showReviews(Model model, @PathVariable long id) {
         Event e=eventHolder.getEvent(id);
         model.addAttribute("reviews", eventHolder.getReviewsOfAnEvent(e));
