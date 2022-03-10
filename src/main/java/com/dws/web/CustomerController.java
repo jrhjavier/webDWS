@@ -35,8 +35,8 @@ public class CustomerController {
         return "savedEvent";
     }
 
-    @GetMapping("/planning/new")
-    public String newEvent2(Model model, @RequestParam String email, @RequestParam String name,@RequestParam String category, @RequestParam String description, @RequestParam int price) {
+    @GetMapping("/planning/new/{name}/{category}/{description}/{price}")
+    public String newEvent2(Model model, @PathVariable String email, @PathVariable String name,@PathVariable String category, @PathVariable String description, @PathVariable int price) {
         Event e= new Event(name,category,description,price);
         Customer c= new Customer(email);
         customerHolder.addEventToPlanning(c,e);

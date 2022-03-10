@@ -2,6 +2,7 @@ package com.dws.web;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Customer {
@@ -133,4 +134,12 @@ public class Customer {
         this.planning.clear();
     }
 
+    public boolean equals(String email) {
+        return this.email.equalsIgnoreCase(email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(email);
+    }
 }

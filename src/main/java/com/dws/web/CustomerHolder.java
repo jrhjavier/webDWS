@@ -23,7 +23,12 @@ public class CustomerHolder {
     }
 
     public Customer getCustomer(String email) {
-        return this.customers.get(email);
+        for (Customer c : this.customers.values()){
+            if (c.equals(email)){
+                return c;
+            }
+        }
+        return null;
     }
 
     public AtomicLong getLastIDEvent() {
