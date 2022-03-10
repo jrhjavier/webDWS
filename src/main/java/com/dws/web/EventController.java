@@ -59,8 +59,8 @@ public class EventController {
 
 
     @GetMapping("/events/new")
-    public String newEvent2(Model model, @RequestParam String name, @RequestParam String description, @RequestParam String price,@RequestParam String category) {
-        Event e= new Event(name,description,price,category);
+    public String newEvent2(Model model, @RequestParam String name,@RequestParam String category, @RequestParam String description, @RequestParam int price) {
+        Event e= new Event(name,category,description,price);
         eventHolder.addEvent(e);
         model.addAttribute("event",e);
         return "savedEvent";

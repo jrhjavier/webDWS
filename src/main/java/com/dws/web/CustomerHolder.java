@@ -22,8 +22,12 @@ public class CustomerHolder {
         this.customers.put(id, c);
     }
 
-    public Customer getCustomer(long id) {
-        return this.customers.get(id);
+    public Customer getCustomer(String email) {
+        return this.customers.get(email);
+    }
+
+    public AtomicLong getLastIDEvent() {
+        return lastIDEvent;
     }
 
     public Collection<Customer> getAllCustomers() {
@@ -47,8 +51,15 @@ public class CustomerHolder {
         c.addToPlanning(e);
     }
 
-    public void deleteEventFromPlanning(Customer c, long idEvent){
-        c.deleteEvent(idEvent);
+    public Event deleteEventFromPlanning(Customer c, long idEvent){
+        Event e=getAnEvent(c, idEvent);
+        if (c.containsPlanning(e)){
+            c.deleteEvent(idEvent);
+            return e;
+        }
+        else{
+            return null;
+        }
     }
 
     public void updateAnEvent(Customer c, long idOldEvent, Event updatedEvent){

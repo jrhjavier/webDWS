@@ -7,7 +7,7 @@ public class Event {
     private long idEvent;
     private String name;
     private String description;
-    private String price;
+    private int price;
     private String category;
     private int averageRating = 0;  //valoracion media
 
@@ -17,7 +17,7 @@ public class Event {
     public Event() {
     }
 
-    public Event(String name, String description, String price, String category) {
+    public Event(String name, String category, String description, int price) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -38,7 +38,7 @@ public class Event {
         return this.description;
     }
 
-    public String getPrice() {
+    public int getPrice() {
         return this.price;
     }
 
@@ -66,7 +66,7 @@ public class Event {
         this.description = description;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
