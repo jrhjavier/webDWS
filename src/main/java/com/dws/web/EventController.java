@@ -2,10 +2,13 @@ package com.dws.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.Collection;
 
 @Controller
 public class EventController {
@@ -34,6 +37,10 @@ public class EventController {
         return "tourism_template";
     }
 
+    @GetMapping("/addEvent")
+    public String addEvent(Model model) {
+        return "newEvent";
+    }
 
     @DeleteMapping("/events/delete")
     public String deleteEvent(@RequestBody Event e) {
@@ -43,10 +50,23 @@ public class EventController {
     }
 
     @PostMapping("/events/new")
-    public String newEvent(@RequestBody Event e) {
+    public String newEvent(Model model, Event e) {
+        //Event e= new Event()
         eventHolder.addEvent(e);
-        return "saved_event";
+        model.addAttribute("event",e);
+        return "savedEvent";
     }
+
+
+    @GetMapping("/events/new")
+    public String newEvent2(Model model, @RequestParam String name, @RequestParam String description, @RequestParam String price,@RequestParam String category) {
+        Event e= new Event(name,description,price,category);
+        eventHolder.addEvent(e);
+        model.addAttribute("event",e);
+        return "savedEvent";
+    }
+
+
 
     @PutMapping("/events/update")
     public String updateEvent(@RequestParam long id, @RequestBody Event updatedEvent) {
@@ -78,7 +98,6 @@ public class EventController {
         return "events";
     }
 
-    /*
 
     @GetMapping("/events/reviews/{id}")
     public String showReviews(Model model, @PathVariable long id) {
@@ -87,20 +106,26 @@ public class EventController {
         return "show_reviews";
     }
 
-    @PostMapping("/events/{id}/review/added")
+    @PostMapping("/events/{id}/review/add")
     public String newReview(@PathVariable long id, @RequestBody Review r){
         Event e=eventHolder.getEvent(id);
         eventHolder.addReview(e, r);
         return "added_review";
     }
 
-    @PostMapping("/events/{id}/review/add")
-    public String addReview(Model model, @PathVariable long id){
-        Event e=eventHolder.getEvent(id);
-        model.addAttribute("reviews", eventHolder.getReviewsOfAnEvent(e));
-        return "add_review";
+    @GetMapping("/planning")
+    public String planning(Model model) {
+        // IMPLEMENTAR AQUI LO DE PLANNING
+        return "planning";
     }
 
 
-     */
+
+    @GetMapping("/eventssss")
+    public ResponseEntity<Collection> eventssss(){
+
+        return new ResponseEntity<>(eventHolder.getEvents(),HttpStatus.OK);
+
+    }
+
 }

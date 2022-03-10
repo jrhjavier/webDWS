@@ -19,10 +19,12 @@ public class Event {
 
     public Event(String name, String description, String price, String category) {
         this.name = name;
-        this.price = price;
         this.description = description;
+        this.price = price;
         this.category = category;
     }
+
+
 
     public long getId() {
         return this.idEvent;
