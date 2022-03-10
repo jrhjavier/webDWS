@@ -93,4 +93,10 @@ public class EventController {
         return "added_review";
     }
 
+    @GetMapping("/planning")
+    public String planning(Model model) {
+        // IMPLEMENTAR AQUI LO DE PLANNING
+        return "planning";
+    }
+
 }
