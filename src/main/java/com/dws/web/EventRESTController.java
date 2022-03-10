@@ -3,6 +3,7 @@ package com.dws.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -57,10 +58,6 @@ public class EventRESTController {
         eventHolder.addEvent(event);
         return new ResponseEntity<>(event, HttpStatus.CREATED);
     }
-
-
-
-
 
     @GetMapping("/events/{id}")  //Products by id
     public ResponseEntity<Event> getEventAPI(@PathVariable long id){

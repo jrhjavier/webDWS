@@ -48,6 +48,7 @@ public class EventController {
 
     @PostMapping("/events/new")
     public String newEvent(Model model, Event e) {
+        //Event e= new Event()
         eventHolder.addEvent(e);
         model.addAttribute("event",e);
         return "savedEvent";

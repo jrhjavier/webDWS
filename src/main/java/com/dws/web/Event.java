@@ -16,8 +16,7 @@ public class Event {
     public Event() {
     }
 
-    public Event(long idPlace, String name, String description, String price, String category) {
-        this.idEvent = idPlace;
+    public Event(String name, String description, String price, String category) {
         this.name = name;
         this.price = price;
         this.description = description;
