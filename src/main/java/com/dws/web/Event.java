@@ -11,8 +11,9 @@ public class Event {
     private String category;
     private int averageRating = 0;  //valoracion media
 
+    /*
     private Map<Long, Review> reviews = new ConcurrentHashMap<>();
-
+*/
     public Event() {
     }
 
@@ -87,6 +88,7 @@ public class Event {
         this.averageRating = averageRating;
     }
 
+    /*
     public Collection<Review> getReviews() {
         return this.reviews.values();
     }
@@ -107,6 +109,7 @@ public class Event {
         return this.reviews.get(id);
     }
 
+     */
     @Override
     public String toString() {
         return "Sitio:" + "\n" + "IdSitio: " + this.idEvent + "\n" + "name: " +
@@ -133,6 +136,7 @@ public class Event {
         return Objects.hash(idEvent);
     }
 
+    /*
 
     public Review eventContainsReview(Review r1){
 
@@ -153,5 +157,7 @@ public class Event {
         this.reviews.remove(r.getIdReview());
     }
 
+
+     */
 
 }

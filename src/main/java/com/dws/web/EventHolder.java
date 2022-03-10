@@ -13,13 +13,13 @@ import java.util.concurrent.atomic.AtomicLong;
 public class EventHolder {
 
     private Map<Long, Event> events = new ConcurrentHashMap<>();
-    private AtomicLong lastID = new AtomicLong();
+    private AtomicLong lastIDEvent = new AtomicLong();
 
     private AtomicLong lastIDReview = new AtomicLong();
 
 
     public void addEvent (Event event){
-        long id = this.lastID.incrementAndGet();
+        long id = this.lastIDEvent.incrementAndGet();
         event.setIdEvent(id);
         this.events.put(id, event);
     }
@@ -42,8 +42,8 @@ public class EventHolder {
         return event;  //el return para que?
     }
 
-    public AtomicLong getLastID() {
-        return this.lastID;
+    public AtomicLong getLastIDEvent() {
+        return this.lastIDEvent;
     }
 
     public Collection<Event> getEventsFilteredByCategory(String category){  //eventos filtrados por categoria
@@ -55,6 +55,9 @@ public class EventHolder {
         }
         return l;
     }
+
+
+/*
 
     public void addReview(Event e, Review r){
         long id = r.getLastID().incrementAndGet();
@@ -111,7 +114,7 @@ public class EventHolder {
         }
         return l;
     }
-/*
+
     public Collection<Review> getReviewsOfAnEventCategory(String category){
         Collection<Event> eventsFilteredByCategory=this.getEventsFilteredByCategory(category);
 
@@ -125,7 +128,6 @@ public class EventHolder {
     }
 
 
- */
     public Collection<Review> getReviewsOfAClient(Event e, Customer c){
 
         Collection<Review> l= null;
@@ -151,5 +153,7 @@ public class EventHolder {
         return suma/reviewsOfAnEvent.size();
     }
 
+
+ */
 
 }

@@ -17,7 +17,6 @@ public class EventRESTController {
     @Autowired
     EventHolder eventHolder;
 
-
     @GetMapping("/events/{category}")  //Events by category
     public ResponseEntity<Collection> getEventsByCategoryAPI(@PathVariable String category){
         Collection<Event> events =eventHolder.getEventsFilteredByCategory(category);
@@ -51,9 +50,19 @@ public class EventRESTController {
         }
     }
 
+    @GetMapping("/events")
+    public ResponseEntity<Collection> getAllEvent() {
+        Collection<Event> events = eventHolder.getEvents();
+        if (events != null) {
+            return new ResponseEntity<>(events, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @PostMapping("/events/")
     public ResponseEntity<Event> newEvent(@RequestBody Event event) {
-        long id = eventHolder.getLastID().incrementAndGet();
+        long id = eventHolder.getLastIDEvent().incrementAndGet();
         event.setIdEvent(id);
         eventHolder.addEvent(event);
         return new ResponseEntity<>(event, HttpStatus.CREATED);
@@ -73,6 +82,7 @@ public class EventRESTController {
 
     }
 
+    /*
     @GetMapping("/events/{id}/reviews") //Reviews de un Evento
     public ResponseEntity<Collection> getReviewsOfAnEventAPI(@PathVariable long id){
         Event e= eventHolder.getEvent(id);
@@ -92,7 +102,7 @@ public class EventRESTController {
         return new ResponseEntity<>(r, HttpStatus.CREATED);
     }
 
-    @PostMapping("/events/{id}/review/delete")
+    @DeleteMapping("/events/{id}/review/delete")
     public ResponseEntity<Review> deleteReviewAPI(@PathVariable long idEvent, @RequestBody long idReview){
         Event e=eventHolder.getEvent(idEvent);
         Review r=eventHolder.getReview(e, idReview);
@@ -100,5 +110,19 @@ public class EventRESTController {
         return new ResponseEntity<>(r, HttpStatus.CREATED);
     }
 
+    @PutMapping("/events/{id}/review/update")
+    public ResponseEntity<Review> updateReview(@PathVariable long idEvent, @RequestParam long idReview, @RequestBody Review updatedReview) {
+        Event event = eventHolder.getEvent(idEvent);
+        Review r=eventHolder.getReview(event, idReview);
+        if (r != null) {
+            updatedReview.setIdReview(idReview);
+            eventHolder.addReview(event, updatedReview);
+            return new ResponseEntity<>(updatedReview, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
+
+     */
 }

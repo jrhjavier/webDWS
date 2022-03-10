@@ -34,10 +34,6 @@ public class EventController {
         return "tourism_template";
     }
 
-    @GetMapping("/addEvent")
-    public String addEvent(Model model) {
-        return "newEvent";
-    }
 
     @DeleteMapping("/events/delete")
     public String deleteEvent(@RequestBody Event e) {
@@ -47,21 +43,10 @@ public class EventController {
     }
 
     @PostMapping("/events/new")
-    public String newEvent(Model model, Event e) {
-        //Event e= new Event()
+    public String newEvent(@RequestBody Event e) {
         eventHolder.addEvent(e);
-        model.addAttribute("event",e);
-        return "savedEvent";
+        return "saved_event";
     }
-
-
-    @GetMapping("/events/new")
-    public String newEvent(@RequestParam Event e) {
-        eventHolder.addEvent(e);
-        return "savedEvent";
-    }
-
-
 
     @PutMapping("/events/update")
     public String updateEvent(@RequestParam long id, @RequestBody Event updatedEvent) {
@@ -93,6 +78,7 @@ public class EventController {
         return "events";
     }
 
+    /*
 
     @GetMapping("/events/reviews/{id}")
     public String showReviews(Model model, @PathVariable long id) {
@@ -101,17 +87,20 @@ public class EventController {
         return "show_reviews";
     }
 
-    @PostMapping("/events/{id}/review/add")
+    @PostMapping("/events/{id}/review/added")
     public String newReview(@PathVariable long id, @RequestBody Review r){
         Event e=eventHolder.getEvent(id);
         eventHolder.addReview(e, r);
         return "added_review";
     }
 
-    @GetMapping("/planning")
-    public String planning(Model model) {
-        // IMPLEMENTAR AQUI LO DE PLANNING
-        return "planning";
+    @PostMapping("/events/{id}/review/add")
+    public String addReview(Model model, @PathVariable long id){
+        Event e=eventHolder.getEvent(id);
+        model.addAttribute("reviews", eventHolder.getReviewsOfAnEvent(e));
+        return "add_review";
     }
 
+
+     */
 }
