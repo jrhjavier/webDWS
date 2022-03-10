@@ -26,6 +26,7 @@ public class EventRESTController {
 
      */
 
+    /*
     @GetMapping("/events/{category}")  //Events by category
     public ResponseEntity<Collection> getEventsByCategoryAPI(@PathVariable String category){
         Collection<Event> events =eventHolder.getEventsFilteredByCategory(category);
@@ -37,6 +38,8 @@ public class EventRESTController {
         }
     }
 
+
+     */
     @DeleteMapping("/events/{id}")
     public ResponseEntity<Event> deleteEvent(@PathVariable long id) {
         Event event = eventHolder.deleteEvent(id);

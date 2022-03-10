@@ -15,6 +15,8 @@ public class CustomerController {
     @Autowired
     CustomerHolder customerHolder;
 
+    @Autowired
+    EventHolder eventHolder;
 
 
    /* @PostMapping("/planning/new")  //Add an event to the planning
@@ -39,7 +41,7 @@ public class CustomerController {
     @GetMapping("/planning/new/{name}")
     public String newEvent2(Model model, @PathVariable String name) {
         Customer c= customerHolder.getCustomer("admin");
-        Event e = customerHolder.getAnEventByNoun(c, name);
+        Event e = eventHolder.getEventByName(name);
         customerHolder.addEventToPlanning(c,e);
         model.addAttribute("event",e);
         return "savedEvent";

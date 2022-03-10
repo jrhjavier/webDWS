@@ -18,11 +18,11 @@ public class EventController {
         model.addAttribute("event", eventHolder.getEvents());
         return "index_template";
     }
-*/
 
 
 
 
+     */
     @DeleteMapping("/events/delete")
     public String deleteEvent(@RequestBody Event e) {
         long id=eventHolder.getEvent(e);
