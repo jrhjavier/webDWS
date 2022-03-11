@@ -13,16 +13,7 @@ public class EventController {
     @Autowired
     EventHolder eventHolder;
 
-    /*@GetMapping("/index")
-    public String index(Model model) {
-        model.addAttribute("event", eventHolder.getEvents());
-        return "index_template";
-    }
 
-
-
-
-     */
     @DeleteMapping("/events/delete")
     public String deleteEvent(@RequestBody Event e) {
         long id=eventHolder.getEvent(e);
@@ -78,24 +69,5 @@ public class EventController {
         model.addAttribute("events", eventHolder.getEvents());
         return "events";
     }
-
-    /*
-
-    /*@GetMapping("/events/reviews/{id}")
-    public String showReviews(Model model, @PathVariable long id) {
-        Event e=eventHolder.getEvent(id);
-        model.addAttribute("reviews", eventHolder.getReviewsOfAnEvent(e));
-        return "show_reviews";
-    }
-
-    @PostMapping("/events/{id}/review/add")
-    public String newReview(@PathVariable long id, @RequestBody Review r){
-        Event e=eventHolder.getEvent(id);
-        eventHolder.addReview(e, r);
-        return "added_review";
-    }
-
-
-     */
 
 }

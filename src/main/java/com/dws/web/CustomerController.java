@@ -7,7 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Collection;
 
 @Controller
 public class CustomerController {
@@ -19,15 +18,6 @@ public class CustomerController {
     EventHolder eventHolder;
 
 
-   /* @PostMapping("/planning/new")  //Add an event to the planning
-    public String addEventToPlanningAPI(Model model, @RequestParam String email,  @RequestParam String name, @RequestParam String description, @RequestParam String price,@RequestParam String category){
-        Customer c= new Customer(email);
-        Event e= new Event(name,description,price,category);
-        customerHolder.addEventToPlanning(c, e);
-        model.addAttribute("event",e);
-        return "savedEvent";
-    }*/
-
     @PostMapping("/planning/new")  //Add an event to the planning
     public String addEventToPlanningAPI(Model model,Event e){
         //Customer c= new Customer(email);
@@ -37,7 +27,6 @@ public class CustomerController {
         return "savedEvent";
     }
 
-
     @GetMapping("/planning/new/{name}")
     public String newEvent2(Model model, @PathVariable String name) {
         Customer c= customerHolder.getCustomer("admin");
@@ -46,8 +35,6 @@ public class CustomerController {
         model.addAttribute("event",e);
         return "savedEvent";
     }
-
-
 
     @GetMapping("/servidor/{num}")
     public String enlace(Model model, @PathVariable int num){
@@ -85,9 +72,5 @@ public class CustomerController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
-
-
-
-
 
 }

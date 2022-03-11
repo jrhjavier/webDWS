@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Data
 public class Event {
@@ -25,11 +24,8 @@ public class Event {
 
     @JsonView(Customer.Basico.class)
     private String category;
-    //private int averageRating = 0;
 
-    /*
-    private Map<Long, Review> reviews = new ConcurrentHashMap<>();
-*/
+
     public Event() {
     }
 
@@ -39,7 +35,6 @@ public class Event {
         this.price = price;
         this.category = category;
     }
-
 
 
     public long getId() {
@@ -62,11 +57,6 @@ public class Event {
         return this.category;
     }
 
-    /*public int getStarsAverage() {
-        return this.averageRating;
-    }
-
-     */
 
     public long incrementAndGetId() {  //el increment no sabemos por que es, habra que incrementar algo
         return this.idEvent++;
@@ -92,50 +82,13 @@ public class Event {
         this.category = category;
     }
 
-    /*public void setStarsAverage(int averageRating) {
-        this.averageRating = averageRating;
-    }
 
-     */
 
     public long getIdEvent() {
         return idEvent;
     }
 
-    /*public int getAverageRating() {
-        return averageRating;
-    }
 
-     */
-
-    /*public void setAverageRating(int averageRating) {
-        this.averageRating = averageRating;
-    }
-
-     */
-
-    /*
-    public Collection<Review> getReviews() {
-        return this.reviews.values();
-    }
-
-    public void setReviews(Map<Long, Review> reviews) {
-        this.reviews = reviews;
-    }
-
-    public void setReview (Review r){
-        this.reviews.put(r.getIdReview(), r);
-    }
-
-    public Review getReview(Review r){
-        return this.reviews.get(r.getIdReview());
-    }
-
-    public Review getReview(long id){
-        return this.reviews.get(id);
-    }
-
-     */
     @Override
     public String toString() {
         return "Sitio:" + "\n" + "IdSitio: " + this.idEvent + "\n" + "name: " +
@@ -148,7 +101,7 @@ public class Event {
     }
 
     @Override
-    public boolean equals(Object o) {  //Comparamos los sitios por su id
+    public boolean equals(Object o) {  //We compare the events by their id
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Event event = (Event) o;
@@ -160,29 +113,5 @@ public class Event {
     public int hashCode() {
         return Objects.hash(idEvent);
     }
-
-    /*
-
-    public Review eventContainsReview(Review r1){
-
-        for (Review r : this.reviews.values()){
-            if (r1.equals(r)){
-                return r;
-            }
-        }
-
-        return null;
-    }
-
-    public void cleanReviews(){
-        this.reviews.clear();
-    }
-
-    public void deleteReviewOfAnEvent(Review r){
-        this.reviews.remove(r.getIdReview());
-    }
-
-
-     */
 
 }
