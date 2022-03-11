@@ -44,27 +44,47 @@ public class EventHolder {
         Event e20 = new Event("Palacio Real", "Turismo", "El Palacio Real de Madrid, popularmente conocido también como Palacio de Oriente, es la residencia oficial del Jefe del Estado, el rey de España; no obstante, los actuales reyes no habitan en él, sino en el Palacio de la Zarzuela, por lo que es utilizado para ceremonias de Estado y actos solemnes.", 12);
         Event e21 = new Event("Catedral de la Almudena", "Turismo", "La Santa Iglesia Catedral Metropolitana de Santa María la Real de la Almudena, conocida simplemente como Catedral de la Almudena, es una catedral de culto católico, dedicada a la Virgen María bajo la advocación de la Almudena, y sede episcopal de Madrid.", 6);
 
-
+        e1.setIdEvent(l);
         events.put(l++, e1);
+        e2.setIdEvent(l);
         events.put(l++, e2);
+        e3.setIdEvent(l);
         events.put(l++, e3);
+        e4.setIdEvent(l);
         events.put(l++, e4);
+        e5.setIdEvent(l);
         events.put(l++, e5);
+        e6.setIdEvent(l);
         events.put(l++, e6);
+        e7.setIdEvent(l);
         events.put(l++, e7);
+        e8.setIdEvent(l);
         events.put(l++, e8);
+        e9.setIdEvent(l);
         events.put(l++, e9);
+        e10.setIdEvent(l);
         events.put(l++, e10);
+        e11.setIdEvent(l);
         events.put(l++, e11);
+        e12.setIdEvent(l);
         events.put(l++, e12);
+        e13.setIdEvent(l);
         events.put(l++, e13);
+        e14.setIdEvent(l);
         events.put(l++, e14);
+        e15.setIdEvent(l);
         events.put(l++, e15);
+        e16.setIdEvent(l);
         events.put(l++, e16);
+        e17.setIdEvent(l);
         events.put(l++, e17);
+        e18.setIdEvent(l);
         events.put(l++, e18);
+        e19.setIdEvent(l);
         events.put(l++, e19);
+        e20.setIdEvent(l);
         events.put(l++, e20);
+        e21.setIdEvent(l);
         events.put(l, e21);
 
     }

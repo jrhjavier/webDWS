@@ -37,7 +37,7 @@ public class CustomerRESTController {
         }
     }
 
-    @PutMapping("/planning/{id}")
+    @PutMapping("/planning/{email}/{id}")
     public ResponseEntity<Event> updateEvent(@PathVariable String email, @PathVariable long idEvent, @RequestBody Event updatedEvent) {
         Customer c= customerHolder.getCustomer(email);
         Event event = customerHolder.getAnEvent(c, idEvent);
