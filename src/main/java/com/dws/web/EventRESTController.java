@@ -47,7 +47,7 @@ public class EventRESTController {
         }
     }
 
-    @PostMapping("/events/")
+    @PostMapping("/events")
     public ResponseEntity<Event> newEvent(@RequestBody Event event) {
         long id = eventHolder.getLastIDEvent().incrementAndGet();
         event.setIdEvent(id);
