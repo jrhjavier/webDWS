@@ -1,6 +1,6 @@
 package com.dws.web;
 
-import jdk.jfr.DataAmount;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 
 import java.util.Collection;
@@ -9,13 +9,32 @@ import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Data
+
+
+
 public class Customer {
+
+    interface Basico {}
+
+    @JsonView(Basico.class)
     private long idClient;
+
+    @JsonView(Basico.class)
     private String name;
+
+    @JsonView(Basico.class)
     private String surname;
+
+    @JsonView(Basico.class)
     private String email;
+
+    @JsonView(Basico.class)
     private String phoneNumber;
+
+    @JsonView(Basico.class)
     private String passwd;
+
+    @JsonView(Basico.class)
     private String address;
 
     private Map<Long, Event> planning = new ConcurrentHashMap<>();
@@ -127,7 +146,7 @@ public class Customer {
     }
 
     public Collection<Event> getAllEvents(){
-        Collection c = this.planning.values();
+        Collection<Event> c = this.planning.values();
         return c;
     }
 

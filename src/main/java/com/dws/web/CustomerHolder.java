@@ -3,7 +3,6 @@ package com.dws.web;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
@@ -29,12 +28,14 @@ public class CustomerHolder {
     }
 
     public Customer getCustomer(String email) {
-        for (Customer c : this.customers.values()){
-            if (c.equals(email)){
-                return c;
+
+        for (Map.Entry<Long, Customer> entry : this.customers.entrySet()){
+            if (entry.getValue().equals(email)){
+                return entry.getValue();
             }
         }
         return null;
+
     }
 
     public AtomicLong getLastIDEvent() {
@@ -80,7 +81,6 @@ public class CustomerHolder {
     }
 
     public Collection<Event> getAllEventsOfACustomer(Customer c){
-
         return c.getAllEvents();
     }
 

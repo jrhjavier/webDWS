@@ -14,7 +14,7 @@ public class CustomerRESTController {
     @Autowired
     CustomerHolder customerHolder;
 
-    @GetMapping("/planning/{category}")  //Events by category
+    @GetMapping("/planning/{email}/{category}")  //Events by category
     public ResponseEntity<Collection> getEventsByCategoryAPI(@PathVariable String email, @PathVariable String category){
         Customer c= customerHolder.getCustomer(email);
         Collection<Event> events =customerHolder.getEventsOfACategory(c, category);
@@ -26,7 +26,7 @@ public class CustomerRESTController {
         }
     }
 
-    @DeleteMapping("/planning/{email}")
+    @DeleteMapping("/planning/{email}/{id}")
     public ResponseEntity<Event> deleteEvent(@PathVariable String email, @PathVariable long id) {
         Customer c= customerHolder.getCustomer(email);
         Event event = customerHolder.deleteEventFromPlanning(c, id);
@@ -54,7 +54,7 @@ public class CustomerRESTController {
     public ResponseEntity<Collection> getAllEventOfACustomer(@PathVariable String email) {
         Customer c=customerHolder.getCustomer(email);
         Collection<Event> events = customerHolder.getAllEventsOfACustomer(c);
-        if (events != null) {
+        if (!events.isEmpty()) {
             return new ResponseEntity<>(events, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
