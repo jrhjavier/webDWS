@@ -9,9 +9,6 @@ import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Data
-
-
-
 public class Customer {
 
     interface Basico {}
