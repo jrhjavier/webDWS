@@ -1,5 +1,6 @@
 package com.dws.web;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 
 import java.util.*;
@@ -7,10 +8,22 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Data
 public class Event {
+
+    interface Basico {}
+
+    @JsonView(Customer.Basico.class)
     private long idEvent;
+
+    @JsonView(Customer.Basico.class)
     private String name;
+
+    @JsonView(Customer.Basico.class)
     private String description;
+
+    @JsonView(Customer.Basico.class)
     private int price;
+
+    @JsonView(Customer.Basico.class)
     private String category;
     //private int averageRating = 0;
 
