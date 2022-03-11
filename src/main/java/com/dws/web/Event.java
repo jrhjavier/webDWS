@@ -12,7 +12,7 @@ public class Event {
     private String description;
     private int price;
     private String category;
-    private int averageRating = 0;  //valoracion media
+    //private int averageRating = 0;
 
     /*
     private Map<Long, Review> reviews = new ConcurrentHashMap<>();
@@ -49,12 +49,14 @@ public class Event {
         return this.category;
     }
 
-    public int getStarsAverage() {
+    /*public int getStarsAverage() {
         return this.averageRating;
     }
 
+     */
+
     public long incrementAndGetId() {  //el increment no sabemos por que es, habra que incrementar algo
-        return this.idEvent;
+        return this.idEvent++;
     }
 
     public void setIdEvent(long idPlace) {
@@ -77,21 +79,27 @@ public class Event {
         this.category = category;
     }
 
-    public void setStarsAverage(int averageRating) {
+    /*public void setStarsAverage(int averageRating) {
         this.averageRating = averageRating;
     }
+
+     */
 
     public long getIdEvent() {
         return idEvent;
     }
 
-    public int getAverageRating() {
+    /*public int getAverageRating() {
         return averageRating;
     }
 
-    public void setAverageRating(int averageRating) {
+     */
+
+    /*public void setAverageRating(int averageRating) {
         this.averageRating = averageRating;
     }
+
+     */
 
     /*
     public Collection<Review> getReviews() {
@@ -119,8 +127,7 @@ public class Event {
     public String toString() {
         return "Sitio:" + "\n" + "IdSitio: " + this.idEvent + "\n" + "name: " +
                 this.name + "\n" + "description: " + this.description + "\n" +
-                "price: " + this.price + "\n" +
-                "Valoracion Media: " + this.averageRating;
+                "price: " + this.price + "\n";
     }
 
     public boolean sameCategory(String category) {
