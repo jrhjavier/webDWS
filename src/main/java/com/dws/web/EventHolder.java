@@ -16,10 +16,6 @@ public class EventHolder {
     private Map<Long, Event> events = new ConcurrentHashMap<>();
     private AtomicLong lastIDEvent = new AtomicLong();
 
-
-    private AtomicLong lastIDReview = new AtomicLong();
-
-
     public EventHolder(){
         long l = 10000;
         Event e1 = new Event("Teleferico", "Ocio", "El Teleférico (con accesos en la Estación del Paseo del Pintor Rosales y en la Estación de Casa de Campo) es una magnífica oportunidad para sobrevolar la parte más verde de la ciudad y contemplar desde el aire su parte más histórica. Además de ofrecer unas vistas panorámicas inmejorables, el Teleférico es un medio de transporte rápido y sostenible para llegar al corazon de la Casa de Campo", 6);

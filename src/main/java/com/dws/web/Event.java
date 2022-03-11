@@ -62,8 +62,8 @@ public class Event {
         return this.idEvent++;
     }
 
-    public void setIdEvent(long idPlace) {
-        this.idEvent = idPlace;
+    public void setIdEvent(long idEvent) {
+        this.idEvent = idEvent;
     }
 
     public void setName(String name) {
@@ -91,9 +91,9 @@ public class Event {
 
     @Override
     public String toString() {
-        return "Sitio:" + "\n" + "IdSitio: " + this.idEvent + "\n" + "name: " +
-                this.name + "\n" + "description: " + this.description + "\n" +
-                "price: " + this.price + "\n";
+        return "Evento:" + "\n" + "IdEvento: " + this.idEvent + "\n" + "nombre: " +
+                this.name + "\n" + "descripción: " + this.description + "\n" +
+                "precio: " + this.price + "\n";
     }
 
     public boolean sameCategory(String category) {
