@@ -27,6 +27,10 @@ public class CustomerHolder {
         this.customers.put(id, c);
     }
 
+    public void addUpdatedClient(Customer c){
+        this.customers.put(c.getIdClient(), c);
+    }
+
     public Customer getCustomer(String email) {
 
         for (Map.Entry<Long, Customer> entry : this.customers.entrySet()){
