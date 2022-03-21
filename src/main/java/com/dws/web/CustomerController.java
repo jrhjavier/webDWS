@@ -33,14 +33,15 @@ public class CustomerController {
     }
 
     @PutMapping("/customer/update")
-    public String updateCustomer(String email, Customer updatedCustomer) {
+    public String updateCustomer(Model model, String email, Customer updatedCustomer) {
         Customer c=customerHolder.getCustomer(email);
         if (c != null) {
             long id=c.getIdClient();
             customerHolder.deleteCustomer(id);
             updatedCustomer.setIdClient(id);
             customerHolder.addUpdatedClient(updatedCustomer);
-            return "updated_customer";
+            model.addAttribute("customer", c);
+            return "savedCustomer";
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -79,7 +80,7 @@ public class CustomerController {
     @PutMapping("/planning/update")
     public String updateEvent(@RequestBody Customer c, @RequestParam long idOldEvent, @RequestBody Event updatedEvent) {
         customerHolder.updateAnEvent(c, idOldEvent, updatedEvent);
-        return "saved_event";
+        return "savedEvent";
     }
 
     @PostMapping("/planning/new")  //Add an event to the planning

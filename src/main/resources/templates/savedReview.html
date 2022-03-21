@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Opinión añadida</title>
+    <link href="/css/styleSavedEvent.css" rel="stylesheet"></head>
+</head>
+
+<body>
+<div class="text-center">
+    <h2>La opinión ha sido guardado correctamente: </h2>
+</div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="card">
+                <div class="card-block">
+                    <h2>Usuario: {{review.userName}}</h2>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <p><img src="/images/savedEvents.jpg" class="img-responsive" alt=""></p>
+                        </div>
+                        <div class="col-md-8">
+                            <p>Opinión: {{review.message}}</p><br>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class=" btn btn-primary"><a href="/">Volver al inicio</a></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--EVENTO NUEVO AÑADIDO:<br>
+    {{event.name}}<br>
+    {{event.description}}<br>
+    {{event.price}}<br>
+    {{event.category}}<br><br>
+
+<div class="form-group">
+    <button type="submit" class=" btn btn-primary">
+        <div class="form-group">
+            <button type="submit" class=" btn btn-primary"><a href="/">Volver al index</a></button>
+        </div>
+    </button>
+
+</div>
+-->
+</body>
+</html>

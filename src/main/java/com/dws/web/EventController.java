@@ -38,12 +38,13 @@ public class EventController {
     }
 
     @PutMapping("/events/update")
-    public String updateEvent(long id, Event updatedEvent) {
+    public String updateEvent(Model model, long id, Event updatedEvent) {
         Event event = eventHolder.getEvent(id);
         if (event != null) {
             updatedEvent.setIdEvent(id);
             eventHolder.addEvent(updatedEvent);
-            return "updated_event";
+            model.addAttribute("event",updatedEvent);
+            return "savedEvent";
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -91,14 +92,15 @@ public class EventController {
     }
 
     @PutMapping("/event/review/update")
-    public String updateReview(long idEvent, long idOldReview, Review updatedReview) {
+    public String updateReview(Model model, long idEvent, long idOldReview, Review updatedReview) {
         Event e = eventHolder.getEvent(idEvent);
         Review r=e.getReview(idOldReview);
         if (r != null) {
             e.deleteReviewOfThisEvent(idOldReview);
             updatedReview.setIdReview(idOldReview);
             e.addUpdatedReviewToThisEvent(updatedReview);
-            return "updated_review";
+            model.addAttribute("review",updatedReview);
+            return "savedReview";
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }

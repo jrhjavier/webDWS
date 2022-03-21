@@ -3,9 +3,6 @@ package com.dws.web;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 
-import java.util.concurrent.atomic.AtomicLong;
-
-
 @Data
 public class Review {
 

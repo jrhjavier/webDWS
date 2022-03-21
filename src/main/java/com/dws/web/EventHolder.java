@@ -17,7 +17,7 @@ public class EventHolder {
     private AtomicLong lastIDEvent = new AtomicLong();
 
     public EventHolder(){
-        long l = 10000;
+
         Event e1 = new Event("Teleferico", "Ocio", "El Teleférico (con accesos en la Estación del Paseo del Pintor Rosales y en la Estación de Casa de Campo) es una magnífica oportunidad para sobrevolar la parte más verde de la ciudad y contemplar desde el aire su parte más histórica. Además de ofrecer unas vistas panorámicas inmejorables, el Teleférico es un medio de transporte rápido y sostenible para llegar al corazon de la Casa de Campo", 6);
         Event e2 = new Event("Barcas Retiro", "Ocio", "Actualmente, el estanque ofrece varias actividades dentro del Centro Deportivo Municipal Estanque del Retiro, como barcas de remo (se dispone de 100 barcas, dos de ellas accesibles para personas en silla de ruedas), barco solar (accesible para silla de ruedas) y aula solar y la Escuela Municipal de Piragüismo, dirigida a niños y jóvenes entre 7 y 17 años.", 6);
         Event e3 = new Event("Parque de Atracciones", "Ocio", "El Parque de Atracciones de Madrid es un parque de atracciones situado en Madrid, en la Comunidad de Madrid, en España, concretamente en la zona de Batán de la Casa de Campo.", 25);
@@ -40,48 +40,27 @@ public class EventHolder {
         Event e20 = new Event("Palacio Real", "Turismo", "El Palacio Real de Madrid, popularmente conocido también como Palacio de Oriente, es la residencia oficial del Jefe del Estado, el rey de España; no obstante, los actuales reyes no habitan en él, sino en el Palacio de la Zarzuela, por lo que es utilizado para ceremonias de Estado y actos solemnes.", 12);
         Event e21 = new Event("Catedral de la Almudena", "Turismo", "La Santa Iglesia Catedral Metropolitana de Santa María la Real de la Almudena, conocida simplemente como Catedral de la Almudena, es una catedral de culto católico, dedicada a la Virgen María bajo la advocación de la Almudena, y sede episcopal de Madrid.", 6);
 
-        e1.setIdEvent(l);
-        events.put(l++, e1);
-        e2.setIdEvent(l);
-        events.put(l++, e2);
-        e3.setIdEvent(l);
-        events.put(l++, e3);
-        e4.setIdEvent(l);
-        events.put(l++, e4);
-        e5.setIdEvent(l);
-        events.put(l++, e5);
-        e6.setIdEvent(l);
-        events.put(l++, e6);
-        e7.setIdEvent(l);
-        events.put(l++, e7);
-        e8.setIdEvent(l);
-        events.put(l++, e8);
-        e9.setIdEvent(l);
-        events.put(l++, e9);
-        e10.setIdEvent(l);
-        events.put(l++, e10);
-        e11.setIdEvent(l);
-        events.put(l++, e11);
-        e12.setIdEvent(l);
-        events.put(l++, e12);
-        e13.setIdEvent(l);
-        events.put(l++, e13);
-        e14.setIdEvent(l);
-        events.put(l++, e14);
-        e15.setIdEvent(l);
-        events.put(l++, e15);
-        e16.setIdEvent(l);
-        events.put(l++, e16);
-        e17.setIdEvent(l);
-        events.put(l++, e17);
-        e18.setIdEvent(l);
-        events.put(l++, e18);
-        e19.setIdEvent(l);
-        events.put(l++, e19);
-        e20.setIdEvent(l);
-        events.put(l++, e20);
-        e21.setIdEvent(l);
-        events.put(l, e21);
+        this.addEvent(e1);
+        this.addEvent(e2);
+        this.addEvent(e3);
+        this.addEvent(e4);
+        this.addEvent(e5);
+        this.addEvent(e6);
+        this.addEvent(e7);
+        this.addEvent(e8);
+        this.addEvent(e9);
+        this.addEvent(e10);
+        this.addEvent(e11);
+        this.addEvent(e12);
+        this.addEvent(e13);
+        this.addEvent(e14);
+        this.addEvent(e15);
+        this.addEvent(e16);
+        this.addEvent(e17);
+        this.addEvent(e18);
+        this.addEvent(e19);
+        this.addEvent(e20);
+        this.addEvent(e21);
 
     }
 
