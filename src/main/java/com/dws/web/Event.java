@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Data
 public class Event {
@@ -25,6 +27,9 @@ public class Event {
     @JsonView(Customer.Basico.class)
     private String category;
 
+    Map<Long, Review> reviews=new ConcurrentHashMap<>();
+
+    private AtomicLong lastIDReview = new AtomicLong();
 
     public Event() {
     }
@@ -88,6 +93,31 @@ public class Event {
         return idEvent;
     }
 
+    //REVIEW
+
+    public void addReviewToThisEvent(Review r){
+        long idReview=this.lastIDReview.incrementAndGet();
+        r.setIdReview(idReview);
+        this.reviews.put(r.getIdReview(), r);
+    }
+
+    public void addUpdatedReviewToThisEvent(Review r){
+        this.reviews.put(r.getIdReview(), r);
+    }
+
+    public Review deleteReviewOfThisEvent(long idReview){
+        Review r=this.reviews.get(idReview);
+        this.reviews.remove(idReview);
+        return r;
+    }
+
+    public Review getReview(long idReview){
+        return this.reviews.get(idReview);
+    }
+
+    public Collection<Review> getAllReviews(){
+        return this.reviews.values();
+    }
 
     @Override
     public String toString() {

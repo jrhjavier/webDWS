@@ -14,9 +14,16 @@ public class EventRESTController {
     @Autowired
     EventHolder eventHolder;
 
+    //EVENT (Revisar)
+
+    @PostMapping("/events")
+    public ResponseEntity<Event> newEventAPI(@RequestBody Event event) {
+        eventHolder.addEvent(event);
+        return new ResponseEntity<>(event, HttpStatus.CREATED);
+    }
 
     @DeleteMapping("/events/{id}")
-    public ResponseEntity<Event> deleteEvent(@PathVariable long id) {
+    public ResponseEntity<Event> deleteEventAPI(@PathVariable long id) {
         Event event = eventHolder.deleteEvent(id);
         if (event != null) {
             return new ResponseEntity<>(event, HttpStatus.OK);
@@ -26,7 +33,7 @@ public class EventRESTController {
     }
 
     @PutMapping("/events/{id}")
-    public ResponseEntity<Event> updateEvent(@PathVariable long id, @RequestBody Event updatedEvent) {
+    public ResponseEntity<Event> updateEventAPI(@PathVariable long id, @RequestBody Event updatedEvent) {
         Event event = eventHolder.getEvent(id);
         if (event != null) {
             updatedEvent.setIdEvent(id);
@@ -38,21 +45,13 @@ public class EventRESTController {
     }
 
     @GetMapping("/events")
-    public ResponseEntity<Collection> getAllEvent() {
+    public ResponseEntity<Collection> getAllEventAPI() {
         Collection<Event> events = eventHolder.getEvents();
         if (events != null) {
             return new ResponseEntity<>(events, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-    }
-
-    @PostMapping("/events")
-    public ResponseEntity<Event> newEvent(@RequestBody Event event) {
-        long id = eventHolder.getLastIDEvent().incrementAndGet();
-        event.setIdEvent(id);
-        eventHolder.addEvent(event);
-        return new ResponseEntity<>(event, HttpStatus.CREATED);
     }
 
     @GetMapping("/events/{id}")  //Products by id
@@ -69,4 +68,60 @@ public class EventRESTController {
 
     }
 
+    //REVIEW
+
+    @PostMapping("/event/{idEvent}/review/new")
+    public ResponseEntity<Review> newReviewAPI(@PathVariable long idEvent, @RequestBody Review r) {
+        Event e=eventHolder.getEvent(idEvent);
+        e.addReviewToThisEvent(r);
+        return new ResponseEntity<>(r, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/event/{idEvent}/review/delete/{idReview}")
+    public ResponseEntity<Review> deleteReviewAPI(@PathVariable long idEvent, @PathVariable long idReview) {
+        Event e = eventHolder.getEvent(idEvent);
+        Review r=e.deleteReviewOfThisEvent(idReview);
+        if (r != null) {
+            return new ResponseEntity<>(r, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping("/event/{idEvent}/review/update/{idReview}")
+    public ResponseEntity<Review> updateReviewAPI(@PathVariable long idEvent, @PathVariable long idReview, @RequestBody Review updatedReview) {
+        Event e = eventHolder.getEvent(idEvent);
+        Review r=e.getReview(idReview);
+        if (r != null) {
+            e.deleteReviewOfThisEvent(idReview);
+            updatedReview.setIdReview(idReview);
+            e.addUpdatedReviewToThisEvent(updatedReview);
+            return new ResponseEntity<>(updatedReview, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/event/{idEvent}/reviews")
+    public ResponseEntity<Collection> getAllReviewsOfAnEventAPI(@PathVariable long idEvent) {
+        Event e=eventHolder.getEvent(idEvent);
+        Collection<Review> reviews = e.getAllReviews();
+        if (reviews != null) {
+            return new ResponseEntity<>(reviews, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/event/{idEvent}/review/{idReview}")
+    public ResponseEntity<Review> getReviewAPI(@PathVariable long idEvent, @PathVariable long idReview){
+        Event e= eventHolder.getEvent(idEvent);
+        Review r= e.getReview(idReview);
+        if (r!=null){
+            return new ResponseEntity<>(r, HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }

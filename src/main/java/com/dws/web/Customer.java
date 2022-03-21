@@ -112,6 +112,7 @@ public class Customer {
                 "Direccion : " + this.address + "\n";
     }
 
+    //PLANNING
 
     public void addToPlanning(Event e){
         this.planning.put(e.getId(), e);

@@ -13,13 +13,7 @@ public class EventController {
     @Autowired
     EventHolder eventHolder;
 
-
-    @DeleteMapping("/events/delete")
-    public String deleteEvent(@RequestBody Event e) {
-        long id=eventHolder.getEvent(e);
-        eventHolder.deleteEvent(id);
-        return "deleted_event";
-    }
+    //EVENT (Revisar)
 
     @PostMapping("/events/new")
     public String newEvent(Model model, Event e) {
@@ -27,7 +21,6 @@ public class EventController {
         model.addAttribute("event",e);
         return "savedEvent";
     }
-
 
     @GetMapping("/events/new")
     public String newEvent2(Model model, @RequestParam String name,@RequestParam String category, @RequestParam String description, @RequestParam int price) {
@@ -37,10 +30,15 @@ public class EventController {
         return "savedEvent";
     }
 
-
+    @DeleteMapping("/events/delete")
+    public String deleteEvent(Event e) {
+        long id=eventHolder.getEvent(e);
+        eventHolder.deleteEvent(id);
+        return "deleted_event";
+    }
 
     @PutMapping("/events/update")
-    public String updateEvent(@RequestParam long id, @RequestBody Event updatedEvent) {
+    public String updateEvent(long id, Event updatedEvent) {
         Event event = eventHolder.getEvent(id);
         if (event != null) {
             updatedEvent.setIdEvent(id);
@@ -67,6 +65,57 @@ public class EventController {
     public String catalogue(Model model) {
         model.addAttribute("events", eventHolder.getEvents());
         return "events";
+    }
+
+    @GetMapping("/events/{idEvent}")
+    public String getAnEvent(Model model, @PathVariable long idEvent) {
+        model.addAttribute("event", eventHolder.getEvent(idEvent));
+        return "event";
+    }
+
+    //REVIEW
+
+    @PostMapping("/event/review/new")
+    public String newReview(Model model, int idEvent, Review r) {
+        Event e=eventHolder.getEvent(idEvent);
+        e.addReviewToThisEvent(r);
+        model.addAttribute("review",r);
+        return "savedReview";
+    }
+
+    @DeleteMapping("/event/review/delete")
+    public String deleteReview(long idEvent, long idReview) {
+        Event e=eventHolder.getEvent(idEvent);
+        e.deleteReviewOfThisEvent(idReview);
+        return "deleted_review";
+    }
+
+    @PutMapping("/event/review/update")
+    public String updateReview(long idEvent, long idOldReview, Review updatedReview) {
+        Event e = eventHolder.getEvent(idEvent);
+        Review r=e.getReview(idOldReview);
+        if (r != null) {
+            e.deleteReviewOfThisEvent(idOldReview);
+            updatedReview.setIdReview(idOldReview);
+            e.addUpdatedReviewToThisEvent(updatedReview);
+            return "updated_review";
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/event/reviews")
+    public String getAllReviewsOfAnEvent(Model model, long idEvent) {
+        Event e=eventHolder.getEvent(idEvent);
+        model.addAttribute("reviews", e.getAllReviews());
+        return "reviews";
+    }
+
+    @GetMapping("/event/{idEvent}/{idReview}")
+    public String getAReview(Model model, @PathVariable long idEvent, @PathVariable long idReview) {
+        Event e=eventHolder.getEvent(idEvent);
+        model.addAttribute("review", e.getReview(idReview));
+        return "review";
     }
 
 }
