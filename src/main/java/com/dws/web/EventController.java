@@ -34,7 +34,7 @@ public class EventController {
     public String deleteEvent(Event e) {
         long id=eventHolder.getEvent(e);
         eventHolder.deleteEvent(id);
-        return "deleted_event";
+        return "deletedEvent";
     }
 
     @PutMapping("/events/update")
@@ -89,7 +89,7 @@ public class EventController {
     public String deleteReview(long idEvent, long idReview) {
         Event e=eventHolder.getEvent(idEvent);
         e.deleteReviewOfThisEvent(idReview);
-        return "deleted_review";
+        return "deletedReview";
     }
 
     @PutMapping("/event/review/update")

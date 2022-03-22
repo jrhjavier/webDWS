@@ -7,9 +7,11 @@
 </head>
 
 <body>
-<div class="background-color-layer" style="background-image: url('images/fire.jpg')">
 
+<div
+        class="background-color-layer" style="background-image: url('images/fire.jpg')">
 </div>
+
 <header class="white-text-container section-container">
     <div class="text-center">
         <h1>OPINIONES</h1>
@@ -25,12 +27,7 @@
                 <div class="card-block">
                     <h2>Usuario: {{userName}}</h2>
                     <div class="row">
-                        <div class="col-md-4">
-                            <p><img src="/images/fire.jpg" class="img-responsive" alt=""></p>
-                        </div>
-                        <div class="col-md-8">
-                            <p>{{message}}</p><br>
-                        </div>
+                        <p>{{message}}</p><br>
                     </div>
                 </div>
             </div>
@@ -45,7 +42,7 @@
 </div>
 
 <div class="text-center">
-    <a class="nav-link" href="/">Volver al inicio</a>
+    <button class="btn btn-primary"onclick="location.href = '/events'">Volver a los planes</button>
 </div>
 
 </body>

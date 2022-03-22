@@ -29,7 +29,7 @@ public class CustomerController {
     public String deleteCustomer(String email) {
         Customer c=customerHolder.getCustomer(email);
         customerHolder.deleteCustomer(c.getIdClient());
-        return "deleted_customer";
+        return "deletedCustomer";
     }
 
     @PutMapping("/customer/update")
@@ -74,7 +74,7 @@ public class CustomerController {
     @DeleteMapping("/planning/delete")
     public String deleteEvent(@RequestBody Customer c, @RequestBody long idEvent) {
         customerHolder.deleteEventFromPlanning(c, idEvent);
-        return "deleted_event";
+        return "deletedEvent";
     }
 
     @PutMapping("/planning/update")
