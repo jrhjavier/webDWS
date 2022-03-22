@@ -2,17 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Evento</title>
+    <title>{{event.name}}</title>
     <link href="/css/styleSavedEvent.css" rel="stylesheet"></head>
 </head>
 
 <body>
-<div class="background-color-layer" style="background-image: url('images/fire.jpg')">
 
-</div>
 <header class="white-text-container section-container">
     <div class="text-center">
-        <h1>Evento</h1>
+        <h1>{{event.name}}</h1>
     </div>
 </header>
 
@@ -21,15 +19,14 @@
         <div class="col-xs-12">
             <div class="card">
                 <div class="card-block">
-                    <h2>{{name}}</h2>
-                    <h3>Categoría: {{category}}</h3>
+                    <h2>{{event.category}}</h2>
                     <div class="row">
                         <div class="col-md-4">
                             <p><img src="/images/fire.jpg" class="img-responsive" alt=""></p>
                         </div>
                         <div class="col-md-8">
-                            <p>{{description}}</p><br>
-                            <p>Precio: {{price}}</p><br>
+                            <p>{{event.description}}</p><br>
+                            <p>Precio: {{event.price}}</p><br>
                         </div>
                     </div>
                 </div>
