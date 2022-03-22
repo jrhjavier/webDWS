@@ -2,8 +2,10 @@
 <html lang="en">
 
 <head>
-  <title>Title page</title>
-
+    <title>Title page</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="/js/event.js"></script>
+    <meta charset="UTF-8">
 <link href="/css/styleNewEvent.css" rel="stylesheet"></head>
 
 <body class="">
@@ -12,29 +14,42 @@
         <div class="card">
           <div class="card-block">
             <h2>A&ntildeadir evento</h2>
-            <form action="/planning/new" class="reveal-content" method="post">
+            <form action="/planning/new" class="reveal-content" method="post" id="form">
 
                 <div class="form-group">
-                    <input type="text" class="form-control" name="name" placeholder="Nombre">
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Nombre" required>
+                    <p id="nameFail" class="error"></p>
+
                 </div>
 
                 <div class="form-group">
-                    <input type="text" class="form-control" name="description" placeholder="Descripcion">
+                    <input type="text" class="form-control" id="description" name="description" placeholder="Descripcion" required>
+                    <p id="descriptionFail" class="error"></p>
                 </div>
 
                 <div class="form-group">
-                    <input type="text" class="form-control" name="price" placeholder="Precio">
+                    <input type="text" class="form-control" id="price" name="price" placeholder="Precio" required>
+                    <p id="priceFail" class="error"></p>
+
+                </div>
+
+                <div class="form-group" id="category">
+                    <input type="radio"  name="category" value="Restaurante" > Restaurante &nbsp;&nbsp;
+                    <input type="radio"  name="category" value="Ocio" > Ocio &nbsp;&nbsp;
+                    <input type="radio"  name="category" value="Turismo" > Turismo
                 </div>
 
                 <div class="form-group">
-                    <input type="text" class="form-control" name="category" placeholder="Categoria">
+                    <input type="file"  name="image" value="Selecciona un imagen" required>
                 </div>
-              <div class="form-group">
+
+                <div class="form-group">
                 <button type="submit" class=" btn btn-primary">A&ntildeadir evento a mi planning</button>
               </div> 
             </form>
           </div>
         </div>
+
 
 
 </body>
