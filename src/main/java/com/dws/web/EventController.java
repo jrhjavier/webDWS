@@ -30,21 +30,22 @@ public class EventController {
         return "savedEvent";
     }
 
-    @DeleteMapping("/events/delete")
-    public String deleteEvent(Event e) {
-        long id=eventHolder.getEvent(e);
-        eventHolder.deleteEvent(id);
+    @GetMapping("/events/{idEvent}/delete")
+    public String deleteEvent(Model model, @PathVariable long idEvent) {
+        Event e=eventHolder.deleteEvent(idEvent);
+        model.addAttribute("event", e);
         return "deletedEvent";
     }
 
-    @PutMapping("/events/update")
-    public String updateEvent(Model model, long id, Event updatedEvent) {
-        Event event = eventHolder.getEvent(id);
+    @PostMapping("/events/{idEvent}/update")
+    public String updateEvent(Model model, @PathVariable long idEvent, Event updatedEvent) {
+        Event event = eventHolder.getEvent(idEvent);
         if (event != null) {
-            updatedEvent.setIdEvent(id);
-            eventHolder.addEvent(updatedEvent);
+            eventHolder.deleteEvent(idEvent);
+            updatedEvent.setIdEvent(idEvent);
+            eventHolder.addUpdatedEvent(updatedEvent);
             model.addAttribute("event",updatedEvent);
-            return "savedEvent";
+            return "updatedEvent";
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -74,11 +75,18 @@ public class EventController {
         return "events";
     }
 
-    @GetMapping("/events/{idEvent}")
+    @GetMapping("/events/{idEvent}") //Para crear review
     public String getAnEvent(Model model, @PathVariable long idEvent) {
         Event e = eventHolder.getEvent(idEvent);
         model.addAttribute("event", e);
         return "newReview";
+    }
+
+    @GetMapping("/events/{idEvent}/two") //Para crear review
+    public String getAnEvent2(Model model, @PathVariable long idEvent) {
+        Event e = eventHolder.getEvent(idEvent);
+        model.addAttribute("event", e);
+        return "updateEvent";
     }
 
     //REVIEW
@@ -91,14 +99,14 @@ public class EventController {
         return "reviews";
     }
 
-    @DeleteMapping("/event/review/delete")
-    public String deleteReview(long idEvent, long idReview) {
+    @GetMapping("/event/{idEvent}/review/{idReview}/delete")
+    public String deleteReview(@PathVariable long idEvent, @PathVariable long idReview) {
         Event e=eventHolder.getEvent(idEvent);
         e.deleteReviewOfThisEvent(idReview);
         return "deletedReview";
     }
 
-    @PutMapping("/event/review/update")
+    @GetMapping("/event/review/update")
     public String updateReview(Model model, long idEvent, long idOldReview, Review updatedReview) {
         Event e = eventHolder.getEvent(idEvent);
         Review r=e.getReview(idOldReview);
