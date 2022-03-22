@@ -84,10 +84,9 @@ public class CustomerController {
     }
 
     @PostMapping("/planning/new")
-    public String addEventToPlanningAPI(Model model,Event e){
-        //Customer c= new Customer(email);
-        Customer c= customerHolder.getCustomer("admin");
-        customerHolder.addEventToPlanning(c, e);
+    public String addEventToPlanningAPI(Model model, String email, Event e){
+        Customer c= customerHolder.getCustomer(email);
+        c.addToPlanning(e);
         model.addAttribute("event",e);
         return "savedEvent";
     }

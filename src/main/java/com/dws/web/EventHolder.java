@@ -3,10 +3,7 @@ package com.dws.web;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -93,21 +90,24 @@ public class EventHolder {
     }
 
     public Collection<Event> getEventsFilteredByCategory(String category){  //Events filtered by category
-        Collection<Event> l=null;
-        for (Event e : this.events.values()){
-            if (e.sameCategory(category)){
-                l.add(e);
+
+        Collection<Event> l = new HashSet<>();
+        for (Event entry : this.events.values()){
+            if (entry.sameCategory(category)){
+                l.add(entry);
             }
         }
         return l;
     }
 
     public Event getEventByName(String name){
-        for (Event e: this.events.values()){
-            if (e.getName().equalsIgnoreCase(name)){
-                return e;
+
+        for (Map.Entry<Long, Event> entry : this.events.entrySet()){
+            if (entry.getValue().getName().equalsIgnoreCase(name)){
+                return entry.getValue();
             }
         }
+
         return null;
     }
 

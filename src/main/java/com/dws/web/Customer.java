@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 
 import java.util.Collection;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
@@ -14,7 +15,7 @@ public class Customer {
     interface Basico {}
 
     @JsonView(Basico.class)
-    private long idClient;
+    private long idCustomer;
 
     @JsonView(Basico.class)
     private String name;
@@ -53,7 +54,7 @@ public class Customer {
     }
 
     public void setIdClient(long idClient) {
-        this.idClient = idClient;
+        this.idCustomer = idClient;
     }
 
     public void setName(String name) {
@@ -82,7 +83,7 @@ public class Customer {
 
 
     public long getIdClient() {
-        return this.idClient;
+        return this.idCustomer;
     }
 
     public String getName() {
@@ -112,7 +113,7 @@ public class Customer {
     @Override
     public String toString() {
         return "Datos del cliente :" + "\n" +
-                "idCliente = " + this.idClient + "\n" +
+                "idCliente = " + this.idCustomer + "\n" +
                 "Nombre : " + this.name + "\n" +
                 "Apellido : " + this.surname + "\n" +
                 "Email : " + this.email + "\n" +

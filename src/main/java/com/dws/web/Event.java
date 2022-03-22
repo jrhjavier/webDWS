@@ -127,7 +127,7 @@ public class Event {
     }
 
     public boolean sameCategory(String category) {
-        return Objects.equals(this.category, category);
+        return this.category.equalsIgnoreCase(category);
     }
 
     @Override
