@@ -50,16 +50,22 @@ public class EventController {
         }
     }
 
-    @GetMapping("/events/all/{category}")
-    public String catalogueFilteredByCategory(Model model, @PathVariable String category) {
-        if (category.equalsIgnoreCase("ocio")||category.equalsIgnoreCase("restauracion")||category.equalsIgnoreCase("turismo")) {
-            model.addAttribute("events", eventHolder.getEventsFilteredByCategory(category));
-            return "events";
-        }
-        else{
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
+    @GetMapping("/events/all/restaurants")
+    public String getRestaurants(Model model) {
+        model.addAttribute("events", eventHolder.getEventsFilteredByCategory("restaurante"));
+        return "events";
+    }
 
+    @GetMapping("/events/all/leisure")
+    public String getLeisure(Model model) {
+        model.addAttribute("events", eventHolder.getEventsFilteredByCategory("ocio"));
+        return "events";
+    }
+
+    @GetMapping("/events/all/tourism")
+    public String getTourism(Model model) {
+        model.addAttribute("events", eventHolder.getEventsFilteredByCategory("turismo"));
+        return "events";
     }
 
     @GetMapping("/events")
