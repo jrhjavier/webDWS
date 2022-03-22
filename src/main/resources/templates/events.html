@@ -29,9 +29,9 @@
                                 <p>Precio: {{price}}</p><br>
                             </div>
                             <button class="btn btn-primary"onclick="location.href = '/planning/new/{{name}}'">Agregar a tu planning</button>
-                            <button class="btn btn-primary"onclick="location.href = '/events/{{idEvent}}'">Más información</button>
-                            <button type="submit" class=" btn btn-primary"><a href="/event/{idEvent}/reviews">Reviews</a></button>
-                            <button class="btn btn-primary"onclick="location.href = '/newReview.html?idEvent={{idEvent}}'">A&ntildeadir review</button>
+                            <button class="btn btn-primary"onclick="location.href = '/events/{{idEvent}}'">A&ntildeadir review</button>
+                            <button type="submit" class=" btn btn-primary"><a href="/event/{{idEvent}}/reviews">Reviews</a></button>
+
                         </div>
                     </div>
                 </div>
@@ -40,6 +40,8 @@
     </div>
 
     {{/events}}
+
+
 
 </main>
 

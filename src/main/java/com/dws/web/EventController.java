@@ -72,26 +72,18 @@ public class EventController {
     public String getAnEvent(Model model, @PathVariable long idEvent) {
         Event e = eventHolder.getEvent(idEvent);
         model.addAttribute("event", e);
-        return "event";
+        return "newReview";
     }
 
     //REVIEW
 
-    @PostMapping("/event/review/new")
-    public String newReview(Model model, @RequestParam long idEvent, Review r) {
-        Event e=eventHolder.getEvent(idEvent);
-        e.addReviewToThisEvent(r);
-        model.addAttribute("review",r);
-        return "savedReview";
-    }
-
-    /*@PostMapping("/event/{idEvent}/review/new")
+    @PostMapping("/event/{idEvent}/review/new")
     public String newReview(Model model, @PathVariable long idEvent, Review r) {
         Event e=eventHolder.getEvent(idEvent);
         e.addReviewToThisEvent(r);
-        model.addAttribute("review",r);
-        return "savedReview";
-    }*/
+        model.addAttribute("reviews", e.getAllReviews());
+        return "reviews";
+    }
 
     @DeleteMapping("/event/review/delete")
     public String deleteReview(long idEvent, long idReview) {
@@ -115,8 +107,8 @@ public class EventController {
         }
     }
 
-    @GetMapping("/event/reviews")
-    public String getAllReviewsOfAnEvent(Model model, long idEvent) {
+    @GetMapping("/event/{idEvent}/reviews")
+    public String getAllReviewsOfAnEvent(Model model,@PathVariable long idEvent) {
         Event e=eventHolder.getEvent(idEvent);
         model.addAttribute("reviews", e.getAllReviews());
         return "reviews";

@@ -20,8 +20,7 @@ public class Review {
     public Review(){
     }
 
-    public Review(long idReview, String userName, String message){
-        this.idReview=idReview;
+    public Review(String userName, String message){
         this.userName=userName;
         this.message=message;
     }

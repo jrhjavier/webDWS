@@ -60,7 +60,7 @@ public class CustomerController {
         return "customer";
     }
 
-    //PLANNING (Reviar)
+    //PLANNING (Revisar)
 
     @GetMapping("/planning/new/{name}")
     public String newEvent2(Model model, @PathVariable String name) {
@@ -83,7 +83,7 @@ public class CustomerController {
         return "savedEvent";
     }
 
-    @PostMapping("/planning/new")  //Add an event to the planning
+    @PostMapping("/planning/new")
     public String addEventToPlanningAPI(Model model,Event e){
         //Customer c= new Customer(email);
         Customer c= customerHolder.getCustomer("admin");
