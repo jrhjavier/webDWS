@@ -77,7 +77,7 @@ public class EventController {
     //REVIEW
 
     @PostMapping("/event/review/new")
-    public String newReview(Model model, int idEvent, Review r) {
+    public String newReview(Model model, long idEvent, Review r) {
         Event e=eventHolder.getEvent(idEvent);
         e.addReviewToThisEvent(r);
         model.addAttribute("review",r);
@@ -106,8 +106,8 @@ public class EventController {
         }
     }
 
-    @GetMapping("/event/reviews")
-    public String getAllReviewsOfAnEvent(Model model, long idEvent) {
+    @GetMapping("/event/{idEvent}/reviews")
+    public String getAllReviewsOfAnEvent(Model model, @PathVariable long idEvent) {
         Event e=eventHolder.getEvent(idEvent);
         model.addAttribute("reviews", e.getAllReviews());
         return "reviews";
