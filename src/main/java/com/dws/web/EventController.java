@@ -50,7 +50,7 @@ public class EventController {
         }
     }
 
-    @GetMapping("/events/{category}")
+    @GetMapping("/events/all/{category}")
     public String catalogueFilteredByCategory(Model model, @PathVariable String category) {
         if (category.equalsIgnoreCase("ocio")||category.equalsIgnoreCase("restauracion")||category.equalsIgnoreCase("turismo")) {
             model.addAttribute("events", eventHolder.getEventsFilteredByCategory(category));
@@ -70,19 +70,28 @@ public class EventController {
 
     @GetMapping("/events/{idEvent}")
     public String getAnEvent(Model model, @PathVariable long idEvent) {
-        model.addAttribute("event", eventHolder.getEvent(idEvent));
+        Event e = eventHolder.getEvent(idEvent);
+        model.addAttribute("event", e);
         return "event";
     }
 
     //REVIEW
 
     @PostMapping("/event/review/new")
-    public String newReview(Model model, long idEvent, Review r) {
+    public String newReview(Model model, @RequestParam long idEvent, Review r) {
         Event e=eventHolder.getEvent(idEvent);
         e.addReviewToThisEvent(r);
         model.addAttribute("review",r);
         return "savedReview";
     }
+
+    /*@PostMapping("/event/{idEvent}/review/new")
+    public String newReview(Model model, @PathVariable long idEvent, Review r) {
+        Event e=eventHolder.getEvent(idEvent);
+        e.addReviewToThisEvent(r);
+        model.addAttribute("review",r);
+        return "savedReview";
+    }*/
 
     @DeleteMapping("/event/review/delete")
     public String deleteReview(long idEvent, long idReview) {
@@ -106,8 +115,8 @@ public class EventController {
         }
     }
 
-    @GetMapping("/event/{idEvent}/reviews")
-    public String getAllReviewsOfAnEvent(Model model, @PathVariable long idEvent) {
+    @GetMapping("/event/reviews")
+    public String getAllReviewsOfAnEvent(Model model, long idEvent) {
         Event e=eventHolder.getEvent(idEvent);
         model.addAttribute("reviews", e.getAllReviews());
         return "reviews";
