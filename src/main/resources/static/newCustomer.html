@@ -11,35 +11,41 @@
 
 <div class="card">
     <div class="card-block">
-        <h2>Crear Usuario</h2>
+        <h2>Registrese...</h2>
         <form action="/customer/new" class="reveal-content" method="post">
 
             <div class="form-group">
                 <input type="text" class="form-control" name="name" placeholder="Nombre">
+                <p id="nameFail" class="error"></p>
             </div>
 
             <div class="form-group">
                 <input type="text" class="form-control" name="surname" placeholder="Apellido">
+                <p id="surnameFail" class="error"></p>
             </div>
 
             <div class="form-group">
                 <input type="email" class="form-control" name="email" placeholder="Email">
+                <p id="emailFail" class="error"></p>
             </div>
 
             <div class="form-group">
-                <input type="text" class="form-control" name="phoneNumber" placeholder="Numero de telefono">
+                <input type="text" class="form-control" name="phone" placeholder="Numero de telefono">
+                <p id="phoneFail" class="error"></p>
             </div>
 
             <div class="form-group">
-                <input type="password" class="form-control" name="passwd" placeholder="Password">
+                <input type="password" class="form-control" name="password" placeholder="Password">
+                <p id="passwordFail" class="error"></p>
             </div>
 
             <div class="form-group">
                 <input type="text" class="form-control" name="address" placeholder="Direccion">
+                <p id="addressFail" class="error"></p>
             </div>
 
             <div class="form-group">
-                <button type="submit"><a>Crear usuario</a></button>
+                <button type="submit"><a>Registrarse</a></button>
             </div>
         </form>
     </div>

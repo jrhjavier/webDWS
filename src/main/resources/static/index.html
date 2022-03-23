@@ -177,17 +177,23 @@
     <h1 class="text-center">Inicia sesi&oacuten para m&aacutes informaci&oacuten</h1>
     <p class="text-center">Podr&aacutes crear hasta tu propio planning</p>
     <div class="container">
-        <form action="/action_page.php">
+        <form action="/">
             <div class="form-group">
-                <input type="email" class="form-control" id="email">
+                <input type="email" class="form-control" id="email" name="email" placeholder="Email">
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" id="pwd">
+                <input type="password" class="form-control" id="pwd" placeholder="Contraseña">
             </div>
         </form>
         <div class="row">
             <div class="col-12 text-center">
-                <button type="button"><a href="#">Iniciar sesi&oacuten</a></button>
+                <button type="button"><a href="/">Iniciar sesi&oacuten</a></button>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-12 text-center">
+                <button type="button"><a href="/newCustomer.html">Registrarse</a></button>
             </div>
         </div>
     </div>

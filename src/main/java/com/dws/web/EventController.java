@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Collection;
+
 @Controller
 public class EventController {
 
@@ -41,8 +43,14 @@ public class EventController {
     public String updateEvent(Model model, @PathVariable long idEvent, Event updatedEvent) {
         Event event = eventHolder.getEvent(idEvent);
         if (event != null) {
+            Collection<Review> allReviews= event.getAllReviews();
             eventHolder.deleteEvent(idEvent);
             updatedEvent.setIdEvent(idEvent);
+
+            for(Review r : allReviews ){
+                updatedEvent.addReviewToThisEvent(r);
+            }
+
             eventHolder.addUpdatedEvent(updatedEvent);
             model.addAttribute("event",updatedEvent);
             return "updatedEvent";
