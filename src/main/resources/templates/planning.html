@@ -32,6 +32,11 @@
             <div class="col-md-8">
               <p>{{description}}</p><br>
               <p>Precio: {{price}}</p><br>
+
+              <button class="btn btn-primary" onclick="location.href = '/events/{{idEvent}}'">A&ntildeadir review</button>
+              <button class="btn btn-primary" onclick="location.href = '/event/{{idEvent}}/reviews'">Reviews</button>
+              <button class="btn btn-primary" onclick="location.href = '/events/{{idEvent}}/delete'">Borrar evento</button>
+              <button class="btn btn-primary" onclick="location.href = '/events/{{idEvent}}/two'">Modificar evento</button>
             </div>
           </div>
         </div>
