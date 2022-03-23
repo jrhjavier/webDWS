@@ -7,7 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-
 @Controller
 public class CustomerController {
 
@@ -17,15 +16,51 @@ public class CustomerController {
     @Autowired
     EventHolder eventHolder;
 
+    //CUSTOMER
 
-    @PostMapping("/planning/new")  //Add an event to the planning
-    public String addEventToPlanningAPI(Model model,Event e){
-        //Customer c= new Customer(email);
-        Customer c= customerHolder.getCustomer("admin");
-        customerHolder.addEventToPlanning(c, e);
-        model.addAttribute("event",e);
-        return "savedEvent";
+    @PostMapping("/customer/new")
+    public String newCustomer(Model model, Customer c) {
+        customerHolder.addClient(c);
+        model.addAttribute("customer",c);
+        return "savedCustomer";
     }
+
+    @DeleteMapping("/customer/delete")
+    public String deleteCustomer(String email) {
+        Customer c=customerHolder.getCustomer(email);
+        customerHolder.deleteCustomer(c.getIdClient());
+        return "deletedCustomer";
+    }
+
+    @PutMapping("/customer/update")
+    public String updateCustomer(Model model, String email, Customer updatedCustomer) {
+        Customer c=customerHolder.getCustomer(email);
+        if (c != null) {
+            long id=c.getIdClient();
+            customerHolder.deleteCustomer(id);
+            updatedCustomer.setIdClient(id);
+            customerHolder.addUpdatedClient(updatedCustomer);
+            model.addAttribute("customer", c);
+            return "savedCustomer";
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/customers")
+    public String getAllCustomers(Model model) {
+        model.addAttribute("customers", customerHolder.getAllCustomers());
+        return "customers";
+    }
+
+    @GetMapping("/customer/{email}")
+    public String getACustomer(Model model, @PathVariable String email) {
+        Customer c=customerHolder.getCustomer(email);
+        model.addAttribute("customer", c);
+        return "customer";
+    }
+
+    //PLANNING (Revisar)
 
     @GetMapping("/planning/new/{name}")
     public String newEvent2(Model model, @PathVariable String name) {
@@ -36,23 +71,24 @@ public class CustomerController {
         return "savedEvent";
     }
 
-    @GetMapping("/servidor/{num}")
-    public String enlace(Model model, @PathVariable int num){
-        model.addAttribute("numV",num);
-        model.addAttribute("palabra");
-        return "servidor_templates";
-    }
-
     @DeleteMapping("/planning/delete")
     public String deleteEvent(@RequestBody Customer c, @RequestBody long idEvent) {
         customerHolder.deleteEventFromPlanning(c, idEvent);
-        return "deleted_event";
+        return "deletedEvent";
     }
 
     @PutMapping("/planning/update")
     public String updateEvent(@RequestBody Customer c, @RequestParam long idOldEvent, @RequestBody Event updatedEvent) {
         customerHolder.updateAnEvent(c, idOldEvent, updatedEvent);
-        return "saved_event";
+        return "savedEvent";
+    }
+
+    @PostMapping("/planning/new")
+    public String addEventToPlanningAPI(Model model, String email, Event e){
+        Customer c= customerHolder.getCustomer(email);
+        c.addToPlanning(e);
+        model.addAttribute("event",e);
+        return "savedEvent";
     }
 
     @GetMapping("/planning")

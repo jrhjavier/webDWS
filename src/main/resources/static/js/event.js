@@ -22,6 +22,7 @@ function validarProducto(e){
 
         name: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
         description: /^[a-zA-ZÀ-ÿ0-9\s]{1,10}$/, // Letras y espacios y números, pueden llevar acentos.
+        email: /^[a-zA-ZÀ-ÿ0-9\s]{1,10}$/, // Letras y espacios y números, pueden llevar acentos.
         price: /^\d*(\.\d{1})?\d{0,1}$/, //Valida número decimal con dos dígitos de precisión.
 
     }
@@ -53,6 +54,19 @@ function validarProducto(e){
 
             }
         break;
+         case "email":
+                    //Testeamos si se cumple la condición del nombre
+                    if(expresiones.email.test(e.target.value)){
+
+                        document.getElementById("emailFail").innerHTML="";
+
+
+                    }else{
+
+                        document.getElementById("emailFail").innerHTML="El nombre no es valido, posee caracteresno permitidos (numeros, caracteres especiales...)";
+
+                    }
+                break;
         case "price":
             if(expresiones.price.test(e.target.value)){
 

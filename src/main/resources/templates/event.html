@@ -2,39 +2,46 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Evento añadido</title>
+    <title>{{event.name}}</title>
     <link href="/css/styleSavedEvent.css" rel="stylesheet"></head>
 </head>
 
 <body>
-<div class="text-center">
-    <h2>El evento ha sido guardado correctamente: </h2>
-</div>
 
+<header class="white-text-container section-container">
+    <div class="text-center">
+        <h1>{{event.name}}</h1>
+    </div>
+</header>
 
 <div class="container">
     <div class="row">
         <div class="col-xs-12">
             <div class="card">
                 <div class="card-block">
-                    <h2>{{event.name}}</h2>
-                    <h3>Categoría: {{event.category}}</h3>
+                    <h2>{{event.category}}</h2>
                     <div class="row">
                         <div class="col-md-4">
-                            <p><img src="/images/savedEvents.jpg" class="img-responsive" alt=""></p>
+                            <p><img src="/images/fire.jpg" class="img-responsive" alt=""></p>
                         </div>
                         <div class="col-md-8">
                             <p>{{event.description}}</p><br>
                             <p>Precio: {{event.price}}</p><br>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <button class="btn btn-primary"onclick="location.href = '/'">Volver al inicio</button>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
+
+<div style="text-align: center">
+    <img src="images/oso.jpg" class="img-responsive" alt="" style="margin-left: 750px">
+</div>
+
+<div class="text-center">
+    <a class="nav-link" href="/">Volver al inicio</a>
 </div>
 
 </body>
