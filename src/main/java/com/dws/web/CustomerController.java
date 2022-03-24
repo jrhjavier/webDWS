@@ -66,9 +66,13 @@ public class CustomerController {
     public String newEvent2(Model model, @PathVariable String name) {
         Customer c= customerHolder.getCustomer("admin");
         Event e = eventHolder.getEventByName(name);
-        customerHolder.addEventToPlanning(c,e);
-        model.addAttribute("event",e);
-        return "addedEvent";
+        if (c.addToPlanning(e)){
+            model.addAttribute("event",e);
+            return "addedEvent";
+        }
+        else{
+            return "duplicatedEvent";
+        }
     }
 
     @GetMapping("/planning/delete/{idEvent}")
@@ -92,9 +96,13 @@ public class CustomerController {
     @PostMapping("/planning/new")
     public String addEventToPlanningAPI(Model model, String email, Event e){
         Customer c= customerHolder.getCustomer(email);
-        c.addToPlanning(e);
-        model.addAttribute("event",e);
-        return "addedEvent";
+        if (c.addToPlanning(e)){
+            model.addAttribute("event",e);
+            return "addedEvent";
+        }
+        else{
+            return "duplicatedEvent";
+        }
     }
 
     @GetMapping("/planning")

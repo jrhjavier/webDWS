@@ -124,8 +124,14 @@ public class Customer {
 
     //PLANNING
 
-    public void addToPlanning(Event e){
-        this.planning.put(e.getId(), e);
+    public boolean addToPlanning(Event e){
+        if (!this.planning.containsKey(e.getId())){
+            this.planning.put(e.getId(), e);
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     public Collection<Event> getPlanning(){
