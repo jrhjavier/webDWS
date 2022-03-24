@@ -22,21 +22,18 @@
   <div class="row">
     <div class="col-xs-12">
       <div class="card">
-        <div class="card-block">
-          <h2>{{name}}</h2>
+        <div class="text-center" style="margin-top: 20px">
+          <h2><u>{{name}}</u></h2>
           <h3>Categoría: {{category}}</h3>
           <div class="row">
-            <div class="col-md-4">
-              <p><img src="/images/fire.jpg" class="img-responsive" alt=""></p>
-            </div>
-            <div class="col-md-8">
+            <div class="text-center" style="margin-left: 20px; margin-right: 20px; margin-bottom: 20px">
               <p>{{description}}</p><br>
-              <p>Precio: {{price}}</p><br>
-
+              <h4>Precio: {{price}}</h4><br>
+              <button class="btn btn-primary" onclick="location.href = '/planning/new/{{name}}'">Agregar a tu planning</button>
               <button class="btn btn-primary" onclick="location.href = '/events/{{idEvent}}'">A&ntildeadir review</button>
               <button class="btn btn-primary" onclick="location.href = '/event/{{idEvent}}/reviews'">Reviews</button>
               <button class="btn btn-primary" onclick="location.href = '/events/{{idEvent}}/delete'">Borrar evento</button>
-              <button class="btn btn-primary" onclick="location.href = '/events/{{idEvent}}/two'">Modificar evento</button>
+              <button class="btn btn-primary" onclick="location.href = '/events/{{idEvent}}/modify'">Modificar evento</button>
             </div>
           </div>
         </div>

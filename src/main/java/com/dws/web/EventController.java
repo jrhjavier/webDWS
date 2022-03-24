@@ -21,7 +21,7 @@ public class EventController {
     public String newEvent(Model model, Event e) {
         eventHolder.addEvent(e);
         model.addAttribute("event",e);
-        return "savedEvent";
+        return "addedEvent";
     }
 
     @GetMapping("/events/new")
@@ -29,7 +29,7 @@ public class EventController {
         Event e= new Event(name,category,description,price);
         eventHolder.addEvent(e);
         model.addAttribute("event",e);
-        return "savedEvent";
+        return "addedEvent";
     }
 
     @GetMapping("/events/{idEvent}/delete")
@@ -90,7 +90,7 @@ public class EventController {
         return "newReview";
     }
 
-    @GetMapping("/events/{idEvent}/two") //Para crear review
+    @GetMapping("/events/{idEvent}/modify") //Para modificar evento
     public String getAnEvent2(Model model, @PathVariable long idEvent) {
         Event e = eventHolder.getEvent(idEvent);
         model.addAttribute("event", e);

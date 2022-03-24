@@ -68,7 +68,7 @@ public class CustomerController {
         Event e = eventHolder.getEventByName(name);
         customerHolder.addEventToPlanning(c,e);
         model.addAttribute("event",e);
-        return "savedEvent";
+        return "addedEvent";
     }
 
     @DeleteMapping("/planning/delete")
@@ -80,7 +80,7 @@ public class CustomerController {
     @PutMapping("/planning/update")
     public String updateEvent(@RequestBody Customer c, @RequestParam long idOldEvent, @RequestBody Event updatedEvent) {
         customerHolder.updateAnEvent(c, idOldEvent, updatedEvent);
-        return "savedEvent";
+        return "addedEvent";
     }
 
     @PostMapping("/planning/new")
@@ -88,7 +88,7 @@ public class CustomerController {
         Customer c= customerHolder.getCustomer(email);
         c.addToPlanning(e);
         model.addAttribute("event",e);
-        return "savedEvent";
+        return "addedEvent";
     }
 
     @GetMapping("/planning")
