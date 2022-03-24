@@ -3,6 +3,7 @@ package com.dws.web;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
@@ -106,7 +107,7 @@ public class CustomerHolder {
     }
 
     public Collection<Event> getEventsOfACategory(Customer c, String category){
-        Collection<Event> l = null;
+        Collection<Event> l = new HashSet<>();
         for (Event e : getAllEventsOfACustomer(c)){
             if (e.sameCategory(category)){
                 l.add(e);

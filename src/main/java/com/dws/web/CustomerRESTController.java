@@ -3,7 +3,9 @@ package com.dws.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collection;
 
@@ -13,6 +15,9 @@ public class CustomerRESTController {
 
     @Autowired
     CustomerHolder customerHolder;
+
+    @Autowired
+    EventHolder eventHolder;
 
     //CUSTOMER
 
@@ -69,17 +74,18 @@ public class CustomerRESTController {
 
     //PLANNING (Revisar)
 
-    @PostMapping("/events/new/{email}")
-    public ResponseEntity<Event> newEventAPI(@PathVariable String email, @RequestBody Event event) {
+    @PostMapping("/events/{idEvent}/new/{email}")
+    public ResponseEntity<Event> newEventAPI(@PathVariable long idEvent, @PathVariable String email) {
         Customer c= customerHolder.getCustomer(email);
-        customerHolder.addEventToPlanning(c, event);
-        return new ResponseEntity<>(event, HttpStatus.CREATED);
+        Event e=eventHolder.getEvent(idEvent);
+        c.addToPlanning(e);
+        return new ResponseEntity<>(e, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/planning/{email}/{id}")
-    public ResponseEntity<Event> deleteEventAPI(@PathVariable String email, @PathVariable long id) {
+    @DeleteMapping("/planning/{email}/delete/{idEvent}")
+    public ResponseEntity<Event> deleteEventAPI(@PathVariable String email, @PathVariable long idEvent) {
         Customer c= customerHolder.getCustomer(email);
-        Event event = customerHolder.deleteEventFromPlanning(c, id);
+        Event event = customerHolder.deleteEventFromPlanning(c, idEvent);
         if (event != null) {
             return new ResponseEntity<>(event, HttpStatus.OK);
         } else {
@@ -87,13 +93,13 @@ public class CustomerRESTController {
         }
     }
 
-    @PutMapping("/planning/{email}/{id}")
-    public ResponseEntity<Event> updateEventAPI(@PathVariable String email, @PathVariable long id, @RequestBody Event updatedEvent) {
+    @PutMapping("/planning/{email}/{idEvent}")
+    public ResponseEntity<Event> updateEventAPI(@PathVariable String email, @PathVariable long idEvent, @RequestBody Event updatedEvent) {
         Customer c= customerHolder.getCustomer(email);
-        Event event = customerHolder.getAnEvent(c, id);
+        Event event = c.getAnEvent(idEvent);
         if (event != null) {
-            updatedEvent.setIdEvent(id);
-            customerHolder.addEventToPlanning(c, updatedEvent);
+            updatedEvent.setIdEvent(idEvent);
+            c.addToPlanning(event);
             return new ResponseEntity<>(updatedEvent, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -111,10 +117,10 @@ public class CustomerRESTController {
         }
     }
 
-    @GetMapping("/events/{email}/{id}")  //Products by id
-    public ResponseEntity<Event> getEventAPI(@PathVariable String email, @PathVariable long id){
+    @GetMapping("/events/{email}/{idEvent}")  //Products by id
+    public ResponseEntity<Event> getEventAPI(@PathVariable String email, @PathVariable long idEvent){
         Customer c= customerHolder.getCustomer(email);
-        Event e= customerHolder.getAnEvent(c, id);
+        Event e= customerHolder.getAnEvent(c, idEvent);
 
         if (e!=null){
             return new ResponseEntity<>(e, HttpStatus.OK);
@@ -123,5 +129,16 @@ public class CustomerRESTController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
+    }
+
+    @GetMapping("/planning/{email}/category/{category}")
+    public ResponseEntity<Collection> planningFilteredByCategoryAPI(@PathVariable String email, @PathVariable String category) {
+        if (category.equalsIgnoreCase("ocio")||category.equalsIgnoreCase("restauracion")||category.equalsIgnoreCase("turismo")) {
+            Customer c=customerHolder.getCustomer(email);
+            return new ResponseEntity<>(customerHolder.getEventsOfACategory(c, category), HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }

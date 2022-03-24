@@ -126,6 +126,7 @@ public class Customer {
 
     public boolean addToPlanning(Event e){
         if (!this.planning.containsKey(e.getId())){
+
             this.planning.put(e.getId(), e);
             return true;
         }

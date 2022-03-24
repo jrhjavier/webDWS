@@ -1,9 +1,13 @@
 package com.dws.web;
 
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
 import java.util.Collection;
 
 
@@ -16,15 +20,15 @@ public class EventRESTController {
 
     //EVENT (Revisar)
 
-    @PostMapping("/events")
+    @PostMapping("/events/new")
     public ResponseEntity<Event> newEventAPI(@RequestBody Event event) {
         eventHolder.addEvent(event);
         return new ResponseEntity<>(event, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/events/{id}")
-    public ResponseEntity<Event> deleteEventAPI(@PathVariable long id) {
-        Event event = eventHolder.deleteEvent(id);
+    @DeleteMapping("/events/{idEvent}/delete")
+    public ResponseEntity<Event> deleteEventAPI(@PathVariable long idEvent) {
+        Event event = eventHolder.deleteEvent(idEvent);
         if (event != null) {
             return new ResponseEntity<>(event, HttpStatus.OK);
         } else {
@@ -32,12 +36,12 @@ public class EventRESTController {
         }
     }
 
-    @PutMapping("/events/{id}")
-    public ResponseEntity<Event> updateEventAPI(@PathVariable long id, @RequestBody Event updatedEvent) {
-        Event event = eventHolder.getEvent(id);
+    @PutMapping("/events/{idEvent}/update")
+    public ResponseEntity<Event> updateEventAPI(@PathVariable long idEvent, @RequestBody Event updatedEvent) {
+        Event event = eventHolder.getEvent(idEvent);
         if (event != null) {
-            updatedEvent.setIdEvent(id);
-            eventHolder.addEvent(updatedEvent);
+            updatedEvent.setIdEvent(idEvent);
+            eventHolder.addUpdatedEvent(updatedEvent);
             return new ResponseEntity<>(updatedEvent, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -54,10 +58,10 @@ public class EventRESTController {
         }
     }
 
-    @GetMapping("/events/{id}")  //Products by id
-    public ResponseEntity<Event> getEventAPI(@PathVariable long id){
+    @GetMapping("/events/{idEvent}")  //Products by id
+    public ResponseEntity<Event> getEventAPI(@PathVariable long idEvent){
 
-        Event e= eventHolder.getEvent(id);
+        Event e= eventHolder.getEvent(idEvent);
 
         if (e!=null){
             return new ResponseEntity<>(e, HttpStatus.OK);
@@ -66,6 +70,16 @@ public class EventRESTController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
+    }
+
+    @GetMapping("/events/category/{category}")
+    public ResponseEntity<Collection> eventsFilteredByCategoryAPI(@PathVariable String category) {
+        if (category.equalsIgnoreCase("ocio")||category.equalsIgnoreCase("restauracion")||category.equalsIgnoreCase("turismo")) {
+            return new ResponseEntity<>(eventHolder.getEventsFilteredByCategory(category), HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     //REVIEW
