@@ -17,8 +17,18 @@ public class EventController {
 
     //EVENT (Revisar)
 
+    /*
     @PostMapping("/events/new")
     public String newEvent(Model model, Event e) {
+
+        eventHolder.addEvent(e);
+        model.addAttribute("event",e);
+        return "addedEvent";
+    }
+    */
+    @PostMapping("/events/new")
+    public String newEvent(Model model, Event e) {
+
         eventHolder.addEvent(e);
         model.addAttribute("event",e);
         return "addedEvent";

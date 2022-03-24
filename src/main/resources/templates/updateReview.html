@@ -4,7 +4,11 @@
 <head>
     <title>Modificar review</title>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="/js/modifyReview.js"></script>
     <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
+
+    <meta charset="UTF-8">
 
     <link href="/css/styleNewEvent.css" rel="stylesheet">
 </head>
@@ -14,10 +18,10 @@
 <div class="card">
     <div class="card-block">
         <h2>Modificar review</h2>
-        <form action="/event/{{idEvent}}/review/{{idReview}}/update" class="reveal-content" method="post">
+        <form action="/event/{{idEvent}}/review/{{idReview}}/update" class="reveal-content" method="post" id="form">
 
             <div class="form-group">
-                <input type="email" class="form-control" id="userName" name="userName" placeholder="Correo usuario" required>
+                <input type="email" class="form-control" id="userName" name="userName" placeholder="Nuevo correo de usuario" required>
                 <p id="userNameFail" class="error"></p>
             </div>
 
@@ -28,7 +32,7 @@
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Modificar review"/>
+                <button type="submit" class="btn btn-primary" id="btnModifyReview"><a>Modificar Review</a></button>
             </div>
         </form>
     </div>

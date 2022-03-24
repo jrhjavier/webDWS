@@ -2,7 +2,7 @@ $(document).ready(function(){
 
     const form = document.getElementById("form");
     const inputsForm = document.querySelectorAll("#form input");
-    document.getElementById("btnAddReview").disabled=true;
+    document.getElementById("btnModifyReview").disabled=true;
 
 
     //add to inputs
@@ -31,11 +31,11 @@ function addEvent(e){
             if(!expresions.userName.test(e.target.value)){
 
             document.getElementById("userNameFail").innerHTML="Campo incorrecto. Formato válido: xxxxxxx@domain.xxx";
-            document.getElementById("btnAddReview").disabled=true;
+            document.getElementById("btnModifyReview").disabled=true;
 
             }else{
             document.getElementById("userNameFail").innerHTML="";
-            document.getElementById("btnAddReview").disabled=false;
+            document.getElementById("btnModifyReview").disabled=false;
 
             }
         break;

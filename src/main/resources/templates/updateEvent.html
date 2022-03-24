@@ -5,7 +5,7 @@
     <title>Modificar evento</title>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script src="/js/event.js"></script>
+    <script src="/js/modifyEvent.js"></script>
     <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
 
     <meta charset="UTF-8">
@@ -21,18 +21,17 @@
         <form action="/events/{{idEvent}}/update" class="reveal-content" method="post" id="form">
 
             <div class="form-group">
-                <input type="text" class="form-control" id="name" name="name" placeholder="Nombre" required>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Nombre nuevo" required>
                 <p id="nameFail" class="error"></p>
             </div>
 
             <div class="form-group">
                 <textarea name="description" id="description"></textarea>
                 <script>CKEDITOR.replace('description');</script>
-                <p id="descriptionFail" class="error"></p>
             </div>
 
             <div class="form-group">
-                <input type="text" class="form-control" id="price" name="price" placeholder="Precio" required>
+                <input type="text" class="form-control" id="price" name="price" placeholder="Precio nuevo" required>
                 <p id="priceFail" class="error"></p>
 
             </div>
@@ -44,7 +43,7 @@
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Modificar evento"/>
+                <button type="submit" class="btn btn-primary" id="btnModifyEvent"><a>Modificar Evento</a></button>
                 <button class="btn-link" onclick="location.href = '/events'"> Cancelar</button>
             </div>
         </form>

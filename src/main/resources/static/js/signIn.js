@@ -1,12 +1,8 @@
-//Load before HTML
-var nameP = false;
-var descriptionP = false;
-var priceP = false;
-
 $(document).ready(function(){
 
     const form = document.getElementById("form");
     const inputsForm = document.querySelectorAll("#form input");
+    document.getElementById("btnLogin").disabled=true;
 
 
     //add to inputs
@@ -19,20 +15,6 @@ $(document).ready(function(){
         input.addEventListener('blur', addEvent);
 
     });
-    /*
-    document.getElementById("btn-primary").addEventListener('click',function(){
-
-           if(codigoP && nombreP && precioP && unidadesP){
-
-                formulario.reset();
-                var nameP = false;
-                var descriptionP = false;
-                var priceP = false;
-           }
-
-        });
-        */
-
  });
 
 function addEvent(e){
@@ -46,8 +28,8 @@ function addEvent(e){
 
     }
 
-    document.getElementById("emailFail").innerHTML="";
-    document.getElementById("passwordFail").innerHTML="";
+
+
 
 
     switch(e.target.name){
@@ -56,6 +38,15 @@ function addEvent(e){
             if(!expresions.email.test(e.target.value)){
 
             document.getElementById("emailFail").innerHTML="Campo incorrecto. Formato válido: xxxxxxx@domain.xxx";
+            document.getElementById("btnLogin").disabled=true;
+
+
+            }else{
+
+            document.getElementById("emailFail").innerHTML="";
+            document.getElementById("btnLogin").disabled=false;
+
+
 
             }
         break;
@@ -64,6 +55,13 @@ function addEvent(e){
             if(!expresions.password.test(e.target.value)){
 
             document.getElementById("passwordFail").innerHTML="Campo incorrecto. Formato: 1 letra mayúscula, 2 minúsculas, 2 números, mínimo 8 caracteres.";
+            document.getElementById("btnLogin").disabled=true;
+
+            }else{
+
+            document.getElementById("passwordFail").innerHTML="";
+            document.getElementById("btnLogin").disabled=false;
+
 
             }
         break;

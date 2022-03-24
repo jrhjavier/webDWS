@@ -2,7 +2,7 @@ $(document).ready(function(){
 
     const form = document.getElementById("form");
     const inputsForm = document.querySelectorAll("#form input");
-    document.getElementById("btnAddEvent").disable= true;
+    document.getElementById("btnModifyEvent").disabled=true;
 
 
     //add to inputs
@@ -33,12 +33,12 @@ function addEvent(e){
             if(!expresions.name.test(e.target.value)){
 
             document.getElementById("nameFail").innerHTML="Campo incorrecto, posee caracteres no permitidos (numeros, caracteres especiales...)";
-            document.getElementById("btnAddEvent").disabled=true;
+            document.getElementById("btnModifyEvent").disabled=true;
 
             }else{
 
             document.getElementById("nameFail").innerHTML="";
-            document.getElementById("btnAddEvent").disabled=false;
+            document.getElementById("btnModifyEvent").disabled=false;
 
             }
         break;
@@ -48,12 +48,12 @@ function addEvent(e){
             if(!expresions.price.test(e.target.value)){
 
             document.getElementById("priceFail").innerHTML="Campo incorrecto. El precio sólo puede ser un número y puede contener hasta dos decimales.";
-            document.getElementById("btnAddEvent").disabled=true;
+            document.getElementById("btnModifyEvent").disabled=true;
 
             }else{
 
             document.getElementById("priceFail").innerHTML="";
-            document.getElementById("btnAddEvent").disabled=false;
+            document.getElementById("btnModifyEvent").disabled=false;
 
             }
         break;

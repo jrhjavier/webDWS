@@ -3,6 +3,7 @@ $(document).ready(function(){
 
     const form = document.getElementById("form");
     const inputsForm = document.querySelectorAll("#form input");
+    document.getElementById("btnNewCustomer").disabled=true;
 
     //add to inputs
     inputsForm.forEach((input) => {
@@ -14,7 +15,6 @@ $(document).ready(function(){
         input.addEventListener('blur', addEvent);
 
     });
-
  });
 
 function addEvent(e){
@@ -31,19 +31,18 @@ function addEvent(e){
 
     }
 
-    document.getElementById("nameFail").innerHTML="";
-    document.getElementById("surnameFail").innerHTML="";
-    document.getElementById("emailFail").innerHTML="";
-    document.getElementById("phoneNumberFail").innerHTML="";
-    document.getElementById("passwordFail").innerHTML="";
-    document.getElementById("addressFail").innerHTML="";
-
     switch(e.target.name){
 
         case "name":
             if(!expresions.name.test(e.target.value)){
 
             document.getElementById("nameFail").innerHTML="Campo incorrecto, posee caracteres no permitidos (numeros, caracteres especiales...)";
+            document.getElementById("btnNewCustomer").disabled=true;
+
+            }else{
+
+            document.getElementById("nameFail").innerHTML="";
+            document.getElementById("btnNewCustomer").disabled=false;
 
             }
         break;
@@ -52,6 +51,12 @@ function addEvent(e){
             if(!expresions.surname.test(e.target.value)){
 
             document.getElementById("surnameFail").innerHTML="Campo incorrecto, posee caracteres no permitidos (numeros, caracteres especiales...)";
+            document.getElementById("btnNewCustomer").disabled=true;
+
+            }else{
+
+            document.getElementById("surnameFail").innerHTML="";
+            document.getElementById("btnNewCustomer").disabled=false;
 
             }
         break;
@@ -60,6 +65,12 @@ function addEvent(e){
             if(!expresions.email.test(e.target.value)){
 
             document.getElementById("emailFail").innerHTML="Campo incorrecto. Formato válido: xxxxxxx@domain.xxx";
+            document.getElementById("btnNewCustomer").disabled=true;
+
+            }else{
+
+            document.getElementById("emailFail").innerHTML="";
+            document.getElementById("btnNewCustomer").disabled=false;
 
             }
         break;
@@ -68,7 +79,13 @@ function addEvent(e){
              if(!expresions.phoneNumber.test(e.target.value)){
         
              document.getElementById("phoneNumberFail").innerHTML="Campo incorrecto. Formato válido: 000-000-000.";
+             document.getElementById("btnNewCustomer").disabled=true;
         
+             }else{
+
+              document.getElementById("phoneNumberFail").innerHTML="";
+              document.getElementById("btnNewCustomer").disabled=false;
+
              }
         break;
         
@@ -76,7 +93,13 @@ function addEvent(e){
              if(!expresions.password.test(e.target.value)){
               
              document.getElementById("passwordFail").innerHTML="Campo incorrecto. Formato: 1 letra mayúscula, 2 minúsculas, 2 números, mínimo 8 caracteres.";
+             document.getElementById("btnNewCustomer").disabled=true;
               
+             }else{
+
+             document.getElementById("passwordFail").innerHTML="";
+             document.getElementById("btnNewCustomer").disabled=false;
+
              }
         break;
           
@@ -84,7 +107,13 @@ function addEvent(e){
              if(!expresions.address.test(e.target.value)){
                   
              document.getElementById("addressFail").innerHTML="Campo incorrecto. Dirección demasiado larga";
+             document.getElementById("btnNewCustomer").disabled=true;
                   
+             }else{
+
+             document.getElementById("addressFail").innerHTML="";
+             document.getElementById("btnNewCustomer").disabled=false;
+
              }
         break;
                              
