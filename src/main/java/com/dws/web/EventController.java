@@ -25,7 +25,7 @@ public class EventController {
     }
 
     @GetMapping("/events/new")
-    public String newEvent2(Model model, @RequestParam String name,@RequestParam String category, @RequestParam String description, @RequestParam int price) {
+    public String newEvent(Model model, @RequestParam String name,@RequestParam String category, @RequestParam String description, @RequestParam int price) {
         Event e= new Event(name,category,description,price);
         eventHolder.addEvent(e);
         model.addAttribute("event",e);

@@ -16,6 +16,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="/js/signIn.js"></script>
 </head>
 <body>
 <div class="first">
@@ -177,12 +180,14 @@
     <h1 class="text-center">Inicia sesi&oacuten para m&aacutes informaci&oacuten</h1>
     <p class="text-center">Podr&aacutes crear hasta tu propio planning</p>
     <div class="container">
-        <form action="/">
+        <form action="/" id="form">
             <div class="form-group">
                 <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                <p id="emailFail" class="error"></p>
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" id="pwd" placeholder="Contraseña">
+                <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña">
+                <p id="passwordFail" class="error"></p>
             </div>
         </form>
         <div class="row">

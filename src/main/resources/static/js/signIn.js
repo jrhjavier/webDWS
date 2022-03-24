@@ -40,28 +40,30 @@ function addEvent(e){
     //Save expresions (form)
     const expresions = {
 
-        userName: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/, // Email
-        message: /^[a-zA-ZÀ-ÿ0-9\s]{1,10}$/, // Letras y espacios, pueden llevar acentos.
+        email: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/, // Email
+        password: /^(?=(?:.*\d){2})(?=(?:.*[A-Z]){1})(?=(?:.*[a-z]){1})\S{8,}$/, // 1 capital letter, 2 letters, 2 numbers, 8 caracteres min
+
 
     }
 
-    document.getElementById("userNameFail").innerHTML="";
-    document.getElementById("messageFail").innerHTML="";
+    document.getElementById("emailFail").innerHTML="";
+    document.getElementById("passwordFail").innerHTML="";
+
 
     switch(e.target.name){
 
-        case "userName":
-            if(!expresions.userName.test(e.target.value)){
+        case "email":
+            if(!expresions.email.test(e.target.value)){
 
-            document.getElementById("userNameFail").innerHTML="Campo incorrecto. Formato válido: xxxxxxx@domain.xxx";
+            document.getElementById("emailFail").innerHTML="Campo incorrecto. Formato válido: xxxxxxx@domain.xxx";
 
             }
         break;
 
-        case "message":
-            if(!expresions.message.test(e.target.value)){
+        case "password":
+            if(!expresions.password.test(e.target.value)){
 
-            document.getElementById("messageFail").innerHTML="Campo incorrecto. La review es demasiado extensa, debe tener como máximo 10 caracteres..";
+            document.getElementById("passwordFail").innerHTML="Campo incorrecto. Formato: 1 letra mayúscula, 2 minúsculas, 2 números, mínimo 8 caracteres.";
 
             }
         break;

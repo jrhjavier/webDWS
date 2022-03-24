@@ -192,3 +192,8 @@ footer {
   color:white;
   padding: 4%;
 }
+
+.error{
+    color: red;
+    font-size: 15px;
+}
