@@ -6,11 +6,14 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="/js/event.js"></script>
+    <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
+
     <meta charset="UTF-8">
-    <link href="/css/styleNewEvent.css" rel="stylesheet"></head>
 
-<body class="">
+    <link href="/css/styleNewEvent.css" rel="stylesheet">
+</head>
 
+<body>
 
 <div class="card">
     <div class="card-block">
@@ -20,11 +23,11 @@
             <div class="form-group">
                 <input type="text" class="form-control" id="name" name="name" placeholder="Nombre" required>
                 <p id="nameFail" class="error"></p>
-
             </div>
 
             <div class="form-group">
-                <input type="text" class="form-control" id="description" name="description" placeholder="Descripcion" required>
+                <textarea name="description" id="description"></textarea>
+                <script>CKEDITOR.replace('description');</script>
                 <p id="descriptionFail" class="error"></p>
             </div>
 
@@ -35,18 +38,14 @@
             </div>
 
             <div class="form-group" id="category">
-                <input type="radio"  name="category" value="Restaurante" > Restaurante &nbsp;&nbsp;
-                <input type="radio"  name="category" value="Ocio" > Ocio &nbsp;&nbsp;
-                <input type="radio"  name="category" value="Turismo" > Turismo
+                <input type="radio"  name="category" value="Restaurante" required> Restaurante &nbsp;&nbsp;
+                <input type="radio"  name="category" value="Ocio" required> Ocio &nbsp;&nbsp;
+                <input type="radio"  name="category" value="Turismo" required> Turismo
             </div>
 
-            <!--
-            <div class="form-group">
-                <input type="file"  name="image" value="Selecciona un imagen" required>
-            </div>
-            -->
             <div class="form-group">
                 <input type="submit" value="Modificar evento"/>
+                <button class="btn-link" onclick="location.href = '/events'"> Cancelar</button>
             </div>
         </form>
     </div>

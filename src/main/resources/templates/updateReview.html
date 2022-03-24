@@ -4,10 +4,12 @@
 <head>
     <title>Modificar evento</title>
 
-    <link href="/css/styleNewEvent.css" rel="stylesheet"></head>
+    <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
 
-<body class="">
+    <link href="/css/styleNewEvent.css" rel="stylesheet">
+</head>
 
+<body>
 
 <div class="card">
     <div class="card-block">
@@ -15,11 +17,14 @@
         <form action="/event/{{idEvent}}/review/{{idReview}}/update" class="reveal-content" method="post">
 
             <div class="form-group">
-                <input type="text" class="form-control" name="userName" placeholder="Nombre de usuario">
+                <input type="text" class="form-control" id="name" name="name" placeholder="Nombre" required>
+                <p id="nameFail" class="error"></p>
             </div>
 
             <div class="form-group">
-                <input type="text" class="form-control" name="message" placeholder="Opinión">
+                <textarea name="message" id="message"></textarea>
+                <script>CKEDITOR.replace('message');</script>
+                <p id="messageFail" class="error"></p>
             </div>
 
             <div class="form-group">

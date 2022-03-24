@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Opiniones</title>
-    <link href="/css/styleSavedEvent.css" rel="stylesheet"></head>
+    <link href="/css/styleSavedEvent.css" rel="stylesheet">
 </head>
 
 <body>
-
 <div
         class="background-color-layer" style="background-image: url('images/fire.jpg')">
 </div>
@@ -27,7 +27,7 @@
                 <div class="card-block">
                     <h2><u>Usuario:</u> {{userName}}</h2>
                     <div class="row">
-                        <p>{{message}}</p><br>
+                        <p>{{{message}}}</p><br>
                         <button class="btn btn-primary" onclick="location.href = '/event/{{idEvent}}/review/{{idReview}}/delete'"> Borrar review</button>
                         <button class="btn btn-primary" onclick="location.href = '/events/{{idEvent}}/review/{{idReview}}/modify'"> Modificar review</button>
                     </div>
@@ -44,8 +44,8 @@
 </div>
 
 <div class="text-center">
-    <button class="btn btn-primary"onclick="location.href = '/events'">Volver a los planes</button>
+    <button class="btn btn-primary" onclick="location.href = '/events'">Volver a los planes</button>
 </div>
-
 </body>
+
 </html>

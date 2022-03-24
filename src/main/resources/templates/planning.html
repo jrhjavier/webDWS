@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Planning</title>
-    <link href="/css/styleSavedEvent.css" rel="stylesheet"></head>
+    <link href="/css/styleSavedEvent.css" rel="stylesheet">
 </head>
 
 <body>
@@ -27,9 +28,8 @@
           <h3>Categoría: {{category}}</h3>
           <div class="row">
             <div class="text-center" style="margin-left: 20px; margin-right: 20px; margin-bottom: 20px">
-              <p>{{description}}</p><br>
+              <p>{{{description}}}</p><br>
               <h4>Precio: {{price}}</h4><br>
-              <button class="btn btn-primary" onclick="location.href = '/planning/new/{{name}}'">Agregar a tu planning</button>
               <button class="btn btn-primary" onclick="location.href = '/events/{{idEvent}}'">A&ntildeadir review</button>
               <button class="btn btn-primary" onclick="location.href = '/event/{{idEvent}}/reviews'">Reviews</button>
               <button class="btn btn-primary" onclick="location.href = '/planning/delete/{{idEvent}}'">Borrar evento del planning</button>
