@@ -17,16 +17,11 @@
             <div class="card">
                 <div class="card-block">
                     <h2>Usuario: {{review.userName}}</h2>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <p><img src="/images/savedEvents.jpg" class="img-responsive" alt=""></p>
-                        </div>
-                        <div class="col-md-8">
-                            <p>Opinión: {{{review.message}}}</p><br>
-                        </div>
+                    <div class="col-md-8">
+                        <p>{{{review.message}}}</p><br>
                     </div>
                     <div class="form-group">
-                        <button type="submit" class=" btn btn-primary"><a href="/">Volver al inicio</a></button>
+                        <button class="btn btn-primary" onclick="location.href = '/'">Volver al inicio</button>
                         <button class="btn btn-primary" onclick="location.href = '/event/{{idEvent}}/reviews'">Volver a las reviews</button>
                     </div>
                 </div>

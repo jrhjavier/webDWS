@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Modificar evento</title>
+    <title>Modificar review</title>
 
     <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
 
@@ -13,12 +13,12 @@
 
 <div class="card">
     <div class="card-block">
-        <h2>Modificar evento</h2>
+        <h2>Modificar review</h2>
         <form action="/event/{{idEvent}}/review/{{idReview}}/update" class="reveal-content" method="post">
 
             <div class="form-group">
-                <input type="text" class="form-control" id="name" name="name" placeholder="Nombre" required>
-                <p id="nameFail" class="error"></p>
+                <input type="email" class="form-control" id="userName" name="userName" placeholder="Correo usuario" required>
+                <p id="userNameFail" class="error"></p>
             </div>
 
             <div class="form-group">

@@ -129,7 +129,7 @@ public class EventController {
     @PostMapping("/event/{idEvent}/review/{idReview}/update")
     public String updateReview(Model model,@PathVariable long idEvent,@PathVariable long idReview, Review updatedReview) {
         Event e = eventHolder.getEvent(idEvent);
-        Review r=e.getReview(idReview);
+        Review r = e.getReview(idReview);
         if (r != null) {
             e.deleteReviewOfThisEvent(idReview);
             updatedReview.setIdReview(idReview);
