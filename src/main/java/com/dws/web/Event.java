@@ -22,7 +22,7 @@ public class Event {
     private String description;
 
     @JsonView(Customer.Basico.class)
-    private int price;
+    private float price;
 
     @JsonView(Customer.Basico.class)
     private String category;
@@ -54,7 +54,7 @@ public class Event {
         return this.description;
     }
 
-    public int getPrice() {
+    public float getPrice() {
         return this.price;
     }
 
