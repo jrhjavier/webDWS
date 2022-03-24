@@ -53,11 +53,11 @@ public class CustomerController {
         return "customers";
     }
 
-    @GetMapping("/customer/{email}")
-    public String getACustomer(Model model, @PathVariable String email) {
+    @GetMapping("/customer")
+    public String getACustomer(Model model, @RequestParam String email) {
         Customer c=customerHolder.getCustomer(email);
         model.addAttribute("customer", c);
-        return "customer";
+        return "planning";
     }
 
     //PLANNING (Revisar)
@@ -71,17 +71,23 @@ public class CustomerController {
         return "addedEvent";
     }
 
-    @DeleteMapping("/planning/delete")
-    public String deleteEvent(@RequestBody Customer c, @RequestBody long idEvent) {
+    @GetMapping("/planning/delete/{idEvent}")
+    public String deleteEventFromPlanning(Model model, @PathVariable long idEvent) {
+        Customer c=customerHolder.getCustomer("admin");
+        Event e=eventHolder.getEvent(idEvent);
         customerHolder.deleteEventFromPlanning(c, idEvent);
-        return "deletedEvent";
+        model.addAttribute("event", e);
+        return "deletedEventFromPlanning";
     }
 
+    /*
     @PutMapping("/planning/update")
     public String updateEvent(@RequestBody Customer c, @RequestParam long idOldEvent, @RequestBody Event updatedEvent) {
         customerHolder.updateAnEvent(c, idOldEvent, updatedEvent);
         return "addedEvent";
     }
+
+     */
 
     @PostMapping("/planning/new")
     public String addEventToPlanningAPI(Model model, String email, Event e){
