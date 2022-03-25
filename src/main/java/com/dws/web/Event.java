@@ -34,7 +34,7 @@ public class Event {
     public Event() {
     }
 
-    public Event(String name, String category, String description, int price) {
+    public Event(String name, String category, String description, float price) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -79,7 +79,7 @@ public class Event {
         this.description = description;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 
