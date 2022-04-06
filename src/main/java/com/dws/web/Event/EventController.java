@@ -1,5 +1,6 @@
-package com.dws.web;
+package com.dws.web.Event;
 
+import com.dws.web.Review.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -13,7 +14,8 @@ import java.util.Collection;
 public class EventController {
 
     @Autowired
-    EventHolder eventHolder;
+    private EventService eventService;
+    //Añadir servicio no controller
 
     //EVENT (Revisar)
 
@@ -29,39 +31,40 @@ public class EventController {
     @PostMapping("/events/new")
     public String newEvent(Model model, Event e) {
 
-        eventHolder.addEvent(e);
+        eventService.addEvent(e);
         model.addAttribute("event",e);
         return "addedEvent";
     }
 
     @GetMapping("/events/new")
     public String newEvent(Model model, @RequestParam String name,@RequestParam String category, @RequestParam String description, @RequestParam int price) {
+
         Event e= new Event(name,category,description,price);
-        eventHolder.addEvent(e);
+        eventService.addEvent(e);
         model.addAttribute("event",e);
         return "addedEvent";
     }
 
     @GetMapping("/events/{idEvent}/delete")
     public String deleteEvent(Model model, @PathVariable long idEvent) {
-        Event e=eventHolder.deleteEvent(idEvent);
+        Event e=eventService.deleteEvent(idEvent);
         model.addAttribute("event", e);
         return "deletedEvent";
     }
 
     @PostMapping("/events/{idEvent}/update")
     public String updateEvent(Model model, @PathVariable long idEvent, Event updatedEvent) {
-        Event event = eventHolder.getEvent(idEvent);
+        Event event = eventService.getEvent(idEvent);
         if (event != null) {
             Collection<Review> allReviews= event.getAllReviews();
-            eventHolder.deleteEvent(idEvent);
+            eventService.deleteEvent(idEvent);
             updatedEvent.setIdEvent(idEvent);
 
             for(Review r : allReviews ){
                 updatedEvent.addReviewToThisEvent(r);
             }
 
-            eventHolder.addUpdatedEvent(updatedEvent);
+            //eventHolder.addUpdatedEvent(updatedEvent);
             model.addAttribute("event",updatedEvent);
             return "updatedEvent";
         } else {
@@ -71,45 +74,45 @@ public class EventController {
 
     @GetMapping("/events/all/restaurants")
     public String getRestaurants(Model model) {
-        model.addAttribute("events", eventHolder.getEventsFilteredByCategory("restaurante"));
+        model.addAttribute("events", eventService.getEventsFilteredByCategory("restaurante"));
         return "events";
     }
 
     @GetMapping("/events/all/leisure")
     public String getLeisure(Model model) {
-        model.addAttribute("events", eventHolder.getEventsFilteredByCategory("ocio"));
+        model.addAttribute("events", eventService.getEventsFilteredByCategory("ocio"));
         return "events";
     }
 
     @GetMapping("/events/all/tourism")
     public String getTourism(Model model) {
-        model.addAttribute("events", eventHolder.getEventsFilteredByCategory("turismo"));
+        model.addAttribute("events", eventService.getEventsFilteredByCategory("turismo"));
         return "events";
     }
 
     @GetMapping("/events")
     public String catalogue(Model model) {
-        model.addAttribute("events", eventHolder.getEvents());
+        model.addAttribute("events", eventService.getEvents());
         return "events";
     }
 
     @GetMapping("/events/{idEvent}") //Para crear review
     public String getAnEvent(Model model, @PathVariable long idEvent) {
-        Event e = eventHolder.getEvent(idEvent);
+        Event e = eventService.getEvent(idEvent);
         model.addAttribute("event", e);
         return "newReview";
     }
 
     @GetMapping("/events/{idEvent}/modify") //Para modificar evento
-    public String getAnEvent2(Model model, @PathVariable long idEvent) {
-        Event e = eventHolder.getEvent(idEvent);
+    public String modifyAnEvent(Model model, @PathVariable long idEvent) {
+        Event e = eventService.getEvent(idEvent);
         model.addAttribute("event", e);
         return "updateEvent";
     }
 
     @GetMapping("/events/{idEvent}/review/{idReview}/modify") //Para modificar evento
     public String getAnEvent3(Model model, @PathVariable long idEvent, @PathVariable long idReview) {
-        Event e = eventHolder.getEvent(idEvent);
+        Event e = eventService.getEvent(idEvent);
         Review r=e.getReview(idReview);
         model.addAttribute("review", r);
         model.addAttribute("event", e);
@@ -120,7 +123,8 @@ public class EventController {
 
     @PostMapping("/event/{idEvent}/review/new")
     public String newReview(Model model, @PathVariable long idEvent, Review r) {
-        Event e=eventHolder.getEvent(idEvent);
+        //Event e=eventHolder.getEvent(idEvent);
+        Event e = eventService.getEvent(idEvent);
         e.addReviewToThisEvent(r);
         model.addAttribute("reviews", e.getAllReviews());
         model.addAttribute("event", e);
@@ -129,7 +133,8 @@ public class EventController {
 
     @GetMapping("/event/{idEvent}/review/{idReview}/delete")
     public String deleteReview(Model model, @PathVariable long idEvent, @PathVariable long idReview) {
-        Event e=eventHolder.getEvent(idEvent);
+        //Event e=eventHolder.getEvent(idEvent);
+        Event e = eventService.getEvent(idEvent);
         Review r=e.getReview(idReview);
         e.deleteReviewOfThisEvent(idReview);
         model.addAttribute("review", r);
@@ -138,7 +143,8 @@ public class EventController {
 
     @PostMapping("/event/{idEvent}/review/{idReview}/update")
     public String updateReview(Model model,@PathVariable long idEvent,@PathVariable long idReview, Review updatedReview) {
-        Event e = eventHolder.getEvent(idEvent);
+        //Event e = eventHolder.getEvent(idEvent);
+        Event e = eventService.getEvent(idEvent);
         Review r = e.getReview(idReview);
         if (r != null) {
             e.deleteReviewOfThisEvent(idReview);
@@ -154,7 +160,8 @@ public class EventController {
 
     @GetMapping("/event/{idEvent}/reviews")
     public String getAllReviewsOfAnEvent(Model model,@PathVariable long idEvent) {
-        Event e=eventHolder.getEvent(idEvent);
+        //Event e=eventHolder.getEvent(idEvent);
+        Event e = eventService.getEvent(idEvent);
         model.addAttribute("reviews", e.getAllReviews());
         model.addAttribute("event", e);
         return "reviews";
@@ -162,9 +169,12 @@ public class EventController {
 
     @GetMapping("/event/{idEvent}/{idReview}")
     public String getAReview(Model model, @PathVariable long idEvent, @PathVariable long idReview) {
-        Event e=eventHolder.getEvent(idEvent);
+        //Event e=eventHolder.getEvent(idEvent);
+        Event e = eventService.getEvent(idEvent);
         model.addAttribute("review", e.getReview(idReview));
         return "review";
     }
+
+    //PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
 }

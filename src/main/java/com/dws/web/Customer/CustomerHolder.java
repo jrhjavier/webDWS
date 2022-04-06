@@ -1,5 +1,6 @@
-package com.dws.web;
+package com.dws.web.Customer;
 
+import com.dws.web.Event.Event;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -10,6 +11,11 @@ import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 public class CustomerHolder {
+
+    // @Autowired
+    //CustomerRepository customerRepository;
+
+
 
     private Map<Long, Customer> customers = new ConcurrentHashMap<>();
     private AtomicLong lastID = new AtomicLong();
@@ -93,7 +99,7 @@ public class CustomerHolder {
         return c.getAnEvent(idEvent);
     }
 
-    public Event getAnEventByNoun(Customer c,String name){
+    public Event getAnEventByNoun(Customer c, String name){
         for(Event e : getAllEventsOfACustomer(c)){
             if(e.getName().equalsIgnoreCase(name)){
                 return e;

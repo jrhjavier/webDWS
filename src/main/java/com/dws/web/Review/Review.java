@@ -1,4 +1,4 @@
-package com.dws.web;
+package com.dws.web.Review;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
@@ -8,13 +8,13 @@ public class Review {
 
     interface Basico {}
 
-    @JsonView(Customer.Basico.class)
+    //@JsonView(Customer.Basico.class)
     private long idReview;
 
-    @JsonView(Customer.Basico.class)
+    //@JsonView(Customer.Basico.class)
     private String userName;
 
-    @JsonView(Customer.Basico.class)
+    //@JsonView(Customer.Basico.class)
     private String message;
 
     public Review(){

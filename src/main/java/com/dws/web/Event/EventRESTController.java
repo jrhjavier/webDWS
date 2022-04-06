@@ -1,12 +1,10 @@
-package com.dws.web;
+package com.dws.web.Event;
 
-import org.apache.coyote.Response;
+import com.dws.web.Review.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collection;
 

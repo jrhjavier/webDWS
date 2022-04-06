@@ -1,10 +1,10 @@
-package com.dws.web;
+package com.dws.web.Customer;
 
+import com.dws.web.Event.Event;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 
 import java.util.Collection;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;

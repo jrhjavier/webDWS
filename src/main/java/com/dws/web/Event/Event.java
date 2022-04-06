@@ -1,30 +1,39 @@
-package com.dws.web;
+package com.dws.web.Event;
 
-import com.fasterxml.jackson.annotation.JsonView;
+import com.dws.web.Review.Review;
 import lombok.Data;
 
-import java.util.*;
+import javax.persistence.*;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Data
+@Entity
+@Table(name = "Customers")
 public class Event {
 
     interface Basico {}
 
-    @JsonView(Customer.Basico.class)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    //@JsonView(Customer.Basico.class)
     private long idEvent;
 
-    @JsonView(Customer.Basico.class)
+    @Column(nullable = false)//no puede ser null
+    //@JsonView(Customer.Basico.class)
     private String name;
 
-    @JsonView(Customer.Basico.class)
+    @Column(length = 100)
+    //@JsonView(Customer.Basico.class)
     private String description;
 
-    @JsonView(Customer.Basico.class)
+    //@JsonView(Customer.Basico.class)
     private float price;
 
-    @JsonView(Customer.Basico.class)
+    //@JsonView(Customer.Basico.class)
     private String category;
 
     Map<Long, Review> reviews=new ConcurrentHashMap<>();
