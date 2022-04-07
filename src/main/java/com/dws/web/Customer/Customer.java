@@ -1,44 +1,46 @@
 package com.dws.web.Customer;
 
 import com.dws.web.Event.Event;
+import com.dws.web.Review.Review;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.Collection;
-import java.util.Map;
-import java.util.Objects;
+import javax.persistence.*;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-@Data
+@Entity
+@NoArgsConstructor
+@Table(name = "Customer")
 public class Customer {
 
-    interface Basico {}
 
-    @JsonView(Basico.class)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    //@JsonView(Basico.class)
     private long idCustomer;
 
-    @JsonView(Basico.class)
+    //@JsonView(Basico.class)
     private String name;
 
-    @JsonView(Basico.class)
+    //@JsonView(Basico.class)
     private String surname;
 
-    @JsonView(Basico.class)
+    //@JsonView(Basico.class)
     private String email;
 
-    @JsonView(Basico.class)
+    //@JsonView(Basico.class)
     private String phoneNumber;
 
-    @JsonView(Basico.class)
+    // @JsonView(Basico.class)
     private String passwd;
 
-    @JsonView(Basico.class)
+    //@JsonView(Basico.class)
     private String address;
 
     private Map<Long, Event> planning = new ConcurrentHashMap<>();
-
-    public Customer(){
-    }
 
     public Customer(String name, String surname, String email, String phoneNumber, String passwd, String address){
         this.name = name;
@@ -182,4 +184,20 @@ public class Customer {
         return Objects.hash(email);
     }
 
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "customer")
+    private Set<Review> reviewsCustomer = new HashSet<>();
+
+    /*
+    @ManyToMany
+    @JoinTable(
+            name="events_Customer",
+            joinColumns = @JoinColumn(name = "Customer_id"),
+            inverseJoinColumns = @JoinColumn(name = "customer_id")
+    )
+    //private Set<Map.Entry<Long, Event>> eventsCustomer = this.planning.entrySet();
+    private Set<Event> eventsCustomer = new HashSet<>();
+
+     */
 }

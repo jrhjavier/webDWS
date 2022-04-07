@@ -12,6 +12,8 @@ import java.util.concurrent.atomic.AtomicLong;
 @Service
 public class CustomerHolder {
 
+    //Borrar todoo
+
     // @Autowired
     //CustomerRepository customerRepository;
 

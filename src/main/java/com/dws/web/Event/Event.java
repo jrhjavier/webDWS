@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
@@ -14,8 +15,6 @@ import java.util.concurrent.atomic.AtomicLong;
 @Entity
 @Table(name = "Customers")
 public class Event {
-
-    interface Basico {}
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -152,5 +151,11 @@ public class Event {
     public int hashCode() {
         return Objects.hash(idEvent);
     }
+
+
+    @OneToMany
+    private List<Review> reviewsEvent;
+
+    //@ManyToMany(mappedBy = "eventsCustomer")
 
 }
