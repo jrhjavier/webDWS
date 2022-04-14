@@ -125,7 +125,7 @@ public class EventController {
     public String newReview(Model model, @PathVariable long idEvent, Review r) {
         //Event e=eventHolder.getEvent(idEvent);
         Event e = eventService.getEvent(idEvent);
-        e.addReviewToThisEvent(r);
+        reviewService.addReviewToThisEvent(e, r);
         model.addAttribute("reviews", e.getAllReviews());
         model.addAttribute("event", e);
         return "reviews";

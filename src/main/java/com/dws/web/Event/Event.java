@@ -1,6 +1,7 @@
 package com.dws.web.Event;
 
 import com.dws.web.Review.Review;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -35,7 +36,9 @@ public class Event {
     //@JsonView(Customer.Basico.class)
     private String category;
 
-    Map<Long, Review> reviews=new ConcurrentHashMap<>();
+    @JsonIgnore
+    @OneToMany
+    private List<Review> reviews;
 
     private AtomicLong lastIDReview = new AtomicLong();
 
@@ -95,8 +98,6 @@ public class Event {
         this.category = category;
     }
 
-
-
     public long getIdEvent() {
         return idEvent;
     }
@@ -106,25 +107,34 @@ public class Event {
     public void addReviewToThisEvent(Review r){
         long idReview=this.lastIDReview.incrementAndGet();
         r.setIdReview(idReview);
-        this.reviews.put(r.getIdReview(), r);
+        this.reviews.add(r);
     }
 
     public void addUpdatedReviewToThisEvent(Review r){
-        this.reviews.put(r.getIdReview(), r);
+        this.reviews.add(r);
     }
 
     public Review deleteReviewOfThisEvent(long idReview){
-        Review r=this.reviews.get(idReview);
-        this.reviews.remove(idReview);
-        return r;
+        for (Review r: this.reviews){
+            if (r.getIdReview()==idReview){
+                this.reviews.remove(r);
+                return r;
+            }
+        }
+        return null;
     }
 
     public Review getReview(long idReview){
-        return this.reviews.get(idReview);
+        for (Review r:this.reviews){
+            if (r.getIdReview()==idReview){
+                return r;
+            }
+        }
+        return null;
     }
 
-    public Collection<Review> getAllReviews(){
-        return this.reviews.values();
+    public List<Review> getAllReviews(){
+        return this.reviews;
     }
 
     @Override
@@ -152,10 +162,5 @@ public class Event {
         return Objects.hash(idEvent);
     }
 
-
-    @OneToMany
-    private List<Review> reviewsEvent;
-
-    //@ManyToMany(mappedBy = "eventsCustomer")
 
 }

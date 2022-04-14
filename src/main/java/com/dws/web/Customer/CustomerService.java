@@ -1,12 +1,11 @@
 package com.dws.web.Customer;
 
 import com.dws.web.Event.Event;
+import com.dws.web.Event.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 
@@ -18,12 +17,15 @@ public class CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
 
+    @Autowired
+    private EventRepository eventRepository;
 
     private AtomicLong lastID = new AtomicLong();
 
     private AtomicLong lastIDEvent = new AtomicLong();
 
-    public CustomerService(){
+
+    public CustomerService() {
         this.customerRepository.save(new Customer("admin@admin.com"));
     }
 
@@ -31,20 +33,28 @@ public class CustomerService {
         this.customerRepository.save(c);
     }
 
-    public void addUpdatedClient(Customer c){
+    //HECHO
+    public void addUpdatedClient(Customer c) {
         this.customerRepository.save(c);
     }
 
-    public Customer getCustomer(String email) {
-/*
-        for (Map.Entry<Long, Customer> entry : this.customers.entrySet()){
-            if (entry.getValue().equals(email)){
-                return entry.getValue();
-            }
+    //HECHO
+    public Customer getClient(long id) {
+        Optional<Customer> c = customerRepository.findById(id);
+        if (c.isPresent()) {
+            return c.get();
+        } else {
+            return null;
         }
+    }
 
- */
-        return null;
+    public Customer getCustomer(String email) {
+        Optional<Customer> c = this.customerRepository.findByEmail(email);
+        if (c.isPresent()) {
+            return c.get();
+        } else {
+            return null;
+        }
 
     }
 
@@ -52,83 +62,108 @@ public class CustomerService {
         return this.lastIDEvent;
     }
 
+    //HECHO
     public Collection<Customer> getAllCustomers() {
-        return null;
-        //return this.customerRepository.findAllById();
+        Collection<Customer> allCustomers = new HashSet<>();
+        List<Customer> l = customerRepository.findAll();
+        for (Customer c : l) {
+            allCustomers.add(c);
+        }
+        return l;
     }
 
+    //HECHO
     public Customer deleteCustomer(long id) {
-        /*
-        Customer c = this.customers.get(id);
-        this.customers.remove(id);
+        Customer c = customerRepository.getById(id);
+        customerRepository.delete(c);
         return c;
-
-         */
-        return null;
     }
 
+    //HECHO
     public void updateCustomer(Customer c, long id) {
-        /*
-        this.customers.remove(id);
-        this.addClient(c);
-
-         */
+        Customer c1 = customerRepository.getById(id);
+        customerRepository.delete(c1);
+        customerRepository.saveAndFlush(c);
     }
 
-    public void addEventToPlanning(Customer c, Event e) {
-        /*
+    public void addEventToPlanning(long idCustomer, Event e) {
         long id = lastIDEvent.incrementAndGet();
         e.setIdEvent(id);
+        Customer c = customerRepository.getById(idCustomer);
         c.addToPlanning(e);
-
-         */
     }
 
-    public Event deleteEventFromPlanning(Customer c, long idEvent){
-        Event e=getAnEvent(c, idEvent);
-        if (c.containsPlanning(e)){
+    public Event deleteEventFromPlanning(Customer c, long idEvent) {
+        Event e = getAnEvent(c, idEvent);
+        if (c.containsPlanning(e)) {
             c.deleteEvent(idEvent);
             return e;
-        }
-        else{
+        } else {
             return null;
         }
     }
 
-    public void updateAnEvent(Customer c, long idOldEvent, Event updatedEvent){
+    public void updateAnEvent(Customer c, long idOldEvent, Event updatedEvent) {
         c.deleteEvent(idOldEvent);
         updatedEvent.setIdEvent(idOldEvent);
         c.addToPlanning(updatedEvent);
     }
 
-    public Collection<Event> getAllEventsOfACustomer(Customer c){
-        return c.getAllEvents();
+    public Collection<Event> getAllEventsOfACustomer(Customer c) {
+        Collection<Event> allEventsOfACustomer = new HashSet<>();
+
+        Optional<Customer> c1 = customerRepository.findByEmail(c.getEmail());
+        if (c1.isPresent()) {
+            Customer c2 = c1.get();
+            Collection<Event> l = c2.getAllEvents();
+            for (Event e1 : l) {
+                for (Event e2 : this.eventRepository.findAll()) {
+                    if (e1.equals(e2)) {
+                        allEventsOfACustomer.add(e2);
+                    }
+                }
+            }
+        }
+
+        return allEventsOfACustomer;
     }
 
-    public Event getAnEvent(Customer c, long idEvent){
+    public Event getAnEvent(Customer c, long idEvent) {
         return c.getAnEvent(idEvent);
     }
 
-    public Event getAnEventByNoun(Customer c, String name){
-        for(Event e : getAllEventsOfACustomer(c)){
-            if(e.getName().equalsIgnoreCase(name)){
+    public Event getAnEventByNoun(Customer c, String name) {
+        for (Event e : getAllEventsOfACustomer(c)) {
+            if (e.getName().equalsIgnoreCase(name)) {
                 return e;
             }
         }
         return null;
     }
 
-    public void cleanPlanning(Customer c){
+    public void cleanPlanning(Customer c) {
         c.cleanPlanning();
     }
 
+}
+
+    /*
     public Collection<Event> getEventsOfACategory(Customer c, String category){
-        Collection<Event> l = new HashSet<>();
-        for (Event e : getAllEventsOfACustomer(c)){
-            if (e.sameCategory(category)){
-                l.add(e);
+        Collection<Event> allEventsOfACustomerByCategory=new HashSet<>();
+
+        Optional<Customer> c1=customerRepository.findByEmail(c.getEmail());
+        if (c1.isPresent()) {
+            Customer c2 = c1.get();
+            Collection<Event> l = c2.getAllEvents();
+            for (Event e1 : l) {
+                for (Event e2 : this.eventRepository.findAll()){
+                    if (e1.equals(e2)){
+                        allEventsOfACustomerByCategory.add(e2);
+                    }
+                }
             }
         }
-        return l;
-    }
+
+        return allEventsOfACustomerByCategory;
 }
+     */

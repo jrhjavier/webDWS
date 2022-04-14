@@ -1,14 +1,10 @@
 package com.dws.web.Event;
 
 
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Service
@@ -16,6 +12,8 @@ public class EventService {
 
     //Añade 3 repositorios (user,ticket y event)
 //Esto con 3:
+    private AtomicLong lastIDEvent = new AtomicLong();
+
     @Autowired
     private EventRepository eventRepository;
 
@@ -45,10 +43,14 @@ public class EventService {
         eventRepository.save(new Event("Catedral de la Almudena", "Turismo", "La Santa Iglesia Catedral Metropolitana de Santa María la Real de la Almudena, conocida simplemente como Catedral de la Almudena, es una catedral de culto católico, dedicada a la Virgen María bajo la advocación de la Almudena, y sede episcopal de Madrid.", 6));
     }
 
+    //HECHO
     public void addEvent (Event event){
+        long id = this.lastIDEvent.incrementAndGet();
+        event.setIdEvent(id);
         this.eventRepository.save(event);
     }
 
+    //HECHO
     public void addUpdatedEvent(long id,Event eUP ){
         Event eFind = eventRepository.getById(id);
         this.eventRepository.delete(eFind);
@@ -58,24 +60,33 @@ public class EventService {
         //Nose si es así
     }
 
+    //HECHO
     public Collection<Event> getEvents(){
-        /*
-        return this.events.values();
-
-         */
-        return null;
+        Collection<Event> allEvents=new HashSet<>();
+        List<Event> l= eventRepository.findAll();
+        for(Event e : l){
+            allEvents.add(e);
+        }
+        return allEvents;
     }
 
+    //HECHO
     public Event getEvent(long id){
-        return this.eventRepository.getById(id);
+        Optional<Event> e=this.eventRepository.findById(id);
+        if (e.isPresent()){
+            return e.get();
+        }
+        else{
+            return null;
+        }
     }
 
+    //HECHO
     public Long getEvent(Event e){
-        //add metodo
-        long h = 0;
-        return h;
+        return e.getId();
     }
 
+    //HECHO
     public Event deleteEvent(long id){
         Event e = this.eventRepository.getById(id);
         this.eventRepository.delete(e);
@@ -83,21 +94,25 @@ public class EventService {
     }
 
     public AtomicLong getLastIDEvent() {
-        //create method.
-        AtomicLong h = null;
-        return h;
+        return this.lastIDEvent;
     }
 
-    public Collection<Event> getEventsFilteredByCategory(String category){  //Events filtered by category
-
-
-        return null;
+    //HECHO
+    public List<Event> getEventsFilteredByCategory(String category){  //Events filtered by category
+        List<Event> eventsByCategory= eventRepository.findByCategory(category);
+        return eventsByCategory;
     }
 
+    //HECHO
     public Event getEventByName(String name){
+        Optional<Event> e=this.eventRepository.findByName(name);
+        if (e.isPresent()){
+            return e.get();
+        }
+        else{
+            return null;
+        }
 
-        this.eventRepository.findByName(name);
-        return null;
     }
 }
 

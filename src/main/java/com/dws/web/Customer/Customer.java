@@ -40,7 +40,16 @@ public class Customer {
     //@JsonView(Basico.class)
     private String address;
 
-    private Map<Long, Event> planning = new ConcurrentHashMap<>();
+    @JsonIgnore
+    @ManyToMany
+    private List<Event> planning;
+
+    @JsonIgnore
+    @OneToMany
+    private List<Review> reviews;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles;
 
     public Customer(String name, String surname, String email, String phoneNumber, String passwd, String address){
         this.name = name;
@@ -49,6 +58,7 @@ public class Customer {
         this.phoneNumber = phoneNumber;
         this.passwd = passwd;
         this.address = address;
+        this.roles.add("ROLE_USER");
     }
 
     public Customer (String email){
@@ -112,6 +122,10 @@ public class Customer {
         return this.address;
     }
 
+    public List<String> getRoles() {
+        return this.roles;
+    }
+
     @Override
     public String toString() {
         return "Datos del cliente :" + "\n" +
@@ -124,12 +138,23 @@ public class Customer {
                 "Direccion : " + this.address + "\n";
     }
 
+    public boolean getAdmin(){
+        for(String role : roles){
+            if(role.equals("ROLE_ADMIN"))return true;
+        }
+        return false;
+    }
+
+    public void makeAdmin(){
+        this.roles.add("ROLE_ADMIN");
+    }
+
     //PLANNING
 
     public boolean addToPlanning(Event e){
-        if (!this.planning.containsKey(e.getId())){
+        if (!this.planning.contains(e)){
 
-            this.planning.put(e.getId(), e);
+            this.planning.add(e);
             return true;
         }
         else{
@@ -137,12 +162,16 @@ public class Customer {
         }
     }
 
-    public Collection<Event> getPlanning(){
-        return this.planning.values();
+    public List<Event> getPlanning(){
+        return this.planning;
     }
 
     public void deleteEvent(long idEvent){
-        this.planning.remove(idEvent);
+        for (Event e: this.planning){
+            if (e.getId()==idEvent){
+                this.planning.remove(e);
+            }
+        }
     }
 
     public void cleanEvent(){
@@ -156,19 +185,23 @@ public class Customer {
     }
 
     private Event inPlanning(Event e1){
-        for(Event e : this.planning.values()){
+        for(Event e : this.planning){
             if(e.getId() == e1.getId()) return e;
         }
         return null;
     }
 
-    public Collection<Event> getAllEvents(){
-        Collection<Event> c = this.planning.values();
-        return c;
+    public List<Event> getAllEvents(){
+        return this.planning;
     }
 
     public Event getAnEvent(long idEvent){
-        return this.planning.get(idEvent);
+        for (Event e:this.planning){
+            if (e.getId()==idEvent){
+                return e;
+            }
+        }
+        return null;
     }
 
     public void cleanPlanning(){
@@ -184,10 +217,6 @@ public class Customer {
         return Objects.hash(email);
     }
 
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "customer")
-    private Set<Review> reviewsCustomer = new HashSet<>();
 
     /*
     @ManyToMany
