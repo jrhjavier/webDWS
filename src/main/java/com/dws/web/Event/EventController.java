@@ -1,6 +1,7 @@
 package com.dws.web.Event;
 
 import com.dws.web.Review.Review;
+import com.dws.web.Review.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,9 @@ public class EventController {
 
     @Autowired
     private EventService eventService;
+
+    @Autowired
+    private ReviewService reviewService;
     //Añadir servicio no controller
 
     //EVENT (Revisar)
@@ -136,7 +140,7 @@ public class EventController {
         //Event e=eventHolder.getEvent(idEvent);
         Event e = eventService.getEvent(idEvent);
         Review r=e.getReview(idReview);
-        e.deleteReviewOfThisEvent(idReview);
+        reviewService.deleteReviewFromAnEvent(e, r);
         model.addAttribute("review", r);
         return "deletedReview";
     }
@@ -147,9 +151,10 @@ public class EventController {
         Event e = eventService.getEvent(idEvent);
         Review r = e.getReview(idReview);
         if (r != null) {
-            e.deleteReviewOfThisEvent(idReview);
+            reviewService.deleteReviewFromAnEvent(e, r);
             updatedReview.setIdReview(idReview);
             e.addUpdatedReviewToThisEvent(updatedReview);
+            reviewService.addReviewToThisEvent(e, updatedReview);
             model.addAttribute("event", e);
             model.addAttribute("review",updatedReview);
             return "savedReview";
@@ -162,7 +167,7 @@ public class EventController {
     public String getAllReviewsOfAnEvent(Model model,@PathVariable long idEvent) {
         //Event e=eventHolder.getEvent(idEvent);
         Event e = eventService.getEvent(idEvent);
-        model.addAttribute("reviews", e.getAllReviews());
+        model.addAttribute("reviews", reviewService.getAllReviewsOfAnEvent(e));
         model.addAttribute("event", e);
         return "reviews";
     }
@@ -171,7 +176,7 @@ public class EventController {
     public String getAReview(Model model, @PathVariable long idEvent, @PathVariable long idReview) {
         //Event e=eventHolder.getEvent(idEvent);
         Event e = eventService.getEvent(idEvent);
-        model.addAttribute("review", e.getReview(idReview));
+        model.addAttribute("review", reviewService.getReview(e, idReview));
         return "review";
     }
 
