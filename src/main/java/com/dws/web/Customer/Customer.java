@@ -184,7 +184,7 @@ public class Customer {
         return e != null;
     }
 
-    private Event inPlanning(Event e1){
+    public Event inPlanning(Event e1){
         for(Event e : this.planning){
             if(e.getId() == e1.getId()) return e;
         }

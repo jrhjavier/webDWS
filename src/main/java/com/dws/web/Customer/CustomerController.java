@@ -1,7 +1,6 @@
 package com.dws.web.Customer;
 
 import com.dws.web.Event.Event;
-import com.dws.web.Event.EventHolder;
 import com.dws.web.Event.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

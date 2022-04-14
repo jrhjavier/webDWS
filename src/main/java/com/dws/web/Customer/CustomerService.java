@@ -93,6 +93,7 @@ public class CustomerService {
         c.addToPlanning(e);
     }
 
+    //FALTA POR HACER
     public Event deleteEventFromPlanning(Customer c, long idEvent) {
         Event e = getAnEvent(c, idEvent);
         if (c.containsPlanning(e)) {
@@ -129,7 +130,15 @@ public class CustomerService {
     }
 
     public Event getAnEvent(Customer c, long idEvent) {
-        return c.getAnEvent(idEvent);
+        Event e=this.eventRepository.getById(idEvent);
+        Optional<Customer> c1=this.customerRepository.findByEmail(c.getEmail());
+        if (c1.isPresent()){
+            e=c1.get().inPlanning(e);
+            if (e!=null){
+                return e;
+            }
+        }
+        return null;
     }
 
     public Event getAnEventByNoun(Customer c, String name) {
