@@ -41,6 +41,7 @@ public class CustomerController {
             long id=c.getIdClient();
             customerService.deleteCustomer(id);
             updatedCustomer.setIdClient(id);
+            updatedCustomer.setPassword();
             customerService.addUpdatedClient(updatedCustomer);
             model.addAttribute("customer", c);
             return "savedCustomer";
@@ -62,7 +63,7 @@ public class CustomerController {
         return "planning";
     }
 
-    //PLANNING (Revisar)
+    //PLANNING
 
     @GetMapping("/planning/new/{name}")
     public String newEvent2(Model model, @PathVariable String name) {

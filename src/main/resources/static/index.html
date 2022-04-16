@@ -182,11 +182,11 @@
     <div class="container">
         <form action="/" id="form">
             <div class="form-group">
-                <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                <input type="email" class="form-control" id="email" name="email" pattern="[A-Za-z0-9_-]{1,15}"required placeholder="Email">
                 <p id="emailFail" class="error"></p>
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña">
+                <input type="password" class="form-control" id="password" name="password" pattern="[A-Za-z0-9_-]{1,15}"required placeholder="Contraseña">
                 <p id="passwordFail" class="error"></p>
             </div>
         </form>

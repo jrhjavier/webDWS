@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
 @NoArgsConstructor
@@ -48,17 +49,13 @@ public class Customer {
     @OneToMany
     private List<Review> reviews;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> roles;
-
     public Customer(String name, String surname, String email, String phoneNumber, String passwd, String address){
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.passwd = passwd;
+        this.passwd = new BCryptPasswordEncoder().encode(passwd);
         this.address = address;
-        this.roles.add("ROLE_USER");
     }
 
     public Customer (String email){
@@ -93,6 +90,9 @@ public class Customer {
         this.address = address;
     }
 
+    public void setPassword() {
+        this.passwd = new BCryptPasswordEncoder().encode(this.passwd);
+    }
 
     public long getIdClient() {
         return this.idCustomer;
@@ -122,10 +122,6 @@ public class Customer {
         return this.address;
     }
 
-    public List<String> getRoles() {
-        return this.roles;
-    }
-
     @Override
     public String toString() {
         return "Datos del cliente :" + "\n" +
@@ -136,17 +132,6 @@ public class Customer {
                 "Telefono : " + this.phoneNumber + "\n" +
                 "Password : " + this.passwd + "\n" +
                 "Direccion : " + this.address + "\n";
-    }
-
-    public boolean getAdmin(){
-        for(String role : roles){
-            if(role.equals("ROLE_ADMIN"))return true;
-        }
-        return false;
-    }
-
-    public void makeAdmin(){
-        this.roles.add("ROLE_ADMIN");
     }
 
     //PLANNING

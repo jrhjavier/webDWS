@@ -10,8 +10,6 @@ import java.util.concurrent.atomic.AtomicLong;
 @Service
 public class EventService {
 
-    //Añade 3 repositorios (user,ticket y event)
-//Esto con 3:
     private AtomicLong lastIDEvent = new AtomicLong();
 
     @Autowired
