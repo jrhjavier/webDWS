@@ -41,14 +41,6 @@ public class Customer {
     //@JsonView(Basico.class)
     private String address;
 
-    @JsonIgnore
-    @ManyToMany
-    private List<Event> planning;
-
-    @JsonIgnore
-    @OneToMany
-    private List<Review> reviews;
-
     public Customer(String name, String surname, String email, String phoneNumber, String passwd, String address){
         this.name = name;
         this.surname = surname;
@@ -214,4 +206,20 @@ public class Customer {
     private Set<Event> eventsCustomer = new HashSet<>();
 
      */
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "", cascade=CascadeType.ALL)
+    public Set<EventCustomer> getStockCategories() {
+        //return this.eventCustomer;
+        return null;
+    }
+
+    @JsonIgnore
+    @ManyToMany
+    private List<Event> planning;
+
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    //@JoinColumn(name = "cr_fk", referencedColumnName = "id")
+    private List<Review> reviews;
 }

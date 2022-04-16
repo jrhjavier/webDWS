@@ -48,6 +48,7 @@ public class CustomerService {
         }
     }
 
+
     public Customer getCustomer(String email) {
         Optional<Customer> c = this.customerRepository.findByEmail(email);
         if (c.isPresent()) {
@@ -58,6 +59,7 @@ public class CustomerService {
 
     }
 
+
     public AtomicLong getLastIDEvent() {
         return this.lastIDEvent;
     }
@@ -65,11 +67,13 @@ public class CustomerService {
     //HECHO
     public Collection<Customer> getAllCustomers() {
         Collection<Customer> allCustomers = new HashSet<>();
+        //allCustomers = customerRepository.findAll();
+
         List<Customer> l = customerRepository.findAll();
         for (Customer c : l) {
             allCustomers.add(c);
         }
-        return l;
+        return allCustomers;
     }
 
     //HECHO

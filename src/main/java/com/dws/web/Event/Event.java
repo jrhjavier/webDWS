@@ -1,14 +1,13 @@
 package com.dws.web.Event;
 
+import com.dws.web.Customer.EventCustomer;
+import com.dws.web.Customer.EventCustomerId;
 import com.dws.web.Review.Review;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -160,6 +159,12 @@ public class Event {
     @Override
     public int hashCode() {
         return Objects.hash(idEvent);
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.event")
+    public Set<EventCustomer> getStockCategories() {
+        //return this.stockCategories;
+        return null;
     }
 
 
