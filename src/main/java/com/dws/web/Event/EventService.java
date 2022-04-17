@@ -30,8 +30,6 @@ public class EventService {
         this.eventRepository.delete(eFind);
         eUP.setIdEvent(eFind.getIdEvent());
         this.eventRepository.save(eUP);
-        //Add metodo a repositorio
-        //Nose si es así
     }
 
     //HECHO
@@ -73,8 +71,7 @@ public class EventService {
 
     //HECHO
     public List<Event> getEventsFilteredByCategory(String category){  //Events filtered by category
-        List<Event> eventsByCategory= eventRepository.findByCategory(category);
-        return eventsByCategory;
+        return eventRepository.findByCategory(category);
     }
 
     //HECHO

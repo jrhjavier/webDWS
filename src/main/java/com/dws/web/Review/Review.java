@@ -68,9 +68,15 @@ public class Review {
                 '}';
     }
 
+    public void assignEvent(Event e){
+        this.event=e;
+    }
 
+    public void unassignEvent(Event e){
+        this.event=null;
+    }
 
-
-
-
+    public Event getEvent(){
+        return this.event;
+    }
 }

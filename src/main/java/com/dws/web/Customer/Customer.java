@@ -137,7 +137,6 @@ public class Customer {
 
     public boolean addToPlanning(Event e){
         if (!this.planning.contains(e)){
-
             this.planning.add(e);
             return true;
         }
@@ -154,6 +153,7 @@ public class Customer {
         for (Event e: this.planning){
             if (e.getId()==idEvent){
                 this.planning.remove(e);
+                e.unassignCustomer(this);
             }
         }
     }

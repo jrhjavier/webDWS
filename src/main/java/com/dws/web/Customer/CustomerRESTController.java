@@ -85,7 +85,8 @@ public class CustomerRESTController {
     @DeleteMapping("/planning/{email}/delete/{idEvent}")
     public ResponseEntity<Event> deleteEventAPI(@PathVariable String email, @PathVariable long idEvent) {
         Customer c= customerService.getCustomer(email);
-        Event event = customerService.deleteEventFromPlanning(c, idEvent);
+        Event e=eventService.getEvent(idEvent);
+        Event event = customerService.deleteEventFromPlanning(c, e);
         if (event != null) {
             return new ResponseEntity<>(event, HttpStatus.OK);
         } else {

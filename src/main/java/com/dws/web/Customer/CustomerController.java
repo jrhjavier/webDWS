@@ -70,6 +70,7 @@ public class CustomerController {
         Customer c= customerService.getCustomer("admin@admin.es");
         Event e = eventService.getEventByName(name);
         if (c.addToPlanning(e)){
+            e.assignCustomer(c);
             model.addAttribute("event",e);
             return "addedEvent";
         }
@@ -82,7 +83,7 @@ public class CustomerController {
     public String deleteEventFromPlanning(Model model, @PathVariable long idEvent) {
         Customer c=customerService.getCustomer("admin@admin.es");
         Event e=eventService.getEvent(idEvent);
-        customerService.deleteEventFromPlanning(c, idEvent);
+        customerService.deleteEventFromPlanning(c, e);
         model.addAttribute("event", e);
         return "deletedEventFromPlanning";
     }
@@ -100,6 +101,7 @@ public class CustomerController {
     public String addEventToPlanningAPI(Model model, String email, Event e){
         Customer c= customerService.getCustomer(email);
         if (c.addToPlanning(e)){
+            e.assignCustomer(c);
             model.addAttribute("event",e);
             return "addedEvent";
         }

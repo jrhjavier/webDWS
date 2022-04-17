@@ -132,21 +132,17 @@ public class EventController {
 
     @PostMapping("/event/{idEvent}/review/new")
     public String newReview(Model model, @PathVariable long idEvent, Review r) {
-        //Event e=eventHolder.getEvent(idEvent);
         Event e = eventService.getEvent(idEvent);
-        e.addReviewToThisEvent(r);
         reviewService.addReviewToThisEvent(e, r);
-        model.addAttribute("reviews", e.getAllReviews());
+        model.addAttribute("reviews", reviewService.getAllReviewsOfAnEvent(e));
         model.addAttribute("event", e);
         return "reviews";
     }
 
     @GetMapping("/event/{idEvent}/review/{idReview}/delete")
     public String deleteReview(Model model, @PathVariable long idEvent, @PathVariable long idReview) {
-        //Event e=eventHolder.getEvent(idEvent);
         Event e = eventService.getEvent(idEvent);
         Review r=e.getReview(idReview);
-        e.deleteReviewOfThisEvent(r.getIdReview());
         reviewService.deleteReviewFromAnEvent(e, r);
         model.addAttribute("review", r);
         return "deletedReview";
@@ -154,14 +150,12 @@ public class EventController {
 
     @PostMapping("/event/{idEvent}/review/{idReview}/update")
     public String updateReview(Model model,@PathVariable long idEvent,@PathVariable long idReview, Review updatedReview) {
-        //Event e = eventHolder.getEvent(idEvent);
         Event e = eventService.getEvent(idEvent);
         Review r = e.getReview(idReview);
         if (r != null) {
             reviewService.deleteReviewFromAnEvent(e, r);
             updatedReview.setIdReview(idReview);
-            e.addUpdatedReviewToThisEvent(updatedReview);
-            reviewService.addReviewToThisEvent(e, updatedReview);
+            reviewService.addUpdatedReviewToThisEvent(e, updatedReview);
             model.addAttribute("event", e);
             model.addAttribute("review",updatedReview);
             return "savedReview";
@@ -172,7 +166,6 @@ public class EventController {
 
     @GetMapping("/event/{idEvent}/reviews")
     public String getAllReviewsOfAnEvent(Model model,@PathVariable long idEvent) {
-        //Event e=eventHolder.getEvent(idEvent);
         Event e = eventService.getEvent(idEvent);
         model.addAttribute("reviews", reviewService.getAllReviewsOfAnEvent(e));
         model.addAttribute("event", e);
@@ -181,7 +174,6 @@ public class EventController {
 
     @GetMapping("/event/{idEvent}/{idReview}")
     public String getAReview(Model model, @PathVariable long idEvent, @PathVariable long idReview) {
-        //Event e=eventHolder.getEvent(idEvent);
         Event e = eventService.getEvent(idEvent);
         model.addAttribute("review", reviewService.getReview(e, idReview));
         return "review";

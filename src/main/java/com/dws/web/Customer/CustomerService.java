@@ -93,27 +93,14 @@ public class CustomerService {
         long id = lastIDEvent.incrementAndGet();
         e.setIdEvent(id);
         Customer c = customerRepository.getById(idCustomer);
+        e.assignCustomer(c);
         c.addToPlanning(e);
     }
 
 
-    public Event deleteEventFromPlanning(Customer c, long idEvent) {
-        Optional<Customer> customer=customerRepository.findByEmail(c.getEmail());
-        if (customer.isPresent()){
-            Customer c1=customer.get();
-            Event e=eventRepository.getById(idEvent);
-            e=c1.inPlanning(e);
-            if (e!=null){
-                c1.deleteEvent(e.getIdEvent());
-                return e;
-            }
-            else{
-                return null;
-            }
-        }
-        else{
-            return null;
-        }
+    public Event deleteEventFromPlanning(Customer c, Event e) {
+        c.deleteEvent(e.getIdEvent());
+        return e;
     }
 
     public void updateAnEvent(Customer c, long idOldEvent, Event updatedEvent) {
@@ -123,22 +110,7 @@ public class CustomerService {
     }
 
     public Collection<Event> getAllEventsOfACustomer(Customer c) {
-        Collection<Event> allEventsOfACustomer = new HashSet<>();
-
-        Optional<Customer> c1 = customerRepository.findByEmail(c.getEmail());
-        if (c1.isPresent()) {
-            Customer c2 = c1.get();
-            Collection<Event> l = c2.getAllEvents();
-            for (Event e1 : l) {
-                for (Event e2 : this.eventRepository.findAll()) {
-                    if (e1.equals(e2)) {
-                        allEventsOfACustomer.add(e2);
-                    }
-                }
-            }
-        }
-
-        return allEventsOfACustomer;
+        return eventRepository.findByCustomer(c);
     }
 
     public Event getAnEvent(Customer c, long idEvent) {

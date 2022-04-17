@@ -43,8 +43,6 @@ public class Event {
     @ManyToMany()
     private List<Customer> customers;
 
-
-
     public Event(String name, String category, String description, float price) {
         this.name = name;
         this.description = description;
@@ -162,9 +160,13 @@ public class Event {
         return Objects.hash(idEvent);
     }
 
+    public void assignCustomer(Customer c){
+        this.customers.add(c);
+    }
 
-
-    //@JsonIgnore
+    public void unassignCustomer(Customer c){
+        this.customers.remove(c);
+    }
 
 
 
