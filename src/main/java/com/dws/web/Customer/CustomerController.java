@@ -67,7 +67,7 @@ public class CustomerController {
 
     @GetMapping("/planning/new/{name}")
     public String newEvent2(Model model, @PathVariable String name) {
-        Customer c= customerService.getCustomer("admin");
+        Customer c= customerService.getCustomer("admin@admin.es");
         Event e = eventService.getEventByName(name);
         if (c.addToPlanning(e)){
             model.addAttribute("event",e);
@@ -80,7 +80,7 @@ public class CustomerController {
 
     @GetMapping("/planning/delete/{idEvent}")
     public String deleteEventFromPlanning(Model model, @PathVariable long idEvent) {
-        Customer c=customerService.getCustomer("admin");
+        Customer c=customerService.getCustomer("admin@admin.es");
         Event e=eventService.getEvent(idEvent);
         customerService.deleteEventFromPlanning(c, idEvent);
         model.addAttribute("event", e);
@@ -110,7 +110,7 @@ public class CustomerController {
 
     @GetMapping("/planning")
     public String planning(Model model) {
-        Customer c= customerService.getCustomer("admin");
+        Customer c= customerService.getCustomer("admin@admin.es");
         model.addAttribute("events", customerService.getAllEventsOfACustomer(c));
         return "planning";
     }

@@ -72,7 +72,7 @@ public class CustomerRESTController {
         }
     }
 
-    //PLANNING (Revisar)
+    //PLANNING
 
     @PostMapping("/events/{idEvent}/new/{email}")
     public ResponseEntity<Event> newEventAPI(@PathVariable long idEvent, @PathVariable String email) {
