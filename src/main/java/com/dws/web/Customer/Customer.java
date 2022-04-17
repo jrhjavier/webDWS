@@ -10,16 +10,16 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
 @NoArgsConstructor
-@Table(name = "Customer")
+
 public class Customer {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     //@JsonView(Basico.class)
     private long idCustomer;
 
@@ -41,12 +41,19 @@ public class Customer {
     //@JsonView(Basico.class)
     private String address;
 
+    @ManyToMany(mappedBy = "customers")
+    private List<Event> planning;
+
+
+
+
     public Customer(String name, String surname, String email, String phoneNumber, String passwd, String address){
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.passwd = new BCryptPasswordEncoder().encode(passwd);
+       // this.passwd = new BCryptPasswordEncoder().encode(passwd);
+        this.passwd= passwd;
         this.address = address;
     }
 
@@ -82,8 +89,9 @@ public class Customer {
         this.address = address;
     }
 
-    public void setPassword() {
-        this.passwd = new BCryptPasswordEncoder().encode(this.passwd);
+    public void setPassword(String passwd) {
+        //this.passwd = new BCryptPasswordEncoder().encode(this.passwd);
+        this.passwd= passwd;
     }
 
     public long getIdClient() {
@@ -205,21 +213,16 @@ public class Customer {
     //private Set<Map.Entry<Long, Event>> eventsCustomer = this.planning.entrySet();
     private Set<Event> eventsCustomer = new HashSet<>();
 
-     */
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "", cascade=CascadeType.ALL)
-    public Set<EventCustomer> getStockCategories() {
-        //return this.eventCustomer;
-        return null;
-    }
-
-    @JsonIgnore
-    @ManyToMany
-    private List<Event> planning;
+*/
 
 
+    //No la ponemos aún:
+    /*
     @JsonIgnore
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     //@JoinColumn(name = "cr_fk", referencedColumnName = "id")
-    private List<Review> reviews;
+    private Set<Review> reviews;
+
+     */
 }

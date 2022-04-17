@@ -187,7 +187,7 @@ public class EventController {
 
     //PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
-    @GetMapping("/events/{category}")
+    @GetMapping("/events/query/{category}")
     public List<Event> getEventsByCategory(@PathVariable String category) {
         TypedQuery<Event> query = entityManager.createQuery
                 ("SELECT e FROM Event e WHERE e = :category", Event.class);

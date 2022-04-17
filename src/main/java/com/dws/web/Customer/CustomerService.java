@@ -2,6 +2,7 @@ package com.dws.web.Customer;
 
 import com.dws.web.Event.Event;
 import com.dws.web.Event.EventRepository;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 
 @Service
+@NoArgsConstructor
 public class CustomerService {
 
     //Hay que cambiar los métodos orientado al repositoriio
@@ -25,9 +27,6 @@ public class CustomerService {
     private AtomicLong lastIDEvent = new AtomicLong();
 
 
-    public CustomerService() {
-        this.customerRepository.save(new Customer("admin@admin.com"));
-    }
 
     public void addClient(Customer c) {
         this.customerRepository.save(c);

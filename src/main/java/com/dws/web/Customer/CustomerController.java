@@ -41,7 +41,7 @@ public class CustomerController {
             long id=c.getIdClient();
             customerService.deleteCustomer(id);
             updatedCustomer.setIdClient(id);
-            updatedCustomer.setPassword();
+            //updatedCustomer.setPassword();
             customerService.addUpdatedClient(updatedCustomer);
             model.addAttribute("customer", c);
             return "savedCustomer";

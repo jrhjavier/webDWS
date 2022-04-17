@@ -1,21 +1,21 @@
 package com.dws.web.Review;
 
 import com.dws.web.Customer.Customer;
+import com.dws.web.Event.Event;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Data
+
 @Entity
 @NoArgsConstructor
-@Table(name = "Reviews")
 public class Review {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     //@JsonView(Customer.Basico.class)
     private long idReview;
 
@@ -24,6 +24,10 @@ public class Review {
 
     //@JsonView(Customer.Basico.class)
     private String message;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    //@JoinColumn(name = "customer_id", referencedColumnName = "id")
+    private Event event;
 
 
     public Review(String userName, String message){
@@ -64,7 +68,9 @@ public class Review {
                 '}';
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    //@JoinColumn(name = "customer_id", referencedColumnName = "id")
-    private Customer customer;
+
+
+
+
+
 }

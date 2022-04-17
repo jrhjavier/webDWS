@@ -1,28 +1,28 @@
 package com.dws.web.Event;
 
-import com.dws.web.Customer.EventCustomer;
-import com.dws.web.Customer.EventCustomerId;
+//import com.dws.web.Customer.EventCustomer;
+//import com.dws.web.Customer.EventCustomerId;
+import com.dws.web.Customer.Customer;
 import com.dws.web.Review.Review;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
-@Data
+
 @Entity
-@Table(name = "Customers")
+@NoArgsConstructor
 public class Event {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    //@JsonView(Customer.Basico.class)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idEvent;
 
     @Column(nullable = false)//no puede ser null
-    //@JsonView(Customer.Basico.class)
     private String name;
 
     @Column(length = 100)
@@ -35,14 +35,15 @@ public class Event {
     //@JsonView(Customer.Basico.class)
     private String category;
 
-    @JsonIgnore
-    @OneToMany
-    private List<Review> reviews;
-
     private AtomicLong lastIDReview = new AtomicLong();
 
-    public Event() {
-    }
+    @OneToMany(mappedBy = "event")
+    private List<Review> reviews;
+
+    @ManyToMany()
+    private List<Customer> customers;
+
+
 
     public Event(String name, String category, String description, float price) {
         this.name = name;
@@ -161,11 +162,11 @@ public class Event {
         return Objects.hash(idEvent);
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.event")
-    public Set<EventCustomer> getStockCategories() {
-        //return this.stockCategories;
-        return null;
-    }
+
+
+    //@JsonIgnore
+
+
 
 
 }
