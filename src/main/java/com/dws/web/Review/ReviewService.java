@@ -2,6 +2,8 @@ package com.dws.web.Review;
 
 import com.dws.web.Event.Event;
 import com.dws.web.Event.EventRepository;
+import org.owasp.html.PolicyFactory;
+import org.owasp.html.Sanitizers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +33,12 @@ public class ReviewService {
     public void deleteReviewFromAnEvent(Event e, Review r){
         Optional<Event> e1=eventRepository.findById(e.getId());
         if (e1.isPresent()){
-            Event e2=e1.get();
+            //Event e2=e1.get();
+
+            //XSS//
+            PolicyFactory policy= Sanitizers.FORMATTING.and(Sanitizers.LINKS);
+            r.setMessage(policy.sanitize(r.getMessage()));
+
             reviewRepository.delete(r);
         }
     }
