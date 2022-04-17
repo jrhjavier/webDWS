@@ -17,7 +17,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class Customer {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     //@JsonView(Basico.class)
