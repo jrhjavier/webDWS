@@ -150,12 +150,8 @@ public class Customer {
         return this.planning;
     }
 
-    public void deleteEvent(long idEvent){
-        for (Event e: this.planning){
-            if (e.getId()==idEvent){
-                this.planning.remove(e);
-            }
-        }
+    public void deleteEvent(Event event){
+        this.planning.remove(event);
     }
 
     public void cleanEvent(){

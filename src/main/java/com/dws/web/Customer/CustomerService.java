@@ -91,16 +91,20 @@ public class CustomerService {
 
 
     public Event deleteEventFromPlanning(Customer c, Event e) {
-        c.deleteEvent(e.getIdEvent());
+        c.deleteEvent(e);
         e.unassignCustomer(c);
+        customerRepository.saveAndFlush(c);
+        eventRepository.saveAndFlush(e);
         return e;
     }
 
+    /*
     public void updateAnEvent(Customer c, long idOldEvent, Event updatedEvent) {
         c.deleteEvent(idOldEvent);
         updatedEvent.setIdEvent(idOldEvent);
         c.addToPlanning(updatedEvent);
     }
+     */
 
     public Collection<Event> getAllEventsOfACustomer(Customer c) {
         return c.getAllEvents();
