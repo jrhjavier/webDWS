@@ -42,10 +42,6 @@ public class ReviewService {
         e.deleteReviewOfThisEvent(r.getIdReview());
         Optional<Event> e1=eventRepository.findById(e.getId());
         if (e1.isPresent()){
-            //Event e2=e1.get();
-
-
-
             reviewRepository.delete(r);
         }
     }

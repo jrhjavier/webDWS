@@ -25,7 +25,7 @@ public class Event {
     @Column(nullable = false)//no puede ser null
     private String name;
 
-    @Column(length = 100)
+    @Column(length = 1000)
     //@JsonView(Customer.Basico.class)
     private String description;
 

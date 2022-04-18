@@ -33,15 +33,17 @@ public class EventService {
         this.eventRepository.delete(eFind);
         eUP.setIdEvent(eFind.getIdEvent());
 
-        //XSS//
-        PolicyFactory policy= Sanitizers.FORMATTING.and(Sanitizers.LINKS);
-        eUP.setDescription(policy.sanitize(eUP.getDescription()));
 
         this.eventRepository.save(eUP);
         //Add metodo a repositorio
         //Nose si es así
 
          */
+
+        //XSS//
+        PolicyFactory policy= Sanitizers.FORMATTING.and(Sanitizers.LINKS);
+        eUP.setDescription(policy.sanitize(eUP.getDescription()));
+
         this.eventRepository.saveAndFlush(eUP);
     }
 
