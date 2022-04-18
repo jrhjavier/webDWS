@@ -6,16 +6,17 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
 @NoArgsConstructor
 
 public class Customer {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,16 +44,13 @@ public class Customer {
     @ManyToMany(mappedBy = "customers")
     private List<Event> planning;
 
-
-
-
     public Customer(String name, String surname, String email, String phoneNumber, String passwd, String address){
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.phoneNumber = phoneNumber;
-       // this.passwd = new BCryptPasswordEncoder().encode(passwd);
-        this.passwd= passwd;
+        this.passwd=passwd;
+        //this.passwd = new BCryptPasswordEncoder().encode(passwd);
         this.address = address;
     }
 
@@ -80,18 +78,21 @@ public class Customer {
         this.phoneNumber = phoneNumber;
     }
 
-    public void setPasswd(String passwd) {
-        this.passwd = passwd;
-    }
-
     public void setAddress(String address) {
         this.address = address;
     }
 
+    /*
     public void setPassword(String passwd) {
-        //this.passwd = new BCryptPasswordEncoder().encode(this.passwd);
-        this.passwd= passwd;
+        this.passwd = codify(passwd);
     }
+
+    public String codify(String passwd){
+        String pass = new BCryptPasswordEncoder().encode(passwd);
+        return pass;
+    }
+
+     */
 
     public long getIdClient() {
         return this.idCustomer;
@@ -153,7 +154,6 @@ public class Customer {
         for (Event e: this.planning){
             if (e.getId()==idEvent){
                 this.planning.remove(e);
-                e.unassignCustomer(this);
             }
         }
     }
@@ -175,7 +175,7 @@ public class Customer {
         return null;
     }
 
-    public List<Event> getAllEvents(){
+    public Collection<Event> getAllEvents(){
         return this.planning;
     }
 
@@ -224,4 +224,5 @@ public class Customer {
     private Set<Review> reviews;
 
      */
+
 }

@@ -43,6 +43,8 @@ public class Event {
     @ManyToMany()
     private List<Customer> customers;
 
+
+
     public Event(String name, String category, String description, float price) {
         this.name = name;
         this.description = description;
@@ -171,7 +173,8 @@ public class Event {
         this.customers.remove(c);
     }
 
-
-
+    public boolean containsCustomer(Customer c){
+        return this.customers.contains(c);
+    }
 
 }

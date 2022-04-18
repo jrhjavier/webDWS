@@ -72,8 +72,8 @@ public class EventService {
     }
 
     //HECHO
-    public Event deleteEvent(long id){
-        Event e = this.eventRepository.getById(id);
+    public Event deleteEvent(long idEvent){
+        Event e=this.eventRepository.getById(idEvent);
         this.eventRepository.delete(e);
         return e;
     }
@@ -104,6 +104,40 @@ public class EventService {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+*
+* @Autowired
+    EventRepository eventRepository;
+
+    public Optional<Event> existEventById(long id){
+        return eventRepository.findById(id);
+    }
+* */
 
 
 
