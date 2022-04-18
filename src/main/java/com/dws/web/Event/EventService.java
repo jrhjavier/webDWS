@@ -42,8 +42,6 @@ public class EventService {
         eUP.setDescription(policy.sanitize(eUP.getDescription()));
 
         this.eventRepository.save(eUP);
-        //Add metodo a repositorio
-        //Nose si es así
     }
 
     //HECHO
@@ -85,8 +83,7 @@ public class EventService {
 
     //HECHO
     public List<Event> getEventsFilteredByCategory(String category){  //Events filtered by category
-        List<Event> eventsByCategory= eventRepository.findByCategory(category);
-        return eventsByCategory;
+        return eventRepository.findByCategory(category);
     }
 
     //HECHO
