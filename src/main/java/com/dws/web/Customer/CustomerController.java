@@ -9,7 +9,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.util.Collection;
+import java.util.List;
 
 @Controller
 public class CustomerController {
@@ -19,6 +22,9 @@ public class CustomerController {
 
     @Autowired
     EventService eventService;
+
+    @Autowired
+    private EntityManager entityManager;
 
     //CUSTOMER
 
@@ -85,29 +91,15 @@ public class CustomerController {
 
     @GetMapping("/planning/delete/{idEvent}")
     public String deleteEventFromPlanning(Model model, @PathVariable long idEvent) {
-
-        Collection<Customer> allCustomers=customerService.getAllCustomers();
-
-        for (Customer c:allCustomers){
-            Event e=c.getAnEvent(idEvent);
-            c.deleteEvent(idEvent);
-            e.unassignCustomer(c);
-            eventService.deleteEvent(idEvent);
+        Customer c= customerService.getCustomer("admin@admin.es");
+        Event e = eventService.getEvent(idEvent);
+        customerService.deleteEventFromPlanning(c,e);
+        if (eventService.getEvent(idEvent)!=null) {
+            model.addAttribute("event", eventService.getEvent(idEvent));
+            return "deletedEventFromPlanning";
         }
-
-        model.addAttribute("event", eventService.getEvent(idEvent));
-        return "deletedEventFromPlanning";
+        return "redirect:/planning";
     }
-
-    //ESTO ES DE ARRIBA
-    /*
-        Customer c=customerService.getCustomer("admin@admin.es");
-        Event e=c.getAnEvent(idEvent);
-        c.deleteEvent(idEvent);
-        e.unassignCustomer(c);
-        eventService.deleteEvent(idEvent);
-
-         */
 
     /*
     @PutMapping("/planning/update")
