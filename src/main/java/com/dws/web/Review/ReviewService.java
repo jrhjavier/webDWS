@@ -25,48 +25,24 @@ public class ReviewService {
 
 
     public void addReviewToThisEvent(Event e, Review r){ //Igual no se modifica el id de review
-
+        r.assignEvent(e);
         e.addReviewToThisEvent(r);
-        Optional<Event> e1=eventRepository.findById(e.getId());
-        if (e1.isPresent()){
-
-            //XSS//
-            PolicyFactory policy= Sanitizers.FORMATTING.and(Sanitizers.LINKS);
-            r.setMessage(policy.sanitize(r.getMessage()));
-
-            this.reviewRepository.save(r);
-        }
+        this.reviewRepository.save(r);
     }
 
     public void deleteReviewFromAnEvent(Event e, Review r){
         e.deleteReviewOfThisEvent(r.getIdReview());
-        Optional<Event> e1=eventRepository.findById(e.getId());
-        if (e1.isPresent()){
-            reviewRepository.delete(r);
-        }
+        reviewRepository.delete(r);
+    }
+
+    public void addUpdatedReviewToThisEvent(Event e, Review r){
+        e.addUpdatedReviewToThisEvent(r);
+        r.assignEvent(e);
+        reviewRepository.save(r);
     }
 
     public Collection<Review> getAllReviewsOfAnEvent(Event e){
-
-        /*
-        Collection<Review> allReviews=new HashSet<>();
-
-        Optional<Event> e1=eventRepository.findById(e.getId());
-        if (e1.isPresent()){
-            Event e2=e1.get();
-            Collection<Review> l=e2.getAllReviews();
-            for (Review r1 : l){
-                for (Review r2:this.reviewRepository.findAll()){
-                    if (r1.equals(r2)){
-                        allReviews.add(r2);
-                    }
-                }
-            }
-        }
-        return allReviews;
-        */
-
-       return this.reviewRepository.findByEvent(e);
+        return this.reviewRepository.findByEvent(e);
     }
 
     public Review getReview(Event e, long idReview){
