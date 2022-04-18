@@ -63,22 +63,10 @@ public class EventController {
 
     @PostMapping("/events/{idEvent}/update")
     public String updateEvent(Model model, @PathVariable long idEvent, Event updatedEvent) {
-        Event event = eventService.getEvent(idEvent);
-        if (event != null) {
-            Collection<Review> allReviews= event.getAllReviews();
-            eventService.deleteEvent(idEvent);
-            updatedEvent.setIdEvent(idEvent);
+        this.eventService.addUpdatedEvent(idEvent,updatedEvent);
+        model.addAttribute("event",updatedEvent);
+        return "updatedEvent";
 
-            for(Review r : allReviews ){
-                updatedEvent.addReviewToThisEvent(r);
-            }
-
-            //eventHolder.addUpdatedEvent(updatedEvent);
-            model.addAttribute("event",updatedEvent);
-            return "updatedEvent";
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
     }
 
     @GetMapping("/events/all/restaurants")
@@ -134,16 +122,16 @@ public class EventController {
     public String newReview(Model model, @PathVariable long idEvent, Review r) {
         Event e = eventService.getEvent(idEvent);
         reviewService.addReviewToThisEvent(e, r);
-        model.addAttribute("reviews", reviewService.getAllReviewsOfAnEvent(e));
+        model.addAttribute("review", r);
         model.addAttribute("event", e);
-        return "reviews";
+        return "savedReview";
     }
 
     @GetMapping("/event/{idEvent}/review/{idReview}/delete")
     public String deleteReview(Model model, @PathVariable long idEvent, @PathVariable long idReview) {
         Event e = eventService.getEvent(idEvent);
         Review r=e.getReview(idReview);
-        reviewService.deleteReviewFromAnEvent(e, r);
+        this.reviewService.deleteReviewFromAnEvent(e, r);
         model.addAttribute("review", r);
         return "deletedReview";
     }
@@ -153,9 +141,9 @@ public class EventController {
         Event e = eventService.getEvent(idEvent);
         Review r = e.getReview(idReview);
         if (r != null) {
-            reviewService.deleteReviewFromAnEvent(e, r);
+            this.reviewService.deleteReviewFromAnEvent(e, r);
             updatedReview.setIdReview(idReview);
-            reviewService.addUpdatedReviewToThisEvent(e, updatedReview);
+            this.reviewService.addUpdatedReviewToThisEvent(e, updatedReview);
             model.addAttribute("event", e);
             model.addAttribute("review",updatedReview);
             return "savedReview";
@@ -166,14 +154,15 @@ public class EventController {
 
     @GetMapping("/event/{idEvent}/reviews")
     public String getAllReviewsOfAnEvent(Model model,@PathVariable long idEvent) {
-        Event e = eventService.getEvent(idEvent);
-        model.addAttribute("reviews", reviewService.getAllReviewsOfAnEvent(e));
+        Event e = this.eventService.getEvent(idEvent);
+        model.addAttribute("reviews", this.reviewService.getAllReviewsOfAnEvent(e));
         model.addAttribute("event", e);
         return "reviews";
     }
 
     @GetMapping("/event/{idEvent}/{idReview}")
     public String getAReview(Model model, @PathVariable long idEvent, @PathVariable long idReview) {
+        //Event e=eventHolder.getEvent(idEvent);
         Event e = eventService.getEvent(idEvent);
         model.addAttribute("review", reviewService.getReview(e, idReview));
         return "review";

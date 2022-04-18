@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Collection;
+
 @Controller
 public class CustomerController {
 
@@ -22,6 +24,7 @@ public class CustomerController {
 
     @PostMapping("/customer/new")
     public String newCustomer(Model model, Customer c) {
+        //c.setPassword(c.getPasswd());
         customerService.addClient(c);
         model.addAttribute("customer",c);
         return "savedCustomer";
@@ -71,6 +74,7 @@ public class CustomerController {
         Event e = eventService.getEventByName(name);
         if (c.addToPlanning(e)){
             e.assignCustomer(c);
+            eventService.addEvent(e);
             model.addAttribute("event",e);
             return "addedEvent";
         }
@@ -81,12 +85,29 @@ public class CustomerController {
 
     @GetMapping("/planning/delete/{idEvent}")
     public String deleteEventFromPlanning(Model model, @PathVariable long idEvent) {
-        Customer c=customerService.getCustomer("admin@admin.es");
-        Event e=eventService.getEvent(idEvent);
-        customerService.deleteEventFromPlanning(c, e);
-        model.addAttribute("event", e);
+
+        Collection<Customer> allCustomers=customerService.getAllCustomers();
+
+        for (Customer c:allCustomers){
+            Event e=c.getAnEvent(idEvent);
+            c.deleteEvent(idEvent);
+            e.unassignCustomer(c);
+            eventService.deleteEvent(idEvent);
+        }
+
+        model.addAttribute("event", eventService.getEvent(idEvent));
         return "deletedEventFromPlanning";
     }
+
+    //ESTO ES DE ARRIBA
+    /*
+        Customer c=customerService.getCustomer("admin@admin.es");
+        Event e=c.getAnEvent(idEvent);
+        c.deleteEvent(idEvent);
+        e.unassignCustomer(c);
+        eventService.deleteEvent(idEvent);
+
+         */
 
     /*
     @PutMapping("/planning/update")
@@ -101,7 +122,6 @@ public class CustomerController {
     public String addEventToPlanningAPI(Model model, String email, Event e){
         Customer c= customerService.getCustomer(email);
         if (c.addToPlanning(e)){
-            e.assignCustomer(c);
             model.addAttribute("event",e);
             return "addedEvent";
         }
@@ -112,8 +132,7 @@ public class CustomerController {
 
     @GetMapping("/planning")
     public String planning(Model model) {
-        Customer c= customerService.getCustomer("admin@admin.es");
-        model.addAttribute("events", customerService.getAllEventsOfACustomer(c));
+        model.addAttribute("events", customerService.getAllEventsOfACustomer(customerService.getCustomer("admin@admin.es")));
         return "planning";
     }
 

@@ -65,14 +65,7 @@ public class CustomerService {
 
     //HECHO
     public Collection<Customer> getAllCustomers() {
-        Collection<Customer> allCustomers = new HashSet<>();
-        //allCustomers = customerRepository.findAll();
-
-        List<Customer> l = customerRepository.findAll();
-        for (Customer c : l) {
-            allCustomers.add(c);
-        }
-        return allCustomers;
+        return this.customerRepository.findAll();
     }
 
     //HECHO
@@ -86,20 +79,20 @@ public class CustomerService {
     public void updateCustomer(Customer c, long id) {
         Customer c1 = customerRepository.getById(id);
         customerRepository.delete(c1);
-        customerRepository.saveAndFlush(c);
+        customerRepository.save(c);
     }
 
     public void addEventToPlanning(long idCustomer, Event e) {
         long id = lastIDEvent.incrementAndGet();
         e.setIdEvent(id);
         Customer c = customerRepository.getById(idCustomer);
-        e.assignCustomer(c);
         c.addToPlanning(e);
     }
 
 
     public Event deleteEventFromPlanning(Customer c, Event e) {
         c.deleteEvent(e.getIdEvent());
+        e.unassignCustomer(c);
         return e;
     }
 
@@ -110,7 +103,7 @@ public class CustomerService {
     }
 
     public Collection<Event> getAllEventsOfACustomer(Customer c) {
-        return eventRepository.findByCustomer(c);
+        return c.getAllEvents();
     }
 
     public Event getAnEvent(Customer c, long idEvent) {

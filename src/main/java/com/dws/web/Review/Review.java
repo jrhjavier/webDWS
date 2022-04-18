@@ -1,9 +1,6 @@
 package com.dws.web.Review;
 
-import com.dws.web.Customer.Customer;
 import com.dws.web.Event.Event;
-import com.fasterxml.jackson.annotation.JsonView;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -25,7 +22,7 @@ public class Review {
     //@JsonView(Customer.Basico.class)
     private String message;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     //@JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Event event;
 
@@ -68,15 +65,9 @@ public class Review {
                 '}';
     }
 
+
     public void assignEvent(Event e){
         this.event=e;
     }
 
-    public void unassignEvent(Event e){
-        this.event=null;
-    }
-
-    public Event getEvent(){
-        return this.event;
-    }
 }
