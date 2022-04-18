@@ -14,15 +14,11 @@ import java.util.concurrent.atomic.AtomicLong;
 @NoArgsConstructor
 public class EventService {
 
-    private AtomicLong lastIDEvent = new AtomicLong();
-
     @Autowired
     private EventRepository eventRepository;
 
     //HECHO
     public void addEvent (Event event){
-        long id = this.lastIDEvent.incrementAndGet();
-        event.setIdEvent(id);
 
         //XSS//
         PolicyFactory policy= Sanitizers.FORMATTING.and(Sanitizers.LINKS);
@@ -33,7 +29,7 @@ public class EventService {
 
     //HECHO
     public void addUpdatedEvent(long id,Event eUP ){
-        Event eFind = eventRepository.getById(id);
+        /*Event eFind = eventRepository.getById(id);
         this.eventRepository.delete(eFind);
         eUP.setIdEvent(eFind.getIdEvent());
 
@@ -42,6 +38,11 @@ public class EventService {
         eUP.setDescription(policy.sanitize(eUP.getDescription()));
 
         this.eventRepository.save(eUP);
+        //Add metodo a repositorio
+        //Nose si es así
+
+         */
+        this.eventRepository.saveAndFlush(eUP);
     }
 
     //HECHO
@@ -77,13 +78,11 @@ public class EventService {
         return e;
     }
 
-    public AtomicLong getLastIDEvent() {
-        return this.lastIDEvent;
-    }
 
     //HECHO
     public List<Event> getEventsFilteredByCategory(String category){  //Events filtered by category
-        return eventRepository.findByCategory(category);
+        List<Event> eventsByCategory= eventRepository.findByCategory(category);
+        return eventsByCategory;
     }
 
     //HECHO

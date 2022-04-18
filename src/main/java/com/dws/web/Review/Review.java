@@ -68,6 +68,7 @@ public class Review {
                 '}';
     }
 
+    /*
     public void assignEvent(Event e){
         this.event=e;
     }
@@ -76,7 +77,6 @@ public class Review {
         this.event=null;
     }
 
-    public Event getEvent(){
-        return this.event;
-    }
+     */
+
 }
