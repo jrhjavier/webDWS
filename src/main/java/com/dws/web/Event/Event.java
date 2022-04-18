@@ -104,11 +104,14 @@ public class Event {
 
     //REVIEW
 
+
     public void addReviewToThisEvent(Review r){
         long idReview=this.lastIDReview.incrementAndGet();
         r.setIdReview(idReview);
         this.reviews.add(r);
     }
+
+
 
     public void addUpdatedReviewToThisEvent(Review r){
         this.reviews.add(r);

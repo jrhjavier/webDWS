@@ -2,6 +2,8 @@ package com.dws.web.Event;
 
 
 import lombok.NoArgsConstructor;
+import org.owasp.html.PolicyFactory;
+import org.owasp.html.Sanitizers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,26 +14,35 @@ import java.util.concurrent.atomic.AtomicLong;
 @NoArgsConstructor
 public class EventService {
 
-    private AtomicLong lastIDEvent = new AtomicLong();
-
     @Autowired
     private EventRepository eventRepository;
 
     //HECHO
     public void addEvent (Event event){
-        long id = this.lastIDEvent.incrementAndGet();
-        event.setIdEvent(id);
+
+        //XSS//
+        PolicyFactory policy= Sanitizers.FORMATTING.and(Sanitizers.LINKS);
+        event.setDescription(policy.sanitize(event.getDescription()));
+
         this.eventRepository.save(event);
     }
 
     //HECHO
     public void addUpdatedEvent(long id,Event eUP ){
-        Event eFind = eventRepository.getById(id);
+        /*Event eFind = eventRepository.getById(id);
         this.eventRepository.delete(eFind);
         eUP.setIdEvent(eFind.getIdEvent());
+
+        //XSS//
+        PolicyFactory policy= Sanitizers.FORMATTING.and(Sanitizers.LINKS);
+        eUP.setDescription(policy.sanitize(eUP.getDescription()));
+
         this.eventRepository.save(eUP);
         //Add metodo a repositorio
         //Nose si es así
+
+         */
+        this.eventRepository.saveAndFlush(eUP);
     }
 
     //HECHO
@@ -67,9 +78,6 @@ public class EventService {
         return e;
     }
 
-    public AtomicLong getLastIDEvent() {
-        return this.lastIDEvent;
-    }
 
     //HECHO
     public List<Event> getEventsFilteredByCategory(String category){  //Events filtered by category

@@ -2,14 +2,19 @@ package com.dws.web.Review;
 
 import com.dws.web.Event.Event;
 import com.dws.web.Event.EventRepository;
+import lombok.NoArgsConstructor;
+import org.owasp.html.PolicyFactory;
+import org.owasp.html.Sanitizers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 
 @Service
+@NoArgsConstructor
 public class ReviewService {
 
     @Autowired
@@ -18,15 +23,14 @@ public class ReviewService {
     @Autowired
     EventRepository eventRepository;
 
-    public ReviewService(){
-    }
 
     public void addReviewToThisEvent(Event e, Review r){ //Igual no se modifica el id de review
+
         e.addReviewToThisEvent(r);
         Optional<Event> e1=eventRepository.findById(e.getId());
         if (e1.isPresent()){
-            Event e2=e1.get();
-            reviewRepository.save(r);
+            //Event e2=e1.get();
+            this.reviewRepository.save(r);
         }
     }
 
@@ -34,12 +38,19 @@ public class ReviewService {
         e.deleteReviewOfThisEvent(r.getIdReview());
         Optional<Event> e1=eventRepository.findById(e.getId());
         if (e1.isPresent()){
-            Event e2=e1.get();
+            //Event e2=e1.get();
+
+            //XSS//
+            PolicyFactory policy= Sanitizers.FORMATTING.and(Sanitizers.LINKS);
+            r.setMessage(policy.sanitize(r.getMessage()));
+
             reviewRepository.delete(r);
         }
     }
 
     public Collection<Review> getAllReviewsOfAnEvent(Event e){
+
+        /*
         Collection<Review> allReviews=new HashSet<>();
 
         Optional<Event> e1=eventRepository.findById(e.getId());
@@ -55,6 +66,9 @@ public class ReviewService {
             }
         }
         return allReviews;
+        */
+
+       return this.reviewRepository.findByEvent(e);
     }
 
     public Review getReview(Event e, long idReview){
@@ -65,6 +79,10 @@ public class ReviewService {
         else{
             return null;
         }
+    }
+
+    public List<Review> getAllReviews(){
+        return this.reviewRepository.findAll();
     }
 
 }
