@@ -29,7 +29,11 @@ public class ReviewService {
         e.addReviewToThisEvent(r);
         Optional<Event> e1=eventRepository.findById(e.getId());
         if (e1.isPresent()){
-            //Event e2=e1.get();
+
+            //XSS//
+            PolicyFactory policy= Sanitizers.FORMATTING.and(Sanitizers.LINKS);
+            r.setMessage(policy.sanitize(r.getMessage()));
+
             this.reviewRepository.save(r);
         }
     }
@@ -40,9 +44,7 @@ public class ReviewService {
         if (e1.isPresent()){
             //Event e2=e1.get();
 
-            //XSS//
-            PolicyFactory policy= Sanitizers.FORMATTING.and(Sanitizers.LINKS);
-            r.setMessage(policy.sanitize(r.getMessage()));
+
 
             reviewRepository.delete(r);
         }

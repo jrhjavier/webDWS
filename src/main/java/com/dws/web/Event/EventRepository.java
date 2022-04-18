@@ -13,7 +13,7 @@ public interface EventRepository extends JpaRepository<Event,Long> {
     Optional<Event> findByName(String name);
     List<Event> findByCategory(String category);
     List<Event> findByCustomer(Customer c);
-    Event findOneByCustomer(Customer c);
+
 }
 
 
