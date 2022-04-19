@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 @NoArgsConstructor
@@ -22,7 +21,6 @@ public class EventService {
     @Autowired
     private EntityManager entityManager;
 
-    //HECHO
     public void addEvent (Event event){
 
         //XSS//
@@ -32,21 +30,12 @@ public class EventService {
         this.eventRepository.save(event);
     }
 
-    //HECHO
     public void addUpdatedEvent(long id,Event eUP ){
-        /*Event eFind = eventRepository.getById(id);
-        this.eventRepository.delete(eFind);
-        eUP.setIdEvent(eFind.getIdEvent());
 
         //XSS//
         PolicyFactory policy= Sanitizers.FORMATTING.and(Sanitizers.LINKS);
         eUP.setDescription(policy.sanitize(eUP.getDescription()));
 
-        this.eventRepository.save(eUP);
-        //Add metodo a repositorio
-        //Nose si es así
-
-         */
         this.eventRepository.saveAndFlush(eUP);
     }
 
@@ -66,7 +55,6 @@ public class EventService {
     }
 
     /*
-    //HECHO
     public Event getEvent(long id){
         Optional<Event> e=this.eventRepository.findById(id);
         if (e.isPresent()){
@@ -78,20 +66,16 @@ public class EventService {
     }
      */
 
-    //HECHO
     public Long getEvent(Event e){
         return e.getId();
     }
 
-    //HECHO
     public Event deleteEvent(long idEvent){
         Event e=this.eventRepository.getById(idEvent);
         this.eventRepository.delete(e);
         return e;
     }
 
-
-    //HECHO
     public List<Event> getEventsFilteredByCategory(String category){  //Events filtered by category
         List<Event> eventsByCategory= eventRepository.findByCategory(category);
         return eventsByCategory;

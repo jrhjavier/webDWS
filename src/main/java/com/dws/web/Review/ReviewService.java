@@ -3,6 +3,8 @@ package com.dws.web.Review;
 import com.dws.web.Event.Event;
 import com.dws.web.Event.EventRepository;
 import lombok.NoArgsConstructor;
+import org.owasp.html.PolicyFactory;
+import org.owasp.html.Sanitizers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,9 +23,14 @@ public class ReviewService {
     EventRepository eventRepository;
 
 
-    public void addReviewToThisEvent(Event e, Review r){ //Igual no se modifica el id de review
+    public void addReviewToThisEvent(Event e, Review r){
         r.assignEvent(e);
         e.addReviewToThisEvent(r);
+
+        //XSS//
+        PolicyFactory policy= Sanitizers.FORMATTING.and(Sanitizers.LINKS);
+        r.setMessage(policy.sanitize(r.getMessage()));
+
         this.reviewRepository.save(r);
     }
 
@@ -36,6 +43,11 @@ public class ReviewService {
     public void addUpdatedReviewToThisEvent(Event e, Review r){
         e.addUpdatedReviewToThisEvent(r);
         r.assignEvent(e);
+
+        //XSS//
+        PolicyFactory policy= Sanitizers.FORMATTING.and(Sanitizers.LINKS);
+        r.setMessage(policy.sanitize(r.getMessage()));
+
         reviewRepository.save(r);
     }
 

@@ -17,7 +17,7 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idEvent;
 
-    @Column(nullable = false)//no puede ser null
+    @Column(nullable = false)
     private String name;
 
     @Column(length = 1000)

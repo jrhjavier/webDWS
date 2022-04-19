@@ -14,8 +14,6 @@ import java.util.concurrent.atomic.AtomicLong;
 @NoArgsConstructor
 public class CustomerService {
 
-    //Hay que cambiar los métodos orientado al repositoriio
-
     @Autowired
     private CustomerRepository customerRepository;
 
@@ -32,12 +30,10 @@ public class CustomerService {
         this.customerRepository.save(c);
     }
 
-    //HECHO
     public void addUpdatedClient(Customer c) {
         this.customerRepository.save(c);
     }
 
-    //HECHO
     public Customer getClient(long id) {
         Optional<Customer> c = customerRepository.findById(id);
         if (c.isPresent()) {
