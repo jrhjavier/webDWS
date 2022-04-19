@@ -100,15 +100,6 @@ public class CustomerController {
         return "redirect:/planning";
     }
 
-    /*
-    @PutMapping("/planning/update")
-    public String updateEvent(@RequestBody Customer c, @RequestParam long idOldEvent, @RequestBody Event updatedEvent) {
-        customerHolder.updateAnEvent(c, idOldEvent, updatedEvent);
-        return "addedEvent";
-    }
-
-     */
-
     @PostMapping("/planning/new")
     public String addEventToPlanningAPI(Model model, String email, Event e){
         Customer c= customerService.getCustomer(email);
@@ -137,6 +128,5 @@ public class CustomerController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
-
 
 }

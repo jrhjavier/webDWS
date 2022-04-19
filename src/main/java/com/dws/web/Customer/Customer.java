@@ -188,28 +188,4 @@ public class Customer {
         return Objects.hash(email);
     }
 
-
-    /*
-    @ManyToMany
-    @JoinTable(
-            name="events_Customer",
-            joinColumns = @JoinColumn(name = "Customer_id"),
-            inverseJoinColumns = @JoinColumn(name = "customer_id")
-    )
-    //private Set<Map.Entry<Long, Event>> eventsCustomer = this.planning.entrySet();
-    private Set<Event> eventsCustomer = new HashSet<>();
-
-
-*/
-
-
-    //No la ponemos aún:
-    /*
-    @JsonIgnore
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    //@JoinColumn(name = "cr_fk", referencedColumnName = "id")
-    private Set<Review> reviews;
-
-     */
-
 }

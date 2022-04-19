@@ -3,13 +3,10 @@ package com.dws.web.Review;
 import com.dws.web.Event.Event;
 import com.dws.web.Event.EventRepository;
 import lombok.NoArgsConstructor;
-import org.owasp.html.PolicyFactory;
-import org.owasp.html.Sanitizers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 

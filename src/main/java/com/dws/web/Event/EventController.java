@@ -18,17 +18,8 @@ public class EventController {
     @Autowired
     private ReviewService reviewService;
 
-    //EVENT (Revisar)
+    //EVENT
 
-    /*
-    @PostMapping("/events/new")
-    public String newEvent(Model model, Event e) {
-
-        eventHolder.addEvent(e);
-        model.addAttribute("event",e);
-        return "addedEvent";
-    }
-    */
     @PostMapping("/events/new")
     public String newEvent(Model model, Event e) {
 
@@ -55,28 +46,9 @@ public class EventController {
 
     @PostMapping("/events/{idEvent}/update")
     public String updateEvent(Model model, @PathVariable long idEvent, Event updatedEvent) {
-        /*Event event = eventService.getEvent(idEvent);
-        if (event != null) {
-            Collection<Review> allReviews= event.getAllReviews();
-            eventService.deleteEvent(idEvent);
-            updatedEvent.setIdEvent(idEvent);
-
-            for(Review r : allReviews ){
-                updatedEvent.addReviewToThisEvent(r);
-            }
-
-            this.eventService.addEvent(updatedEvent);
-            model.addAttribute("event",updatedEvent);
-            return "updatedEvent";
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-
-         */
         this.eventService.addUpdatedEvent(idEvent,updatedEvent);
         model.addAttribute("event",updatedEvent);
         return "updatedEvent";
-
     }
 
     @GetMapping("/events/all/restaurants")
@@ -182,7 +154,5 @@ public class EventController {
         model.addAttribute("review", reviewService.getReview(e, idReview));
         return "review";
     }
-
-    //PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
 }

@@ -16,7 +16,7 @@ public class EventRESTController {
     @Autowired
     EventService eventService;
 
-    //EVENT (Revisar)
+    //EVENT
 
     @PostMapping("/events/new")
     public ResponseEntity<Event> newEventAPI(@RequestBody Event event) {

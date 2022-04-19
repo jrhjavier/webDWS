@@ -63,19 +63,16 @@ public class CustomerService {
         return this.lastIDEvent;
     }
 
-    //HECHO
     public Collection<Customer> getAllCustomers() {
         return this.customerRepository.findAll();
     }
 
-    //HECHO
     public Customer deleteCustomer(long id) {
         Customer c = customerRepository.getById(id);
         customerRepository.delete(c);
         return c;
     }
 
-    //HECHO
     public void updateCustomer(Customer c, long id) {
         Customer c1 = customerRepository.getById(id);
         customerRepository.delete(c1);
@@ -136,24 +133,3 @@ public class CustomerService {
     }
 
 }
-
-    /*
-    public Collection<Event> getEventsOfACategory(Customer c, String category){
-        Collection<Event> allEventsOfACustomerByCategory=new HashSet<>();
-
-        Optional<Customer> c1=customerRepository.findByEmail(c.getEmail());
-        if (c1.isPresent()) {
-            Customer c2 = c1.get();
-            Collection<Event> l = c2.getAllEvents();
-            for (Event e1 : l) {
-                for (Event e2 : this.eventRepository.findAll()){
-                    if (e1.equals(e2)){
-                        allEventsOfACustomerByCategory.add(e2);
-                    }
-                }
-            }
-        }
-
-        return allEventsOfACustomerByCategory;
-}
-     */

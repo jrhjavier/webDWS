@@ -1,16 +1,11 @@
 package com.dws.web.Event;
 
-//import com.dws.web.Customer.EventCustomer;
-//import com.dws.web.Customer.EventCustomerId;
 import com.dws.web.Customer.Customer;
 import com.dws.web.Review.Review;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 
@@ -102,8 +97,8 @@ public class Event {
         return idEvent;
     }
 
-    //REVIEW
 
+    //REVIEW
 
     public void addReviewToThisEvent(Review r){
         long idReview=this.lastIDReview.incrementAndGet();
