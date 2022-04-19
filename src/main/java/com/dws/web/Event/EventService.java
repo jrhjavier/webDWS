@@ -99,7 +99,12 @@ public class EventService {
         return eventsByCategory;
     }
 
-    //HECHO
+    public Event getEventByName(String name){
+        TypedQuery<Event> query= entityManager.createQuery("SELECT e FROM Event e WHERE e.name = :name", Event.class);
+        return query.setParameter("name", name).getSingleResult();
+    }
+
+    /*
     public Event getEventByName(String name){
         Optional<Event> e=this.eventRepository.findByName(name);
         if (e.isPresent()){
@@ -108,8 +113,9 @@ public class EventService {
         else{
             return null;
         }
-
     }
+
+     */
 }
 
 

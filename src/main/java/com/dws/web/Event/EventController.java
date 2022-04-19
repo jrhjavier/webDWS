@@ -9,11 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import java.util.List;
-import java.util.Collection;
-
 @Controller
 public class EventController {
 
@@ -22,9 +17,6 @@ public class EventController {
 
     @Autowired
     private ReviewService reviewService;
-
-    @Autowired
-    private EntityManager entityManager;
 
     //EVENT (Revisar)
 
@@ -193,10 +185,4 @@ public class EventController {
 
     //PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
-    @GetMapping("/events/query/{category}")
-    public List<Event> getEventsByCategory(@PathVariable String category) {
-        TypedQuery<Event> query = entityManager.createQuery
-                ("SELECT e FROM Event e WHERE e = :category", Event.class);
-        return query.setParameter("category", category).getResultList();
-    }
 }
