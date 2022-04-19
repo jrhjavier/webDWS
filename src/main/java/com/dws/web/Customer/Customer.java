@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import java.util.*;
@@ -49,8 +49,7 @@ public class Customer {
         this.surname = surname;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.passwd=passwd;
-        //this.passwd = new BCryptPasswordEncoder().encode(passwd);
+        this.passwd = new BCryptPasswordEncoder().encode(passwd);
         this.address = address;
     }
 
@@ -82,17 +81,9 @@ public class Customer {
         this.address = address;
     }
 
-    /*
     public void setPassword(String passwd) {
-        this.passwd = codify(passwd);
+        this.passwd = new BCryptPasswordEncoder().encode(passwd);
     }
-
-    public String codify(String passwd){
-        String pass = new BCryptPasswordEncoder().encode(passwd);
-        return pass;
-    }
-
-     */
 
     public long getIdClient() {
         return this.idCustomer;

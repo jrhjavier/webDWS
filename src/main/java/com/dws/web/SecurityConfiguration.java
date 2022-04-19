@@ -1,4 +1,4 @@
-/*
+
 package com.dws.web;
 
 import org.springframework.context.annotation.Configuration;
@@ -12,9 +12,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception{
-        http.httpBasic().disable();
+        http.csrf().disable();
     }
 }
 
- */
 
