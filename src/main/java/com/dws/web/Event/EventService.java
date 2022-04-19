@@ -7,6 +7,8 @@ import org.owasp.html.Sanitizers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -16,6 +18,9 @@ public class EventService {
 
     @Autowired
     private EventRepository eventRepository;
+
+    @Autowired
+    private EntityManager entityManager;
 
     //HECHO
     public void addEvent (Event event){
@@ -47,7 +52,7 @@ public class EventService {
         this.eventRepository.saveAndFlush(eUP);
     }
 
-    //HECHO
+
     public Collection<Event> getEvents(){
         Collection<Event> allEvents=new HashSet<>();
         List<Event> l= eventRepository.findAll();
@@ -57,6 +62,12 @@ public class EventService {
         return allEvents;
     }
 
+    public Event getEvent(long idEvent){
+        TypedQuery<Event> query= entityManager.createQuery("SELECT e FROM Event e WHERE e.idEvent = :idEvent", Event.class);
+        return query.setParameter("idEvent", idEvent).getSingleResult();
+    }
+
+    /*
     //HECHO
     public Event getEvent(long id){
         Optional<Event> e=this.eventRepository.findById(id);
@@ -67,6 +78,7 @@ public class EventService {
             return null;
         }
     }
+     */
 
     //HECHO
     public Long getEvent(Event e){

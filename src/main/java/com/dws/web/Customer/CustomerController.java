@@ -30,7 +30,6 @@ public class CustomerController {
 
     @PostMapping("/customer/new")
     public String newCustomer(Model model, Customer c) {
-        //c.setPassword(c.getPasswd());
         customerService.addClient(c);
         model.addAttribute("customer",c);
         return "savedCustomer";
