@@ -27,9 +27,10 @@ public class ReviewService {
         this.reviewRepository.save(r);
     }
 
-    public void deleteReviewFromAnEvent(Event e, Review r){
-        e.deleteReviewOfThisEvent(r.getIdReview());
+    public Review deleteReviewFromAnEvent(Event e, Review r){
+        e.deleteReviewOfThisEvent(r);
         reviewRepository.delete(r);
+        return r;
     }
 
     public void addUpdatedReviewToThisEvent(Event e, Review r){

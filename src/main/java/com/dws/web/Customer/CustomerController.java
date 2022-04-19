@@ -9,10 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import java.util.Collection;
-import java.util.List;
 
 @Controller
 public class CustomerController {
@@ -22,9 +18,6 @@ public class CustomerController {
 
     @Autowired
     EventService eventService;
-
-    @Autowired
-    private EntityManager entityManager;
 
     //CUSTOMER
 
@@ -49,7 +42,6 @@ public class CustomerController {
             long id=c.getIdClient();
             customerService.deleteCustomer(id);
             updatedCustomer.setIdClient(id);
-            //updatedCustomer.setPassword();
             customerService.addUpdatedClient(updatedCustomer);
             model.addAttribute("customer", c);
             return "savedCustomer";
@@ -101,7 +93,7 @@ public class CustomerController {
     }
 
     @PostMapping("/planning/new")
-    public String addEventToPlanningAPI(Model model, String email, Event e){
+    public String addEventToPlanning(Model model, String email, Event e){
         Customer c= customerService.getCustomer(email);
         if (c.addToPlanning(e)){
             model.addAttribute("event",e);

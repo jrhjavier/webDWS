@@ -1,16 +1,11 @@
 package com.dws.web.Customer;
 
 import com.dws.web.Event.Event;
-import com.dws.web.Review.Review;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonView;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Entity
 @NoArgsConstructor
@@ -81,8 +76,8 @@ public class Customer {
         this.address = address;
     }
 
-    public void setPassword(String passwd) {
-        this.passwd = new BCryptPasswordEncoder().encode(passwd);
+    public void setPassword() {
+        this.passwd = new BCryptPasswordEncoder().encode(this.getPasswd());
     }
 
     public long getIdClient() {

@@ -102,7 +102,6 @@ public class EventController {
 
     @PostMapping("/event/{idEvent}/review/new")
     public String newReview(Model model, @PathVariable long idEvent, Review r) {
-        //Event e=eventHolder.getEvent(idEvent);
         Event e = eventService.getEvent(idEvent);
         reviewService.addReviewToThisEvent(e, r);
         model.addAttribute("review", r);
@@ -112,7 +111,6 @@ public class EventController {
 
     @GetMapping("/event/{idEvent}/review/{idReview}/delete")
     public String deleteReview(Model model, @PathVariable long idEvent, @PathVariable long idReview) {
-        //Event e=eventHolder.getEvent(idEvent);
         Event e = eventService.getEvent(idEvent);
         Review r=e.getReview(idReview);
         reviewService.deleteReviewFromAnEvent(e, r);
@@ -122,7 +120,6 @@ public class EventController {
 
     @PostMapping("/event/{idEvent}/review/{idReview}/update")
     public String updateReview(Model model,@PathVariable long idEvent,@PathVariable long idReview, Review updatedReview) {
-        //Event e = eventHolder.getEvent(idEvent);
         Event e = eventService.getEvent(idEvent);
         Review r = e.getReview(idReview);
         if (r != null) {
@@ -140,7 +137,6 @@ public class EventController {
 
     @GetMapping("/event/{idEvent}/reviews")
     public String getAllReviewsOfAnEvent(Model model,@PathVariable long idEvent) {
-        //Event e=eventHolder.getEvent(idEvent);
         Event e = this.eventService.getEvent(idEvent);
         model.addAttribute("reviews", this.reviewService.getAllReviewsOfAnEvent(e));
         model.addAttribute("event", e);
@@ -149,7 +145,6 @@ public class EventController {
 
     @GetMapping("/event/{idEvent}/{idReview}")
     public String getAReview(Model model, @PathVariable long idEvent, @PathVariable long idReview) {
-        //Event e=eventHolder.getEvent(idEvent);
         Event e = eventService.getEvent(idEvent);
         model.addAttribute("review", reviewService.getReview(e, idReview));
         return "review";

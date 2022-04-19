@@ -23,13 +23,15 @@ public class CustomerRESTController {
 
     @PostMapping("/customer/new")
     public ResponseEntity<Customer> newCustomerAPI(@RequestBody Customer c) {
+        c.setPassword();
         customerService.addClient(c);
         return new ResponseEntity<>(c, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/customer/delete/{email}")
     public ResponseEntity<Customer> deleteCustomerAPI(@PathVariable String email) {
-        Customer c= customerService.getCustomer(email);
+        Customer customer= customerService.getCustomer(email);
+        Customer c=customerService.deleteCustomer(customer.getIdClient());
         if (c != null) {
             return new ResponseEntity<>(c, HttpStatus.OK);
         } else {
@@ -44,6 +46,7 @@ public class CustomerRESTController {
             long idCustomer=c.getIdClient();
             customerService.deleteCustomer(idCustomer);
             updatedCustomer.setIdClient(idCustomer);
+            updatedCustomer.setPassword();
             customerService.addUpdatedClient(updatedCustomer);
             return new ResponseEntity<>(updatedCustomer, HttpStatus.OK);
         } else {
@@ -78,7 +81,10 @@ public class CustomerRESTController {
     public ResponseEntity<Event> newEventAPI(@PathVariable long idEvent, @PathVariable String email) {
         Customer c= customerService.getCustomer(email);
         Event e=eventService.getEvent(idEvent);
-        c.addToPlanning(e);
+        if (c.addToPlanning(e)){
+            e.assignCustomer(c);
+            eventService.addEvent(e);
+        }
         return new ResponseEntity<>(e, HttpStatus.CREATED);
     }
 
@@ -94,6 +100,7 @@ public class CustomerRESTController {
         }
     }
 
+    /*
     @PutMapping("/planning/{email}/{idEvent}")
     public ResponseEntity<Event> updateEventAPI(@PathVariable String email, @PathVariable long idEvent, @RequestBody Event updatedEvent) {
         Customer c= customerService.getCustomer(email);
@@ -106,6 +113,7 @@ public class CustomerRESTController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+     */
 
     @GetMapping("/planning/{email}")
     public ResponseEntity<Collection> getAllEventOfACustomerAPI(@PathVariable String email) {
@@ -122,7 +130,6 @@ public class CustomerRESTController {
     public ResponseEntity<Event> getEventAPI(@PathVariable String email, @PathVariable long idEvent){
         Customer c= customerService.getCustomer(email);
         Event e= customerService.getAnEvent(c, idEvent);
-
         if (e!=null){
             return new ResponseEntity<>(e, HttpStatus.OK);
         }

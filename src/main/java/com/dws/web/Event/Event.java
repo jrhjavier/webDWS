@@ -112,14 +112,9 @@ public class Event {
         this.reviews.add(r);
     }
 
-    public Review deleteReviewOfThisEvent(long idReview){
-        for (Review r: this.reviews){
-            if (r.getIdReview()==idReview){
-                this.reviews.remove(r);
-                return r;
-            }
-        }
-        return null;
+    public Review deleteReviewOfThisEvent(Review r){
+        this.reviews.remove(r);
+        return r;
     }
 
     public Review getReview(long idReview){
