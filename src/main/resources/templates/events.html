@@ -17,8 +17,72 @@
 
 <main class="content-wrapper">
 
-    <div class="text-center">
-        <button class="btn btn-primary" onclick="location.href = '/'">Volver al inicio</button>
+
+
+    <div class="container">
+        <h5 class="text-center">Filtrar</h5>
+        <div class="container" style="padding:40px; border: 3px black solid">
+            <div class="row">
+            </div>
+            <span class="noselect">Precio:</span>
+            <input id="ex2" type="text" class="span2" value="" data-slider-id="range" data-slider-min="10" data-slider-max="700" data-slider-step="5" data-slider-value="[10,700]"/>
+            <hr style="border-color:black; height: 5px; width: 100%;">
+            <br>
+            <span class="noselect">Categoría:</span>
+            <input id="ex" type="text" class="span2" value="" data-slider-id="range" data-slider-min="10" data-slider-max="700" data-slider-step="5" data-slider-value="[10,700]"/>
+            <hr style="border-color:black; height: 5px; width: 100%;">
+
+            <div class="row ml-1">
+                <input type="checkbox" id="5stars" name="stars" value="5" style="margin-left:5px;">
+                <label for="5stars" style="font-size: 12px;">
+                    <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9733;</small>
+                </label>
+            </div>
+            <br>
+            <div class="row ml-1">
+                <input type="checkbox" id="4stars" name="stars" value="4" style="margin-left:5px;">
+                <label for="4stars" style="font-size: 12px;">
+                    <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                </label>
+            </div>
+
+            <nav class="sc-laRQdt hnvXov">
+                <ul class="sc-hlTwrV kjcFkr">
+                    <li class="sc-eLgNKc cDNofT">
+                        <div class="sc-kfzBvY sc-hOqruk pUVQJ jItqrW">
+                            <div class="sc-jXktde XDbXa sc-imdvdU oXDZs">
+                                <div class="sc-eFuaqX ithCyY">
+                                    <div class="sc-fmlJrY lVeha" style="padding-left: 0px; padding-right: 0px;">
+                                        <div class="sc-ljRaeN kMRezX">
+
+                                        </div>
+                                    </div>
+                                    <div data-testid="min-selector" class="sc-jmhFuu ihtLxm" style="left: 0px;">
+
+                                    </div>
+                                    <div data-testid="max-selector" class="sc-dUrmIn ivTCAG" style="right: 0px;">
+
+                                    </div>
+                                </div>
+                                <div class="sc-httYss fOVttd" data-dashlane-rid="e393d68259c93318" data-form-type="other">
+                                    <input aria-label="minimum" value="149€" class="sc-cbDFGl kzisMh" data-dashlane-rid="b64aa41c8abc3214" data-form-type="other">
+                                    <div class="sc-gVgoRu ewlVVL">
+
+                                    </div>
+                                    <input aria-label="maximum" value="6637€" class="sc-cbDFGl sc-hjWSTT kzisMh" data-dashlane-rid="a3140969cf4a2735" data-form-type="other">
+                                </div>
+                                <div class="sc-fWPcWZ dqnFgD">
+
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+
+
+            <br>
+        </div>
     </div>
 
     <br>
@@ -47,7 +111,38 @@
     </div>
 
     {{/events}}
+    <form action="/events/filtered" class="reveal-content" method="post" id="form">
 
+        <div class="form-group">
+            <input type="text" class="form-control" id="priceMin" name="priceMin" placeholder="PrecioMinimo" >
+            <p id="nameFail" class="error"></p>
+        </div>
+
+        <div class="form-group">
+            <input type="text" class="form-control" id="priceMax" name="priceMax" placeholder="PrecioMaximo" >
+            <p id="nameFail2" class="error"></p>
+        </div>
+
+        <div class="text-center">
+            <div class="row ml-1">
+                <input type="checkbox" id="tourism" name="tourism" value="4" style="margin-left:5px;">Turismo
+            </div>
+
+
+            <div class="row ml-1">
+                <input type="checkbox" id="leisure" name="leisure" value="4" style="margin-left:5px;">Ocio
+            </div>
+
+            <div class="row ml-1">
+                <input type="checkbox" id="restaurant" name="restaurant">Restaurante
+            </div>
+
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary" id="btnAddEvent">Filtrar</button>
+            </div>
+        </div>
+    </form>
 </main>
 
 <div style="text-align: center">
@@ -57,6 +152,17 @@
 <div class="text-center">
     <button class="btn btn-primary" onclick="location.href = '/'">Volver al inicio</button>
 </div>
-
 </body>
 </html>
+
+
+<!--
+      </div>
+     <select name="category" id="category">
+         <option value="restaurant">Restaurantes</option>
+         <option value="ocio">Ocio</option>
+         <option value="turismo">Turismo</option>
+         <option value="todos">Todos</option>
+     </select>
+     -->
+

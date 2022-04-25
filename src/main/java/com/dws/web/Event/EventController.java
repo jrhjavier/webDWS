@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Collection;
+
 @Controller
 public class EventController {
 
@@ -148,6 +150,14 @@ public class EventController {
         Event e = eventService.getEvent(idEvent);
         model.addAttribute("review", reviewService.getReview(e, idReview));
         return "review";
+    }
+
+    @PostMapping("/events/filtered")
+    public String filterBy(Model model, float priceMin, float priceMax, String tourism, String leisure, String restaurant){
+
+        Collection<Event> l = this.eventService.filterEvents(priceMin,priceMax,tourism,leisure,restaurant);
+        model.addAttribute("events", l);
+        return "events";
     }
 
 }
