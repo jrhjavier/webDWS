@@ -20,12 +20,6 @@ public class CustomerService {
     @Autowired
     private EventRepository eventRepository;
 
-    private AtomicLong lastID = new AtomicLong();
-
-    private AtomicLong lastIDEvent = new AtomicLong();
-
-
-
     public void addClient(Customer c) {
         this.customerRepository.save(c);
     }
@@ -54,11 +48,6 @@ public class CustomerService {
 
     }
 
-
-    public AtomicLong getLastIDEvent() {
-        return this.lastIDEvent;
-    }
-
     public Collection<Customer> getAllCustomers() {
         return this.customerRepository.findAll();
     }
@@ -76,8 +65,6 @@ public class CustomerService {
     }
 
     public void addEventToPlanning(long idCustomer, Event e) {
-        long id = lastIDEvent.incrementAndGet();
-        e.setIdEvent(id);
         Customer c = customerRepository.getById(idCustomer);
         c.addToPlanning(e);
     }

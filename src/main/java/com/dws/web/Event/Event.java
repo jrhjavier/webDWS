@@ -3,6 +3,8 @@ package com.dws.web.Event;
 import com.dws.web.Customer.Customer;
 import com.dws.web.Review.Review;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.*;
@@ -30,15 +32,11 @@ public class Event {
     //@JsonView(Customer.Basico.class)
     private String category;
 
-    private AtomicLong lastIDReview = new AtomicLong();
-
-    @OneToMany(mappedBy = "event")
+    @OneToMany(cascade =CascadeType.ALL, mappedBy = "event")
     private List<Review> reviews;
 
     @ManyToMany()
     private List<Customer> customers;
-
-
 
     public Event(String name, String category, String description, float price) {
         this.name = name;
@@ -101,8 +99,6 @@ public class Event {
     //REVIEW
 
     public void addReviewToThisEvent(Review r){
-        long idReview=this.lastIDReview.incrementAndGet();
-        r.setIdReview(idReview);
         this.reviews.add(r);
     }
 
@@ -165,6 +161,10 @@ public class Event {
 
     public boolean containsCustomer(Customer c){
         return this.customers.contains(c);
+    }
+
+    public void cleanReviews(){
+        this.reviews.clear();
     }
 
 }
