@@ -1,6 +1,9 @@
 package com.dws.web.Event;
 
 
+import com.dws.web.Review.Review;
+import com.dws.web.Review.ReviewRepository;
+import com.dws.web.Review.ReviewService;
 import lombok.NoArgsConstructor;
 import org.owasp.html.PolicyFactory;
 import org.owasp.html.Sanitizers;
@@ -18,6 +21,9 @@ public class EventService {
 
     @Autowired
     private EventRepository eventRepository;
+
+    @Autowired
+    private ReviewRepository reviewRepository;
 
     @Autowired
     private EntityManager entityManager;
@@ -86,10 +92,12 @@ public class EventService {
     //HECHO
     public Event deleteEvent(long idEvent){
         Event e=this.eventRepository.getById(idEvent);
+        e.cleanReviews();
+        List<Review> reviewsDelete=this.reviewRepository.findByEvent(e);
+        this.reviewRepository.deleteAll(reviewsDelete);
         this.eventRepository.delete(e);
         return e;
     }
-
 
     //HECHO
     public List<Event> getEventsFilteredByCategory(String category){  //Events filtered by category
