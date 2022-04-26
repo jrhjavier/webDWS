@@ -2,6 +2,8 @@ package com.dws.web.Review;
 
 import com.dws.web.Event.Event;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -22,7 +24,7 @@ public class Review {
     //@JsonView(Customer.Basico.class)
     private String message;
 
-    @ManyToOne
+    @ManyToOne(cascade =CascadeType.ALL, fetch = FetchType.LAZY)
     //@JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Event event;
 

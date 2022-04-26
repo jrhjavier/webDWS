@@ -37,8 +37,12 @@ public class Customer {
     //@JsonView(Basico.class)
     private String address;
 
-    @ManyToMany(mappedBy = "customers")
+
+    @ManyToMany(cascade =CascadeType.ALL, mappedBy = "customers")
     private List<Event> planning;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles;
 
     public Customer(String name, String surname, String email, String phoneNumber, String passwd, String address){
         this.name = name;
@@ -182,6 +186,15 @@ public class Customer {
     @Override
     public int hashCode() {
         return Objects.hash(email);
+    }
+
+    //ROLES
+
+    public boolean getAdmin(){
+        for(String role : roles){
+            if(role.equals("ROLE_ADMIN"))return true;
+        }
+        return false;
     }
 
 }
