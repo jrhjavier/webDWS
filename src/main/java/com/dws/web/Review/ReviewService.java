@@ -8,6 +8,8 @@ import org.owasp.html.Sanitizers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +23,9 @@ public class ReviewService {
 
     @Autowired
     EventRepository eventRepository;
+
+    @Autowired
+    private EntityManager entityManager;
 
 
     public void addReviewToThisEvent(Event e, Review r){
@@ -67,6 +72,13 @@ public class ReviewService {
 
     public List<Review> getAllReviews(){
         return this.reviewRepository.findAll();
+    }
+
+
+    public Collection<Review> filterReview(Event event, String userName) {
+
+        TypedQuery<Review> query = entityManager.createQuery("SELECT r FROM Review r WHERE r.userName = :userName AND r.event = :event", Review.class);
+        return query.setParameter("userName", userName).setParameter("event", event).getResultList();
     }
 
 }

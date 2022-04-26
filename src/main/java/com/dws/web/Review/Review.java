@@ -36,6 +36,10 @@ public class Review {
         return this.idReview;
     }
 
+    public long getIdEvent(){
+        return this.event.getIdEvent();
+    }
+
     public void setIdReview(long idReview) {
         this.idReview = idReview;
     }

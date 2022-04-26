@@ -111,6 +111,15 @@ public class EventController {
         return "addedReview";
     }
 
+    @PostMapping("/event/{idEvent}/review/filtered")
+    public String filterReview(Model model, @PathVariable long idEvent, String userName){
+        Event event = eventService.getEvent(idEvent);
+        Collection<Review> c = this.reviewService.filterReview(event, userName);
+        model.addAttribute("event",event);
+        model.addAttribute("reviews", c);
+        return "reviews";
+    }
+
     @GetMapping("/event/{idEvent}/review/{idReview}/delete")
     public String deleteReview(Model model, @PathVariable long idEvent, @PathVariable long idReview) {
         Event e = eventService.getEvent(idEvent);
@@ -153,9 +162,9 @@ public class EventController {
     }
 
     @PostMapping("/events/filtered")
-    public String filterBy(Model model, float priceMin, float priceMax, String tourism, String leisure, String restaurant){
+    public String filterBy(Model model, float priceMin, float priceMax){
 
-        Collection<Event> l = this.eventService.filterEvents(priceMin,priceMax,tourism,leisure,restaurant);
+        Collection<Event> l = this.eventService.filterEvents(priceMin,priceMax);
         model.addAttribute("events", l);
         return "events";
     }

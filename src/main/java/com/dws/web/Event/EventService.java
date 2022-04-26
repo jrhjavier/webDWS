@@ -110,6 +110,13 @@ public class EventService {
         return query.setParameter("name", name).getSingleResult();
     }
 
+    public Collection<Event> filterEvents(float priceMin, float priceMax) {
+
+        TypedQuery<Event> query = entityManager.createQuery("SELECT e FROM Event e WHERE e.price <= :priceMax AND e.price >= :priceMin", Event.class);
+        return query.setParameter("priceMin", priceMin).setParameter("priceMax", priceMax).getResultList();
+    }
+
+
     /*
     public Event getEventByName(String name){
         Optional<Event> e=this.eventRepository.findByName(name);
