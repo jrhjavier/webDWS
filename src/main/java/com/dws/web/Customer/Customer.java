@@ -51,6 +51,7 @@ public class Customer {
         this.phoneNumber = phoneNumber;
         this.passwd = new BCryptPasswordEncoder().encode(passwd);
         this.address = address;
+        this.roles.add("ROLE_USER");
     }
 
     public Customer (String email){
@@ -149,7 +150,6 @@ public class Customer {
         this.planning.clear();
     }
 
-
     public boolean containsPlanning(Event e1){
         Event e = inPlanning(e1);
         return e != null;
@@ -190,11 +190,19 @@ public class Customer {
 
     //ROLES
 
+    public List<String> getRoles(){
+        return this.roles;
+    }
+
     public boolean getAdmin(){
         for(String role : roles){
             if(role.equals("ROLE_ADMIN"))return true;
         }
         return false;
+    }
+
+    public void makeAdmin(){
+        this.roles.add("ROLE_ADMIN");
     }
 
 }
