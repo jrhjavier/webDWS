@@ -2,6 +2,7 @@ package com.dws.web.Event;
 
 import com.dws.web.Customer.Customer;
 import com.dws.web.Review.Review;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -32,10 +33,11 @@ public class Event {
     //@JsonView(Customer.Basico.class)
     private String category;
 
+    @JsonIgnore
     @OneToMany(cascade =CascadeType.ALL, mappedBy = "event")
     private List<Review> reviews;
 
-    @ManyToMany()
+    @ManyToMany
     private List<Customer> customers;
 
     public Event(String name, String category, String description, float price) {

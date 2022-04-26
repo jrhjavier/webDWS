@@ -22,7 +22,7 @@ public class Review {
     //@JsonView(Customer.Basico.class)
     private String message;
 
-    @ManyToOne()
+    @ManyToOne
     //@JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Event event;
 
