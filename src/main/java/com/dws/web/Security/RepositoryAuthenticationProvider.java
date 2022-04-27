@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.dws.web.Customer.Customer;
 import com.dws.web.Customer.CustomerRepository;
+import com.dws.web.Customer.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -23,9 +24,12 @@ public class RepositoryAuthenticationProvider implements AuthenticationProvider 
     @Autowired
     private CustomerRepository customerRepository;
 
+    @Autowired
+    private CustomerService customerService;
+
     @Override
     public Authentication authenticate(Authentication auth) throws AuthenticationException{
-        Customer user = customerRepository.findByEmail(auth.getName());
+        Customer user = customerService.getCustomerByEmail(auth.getName());
         String pass = auth.getCredentials().toString();
         if (user == null  || !new BCryptPasswordEncoder().matches(pass, user.getPasswd())) {
                 throw new BadCredentialsException("Wrong credentials");

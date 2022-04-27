@@ -107,4 +107,14 @@ public class CustomerService {
         c.cleanPlanning();
     }
 
+    public Customer getCustomerByEmail(String email){
+        Optional<Customer> c=customerRepository.findByEmail(email);
+        if (c.isPresent()){
+            return c.get();
+        }
+        else{
+            return null;
+        }
+    }
+
 }
