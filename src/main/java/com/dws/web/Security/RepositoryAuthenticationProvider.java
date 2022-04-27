@@ -1,4 +1,5 @@
-/*
+package com.dws.web.Security;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class RepositoryAuthenticationProvider implements AuthenticationProvider 
 
     @Override
     public Authentication authenticate(Authentication auth) throws AuthenticationException{
-        Customer user = customerRepository.findByEmail2(auth.getName());
+        Customer user = customerRepository.findByEmail(auth.getName());
         String pass = auth.getCredentials().toString();
         if (user == null  || !new BCryptPasswordEncoder().matches(pass, user.getPasswd())) {
                 throw new BadCredentialsException("Wrong credentials");
@@ -43,6 +44,3 @@ public class RepositoryAuthenticationProvider implements AuthenticationProvider 
         return authentication.equals(UsernamePasswordAuthenticationToken.class);
     }
 }
-
-
-*/

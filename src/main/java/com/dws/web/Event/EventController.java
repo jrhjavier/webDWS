@@ -91,7 +91,8 @@ public class EventController {
         return "updateEvent";
     }
 
-    @GetMapping("/events/{idEvent}/review/{idReview}/modify") //Para modificar evento
+
+    @GetMapping("/events/{idEvent}/review/{idReview}/modify") //Para modificar review
     public String getAnEvent3(Model model, @PathVariable long idEvent, @PathVariable long idReview) {
         Event e = eventService.getEvent(idEvent);
         Review r=e.getReview(idReview);
@@ -128,6 +129,7 @@ public class EventController {
         model.addAttribute("review", r);
         return "deletedReview";
     }
+
 
     @PostMapping("/event/{idEvent}/review/{idReview}/update")
     public String updateReview(Model model,@PathVariable long idEvent,@PathVariable long idReview, Review updatedReview) {
