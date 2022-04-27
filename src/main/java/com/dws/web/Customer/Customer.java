@@ -51,7 +51,16 @@ public class Customer {
         this.phoneNumber = phoneNumber;
         this.passwd = new BCryptPasswordEncoder().encode(passwd);
         this.address = address;
-        this.roles.add("ROLE_USER");
+    }
+
+    public Customer(String name, String surname, String email, String phoneNumber, String passwd, String address, String... roles){
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.passwd = new BCryptPasswordEncoder().encode(passwd);
+        this.address = address;
+        this.roles= List.of(roles);
     }
 
     public Customer (String email){

@@ -117,4 +117,13 @@ public class CustomerService {
         }
     }
 
+    public Customer getCustomerByName(String name){
+        Optional<Customer> c=customerRepository.findByName(name);
+        if (c.isPresent()){
+            return c.get();
+        }
+        else{
+            return null;
+        }
+    }
 }
