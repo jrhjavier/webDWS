@@ -16,30 +16,29 @@
 </header>
 
 <main class="content-wrapper">
+    <div class="text-center">
 
-    <form action="/events/filtered" class="reveal-content" method="post" id="form">
+        <form action="/events/filtered" class="reveal-content" method="post" id="form">
+            <div class="form-group">
 
+                <div class="text-center">
+                    <input type="number" class="form-control" id="priceMin" name="priceMin" placeholder="Precio Minimo" required>
+                    <p id="nameFail" class="error"></p>
+                </div>
 
-        <div class="form-group">
+                <div class="text-center">
+                    <input type="number" class="form-control" id="priceMax" name="priceMax" placeholder="Precio Maximo" required>
+                    <p id="nameFail2" class="error"></p>
+                </div>
+                <br>
 
-            <div class="text-center">
-                <input type="text" class="form-control" id="priceMin" name="priceMin" placeholder="Precio Minimo" required>
-                <p id="nameFail" class="error"></p>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary" id="btnAddEvent">Filtrar</button>
+                </div>
             </div>
+        </form>
+    </div>
 
-            <div class="text-center">
-                <input type="text" class="form-control" id="priceMax" name="priceMax" placeholder="Precio Maximo" required>
-                <p id="nameFail2" class="error"></p>
-            </div>
-            <br>
-
-            <div class="text-center">
-                <button type="submit" class="btn btn-primary" id="btnAddEvent">Filtrar</button>
-            </div>
-
-        </div>
-
-    </form>
 
     {{#events}}
 
