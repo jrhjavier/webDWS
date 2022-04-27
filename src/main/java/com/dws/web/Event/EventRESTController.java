@@ -19,6 +19,7 @@ public class EventRESTController {
 
     @Autowired
     ReviewService reviewService;
+
     //EVENT
 
     @PostMapping("/events/new")

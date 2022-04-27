@@ -4,12 +4,9 @@ import com.dws.web.Customer.Customer;
 import com.dws.web.Review.Review;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicLong;
 
 
 @Entity
