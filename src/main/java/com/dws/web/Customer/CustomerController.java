@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.servlet.http.HttpServletRequest;
+
 
 @Controller
 public class CustomerController {
@@ -18,6 +20,9 @@ public class CustomerController {
 
     @Autowired
     EventService eventService;
+
+    @Autowired
+    CustomerRepository customerRepository;
 
     //CUSTOMER
 
@@ -119,6 +124,17 @@ public class CustomerController {
         else{
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
+    }
+
+    //SECURITY
+
+    @GetMapping("/private")
+    public String privatePage(Model model, HttpServletRequest request) {
+        String name = request.getUserPrincipal().getName();
+        Customer user = customerRepository.findByName(name).orElseThrow();
+        model.addAttribute("username", user.getName());
+        model.addAttribute("admin", request.isUserInRole("ADMIN"));
+        return "private";
     }
 
 }
