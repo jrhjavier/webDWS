@@ -30,28 +30,33 @@ public class CustomSecurityConfiguration extends WebSecurityConfigurerAdapter{
         http.authorizeRequests().antMatchers("/js/**").permitAll();
         http.authorizeRequests().antMatchers("/images/**").permitAll();
         http.authorizeRequests().antMatchers("/").permitAll();
+        http.authorizeRequests().antMatchers("/event/**").permitAll();
+        http.authorizeRequests().antMatchers("/events/**").permitAll();
         http.authorizeRequests().antMatchers("/customer/**").permitAll();
         http.authorizeRequests().antMatchers("/planning/**").permitAll();
+        http.authorizeRequests().antMatchers("/login").permitAll();
+        http.authorizeRequests().antMatchers("/logout").permitAll();
+        /*
         http.authorizeRequests().antMatchers("/events/all/**").permitAll();
         http.authorizeRequests().antMatchers("/events").permitAll();
         http.authorizeRequests().antMatchers("/events/{idEvent}").permitAll();
         http.authorizeRequests().antMatchers("/events/filtered").permitAll();
-        http.authorizeRequests().antMatchers("/event/**").permitAll();
-        http.authorizeRequests().antMatchers("/login").permitAll();
-        http.authorizeRequests().antMatchers("/logout").permitAll();
-        //http.authorizeRequests().antMatchers("/register").permitAll();
-        //http.authorizeRequests().antMatchers(HttpMethod.GET, "/catalogo/**").permitAll();
-        //http.authorizeRequests().antMatchers(HttpMethod.POST, "/catalogo/**").permitAll();
-        //http.authorizeRequests().antMatchers(HttpMethod.GET, "/producto/**").permitAll();
-        //http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/cart/items").permitAll();
-
+        http.authorizeRequests().antMatchers("/register").permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/catalogo/**").permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/catalogo/**").permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/producto/**").permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/cart/items").permitAll();
+        */
 
         // Reject the others
-        //http.authorizeRequests().antMatchers("/admin/**").hasAnyRole("ADMIN");
+        http.authorizeRequests().antMatchers("/admin/**").hasAnyRole("ADMIN");
+        http.authorizeRequests().anyRequest().authenticated();
+        /*
         http.authorizeRequests().antMatchers("/customer/delete").hasAnyRole("ADMIN");
         http.authorizeRequests().antMatchers("/customers").hasAnyRole("ADMIN");
-        http.authorizeRequests().antMatchers("/events/**").hasAnyRole("ADMIN");// Revisar /events/{idEvent}/review/{idReview}/modify
-        http.authorizeRequests().anyRequest().authenticated();
+        http.authorizeRequests().antMatchers("/events/**").hasAnyRole("ADMIN");
+        */
+
 
         //Log in:
         http.formLogin().loginPage("/login");

@@ -22,7 +22,7 @@ public class EventController {
 
     //EVENT
 
-    @PostMapping("/events/new")
+    @PostMapping("/admin/events/new")
     public String newEvent(Model model, Event e) {
 
         eventService.addEvent(e);
@@ -30,7 +30,7 @@ public class EventController {
         return "addedEvent";
     }
 
-    @GetMapping("/events/new")
+    @GetMapping("/admin/events/new")
     public String newEvent(Model model, @RequestParam String name,@RequestParam String category, @RequestParam String description, @RequestParam int price) {
 
         Event e= new Event(name,category,description,price);
@@ -39,18 +39,25 @@ public class EventController {
         return "addedEvent";
     }
 
-    @GetMapping("/events/{idEvent}/delete")
+    @GetMapping("/admin/events/{idEvent}/delete")
     public String deleteEvent(Model model, @PathVariable long idEvent) {
         Event e=eventService.deleteEvent(idEvent);
         model.addAttribute("event", e);
         return "deletedEvent";
     }
 
-    @PostMapping("/events/{idEvent}/update")
+    @PostMapping("/admin/events/{idEvent}/update")
     public String updateEvent(Model model, @PathVariable long idEvent, Event updatedEvent) {
         this.eventService.addUpdatedEvent(idEvent,updatedEvent);
         model.addAttribute("event",updatedEvent);
         return "updatedEvent";
+    }
+
+    @GetMapping("/admin/events/{idEvent}/modify") //Para modificar evento
+    public String modifyAnEvent(Model model, @PathVariable long idEvent) {
+        Event e = eventService.getEvent(idEvent);
+        model.addAttribute("event", e);
+        return "updateEvent";
     }
 
     @GetMapping("/events/all/restaurants")
@@ -84,21 +91,12 @@ public class EventController {
         return "newReview";
     }
 
-    @GetMapping("/events/{idEvent}/modify") //Para modificar evento
-    public String modifyAnEvent(Model model, @PathVariable long idEvent) {
-        Event e = eventService.getEvent(idEvent);
-        model.addAttribute("event", e);
-        return "updateEvent";
-    }
+    @PostMapping("/events/filtered")
+    public String filterBy(Model model, float priceMin, float priceMax){
 
-
-    @GetMapping("/events/{idEvent}/review/{idReview}/modify") //Para modificar review
-    public String getAnEvent3(Model model, @PathVariable long idEvent, @PathVariable long idReview) {
-        Event e = eventService.getEvent(idEvent);
-        Review r=e.getReview(idReview);
-        model.addAttribute("review", r);
-        model.addAttribute("event", e);
-        return "updateReview";
+        Collection<Event> l = this.eventService.filterEvents(priceMin,priceMax);
+        model.addAttribute("events", l);
+        return "events";
     }
 
     //REVIEW
@@ -130,6 +128,14 @@ public class EventController {
         return "deletedReview";
     }
 
+    @GetMapping("/events/{idEvent}/review/{idReview}/modify") //Para modificar review
+    public String getAnEvent3(Model model, @PathVariable long idEvent, @PathVariable long idReview) {
+        Event e = eventService.getEvent(idEvent);
+        Review r=e.getReview(idReview);
+        model.addAttribute("review", r);
+        model.addAttribute("event", e);
+        return "updateReview";
+    }
 
     @PostMapping("/event/{idEvent}/review/{idReview}/update")
     public String updateReview(Model model,@PathVariable long idEvent,@PathVariable long idReview, Review updatedReview) {
@@ -161,14 +167,6 @@ public class EventController {
         Event e = eventService.getEvent(idEvent);
         model.addAttribute("review", reviewService.getReview(e, idReview));
         return "review";
-    }
-
-    @PostMapping("/events/filtered")
-    public String filterBy(Model model, float priceMin, float priceMax){
-
-        Collection<Event> l = this.eventService.filterEvents(priceMin,priceMax);
-        model.addAttribute("events", l);
-        return "events";
     }
 
 }

@@ -33,7 +33,7 @@ public class CustomerController {
         return "savedCustomer";
     }
 
-    @DeleteMapping("/customer/delete")
+    @DeleteMapping("/admin/customer/delete")
     public String deleteCustomer(String email) {
         Customer c=customerService.getCustomer(email);
         customerService.deleteCustomer(c.getIdClient());
@@ -55,7 +55,7 @@ public class CustomerController {
         }
     }
 
-    @GetMapping("/customers")
+    @GetMapping("/admin/customers")
     public String getAllCustomers(Model model) {
         model.addAttribute("customers", customerService.getAllCustomers());
         return "customers";

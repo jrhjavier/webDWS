@@ -22,13 +22,13 @@ public class EventRESTController {
 
     //EVENT
 
-    @PostMapping("/events/new")
+    @PostMapping("/admin/events/new")
     public ResponseEntity<Event> newEventAPI(@RequestBody Event event) {
         eventService.addEvent(event);
         return new ResponseEntity<>(event, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/events/{idEvent}/delete")
+    @DeleteMapping("/admin/events/{idEvent}/delete")
     public ResponseEntity<Event> deleteEventAPI(@PathVariable long idEvent) {
         Event event = eventService.deleteEvent(idEvent);
         if (event != null) {
@@ -38,7 +38,7 @@ public class EventRESTController {
         }
     }
 
-    @PutMapping("/events/{idEvent}/update")
+    @PutMapping("/admin/events/{idEvent}/update")
     public ResponseEntity<Event> updateEventAPI(@PathVariable long idEvent, @RequestBody Event updatedEvent) {
         Event event = eventService.getEvent(idEvent);
         if (event != null) {

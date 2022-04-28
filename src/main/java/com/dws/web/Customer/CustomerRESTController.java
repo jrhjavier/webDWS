@@ -28,7 +28,7 @@ public class CustomerRESTController {
         return new ResponseEntity<>(c, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/customer/delete/{email}")
+    @DeleteMapping("/admin/customer/delete/{email}")
     public ResponseEntity<Customer> deleteCustomerAPI(@PathVariable String email) {
         Customer customer= customerService.getCustomer(email);
         Customer c=customerService.deleteCustomer(customer.getIdClient());
@@ -54,7 +54,7 @@ public class CustomerRESTController {
         }
     }
 
-    @GetMapping("/customers")
+    @GetMapping("/admin/customers")
     public ResponseEntity<Collection> getAllCustomersAPI() {
         Collection<Customer> customers = customerService.getAllCustomers();
         if (customers != null) {
