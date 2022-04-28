@@ -1,4 +1,3 @@
-
 package com.dws.web.Security;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,7 +10,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
 
 @Configuration
 public class CSRFHandler implements WebMvcConfigurer {
@@ -35,4 +34,5 @@ public class CSRFHandler implements WebMvcConfigurer {
     }
 
 }
+
 

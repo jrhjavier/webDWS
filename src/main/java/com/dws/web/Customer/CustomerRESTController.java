@@ -23,7 +23,6 @@ public class CustomerRESTController {
 
     @PostMapping("/customer/new")
     public ResponseEntity<Customer> newCustomerAPI(@RequestBody Customer c) {
-        c.setPassword();
         customerService.addClient(c);
         return new ResponseEntity<>(c, HttpStatus.CREATED);
     }
@@ -46,7 +45,7 @@ public class CustomerRESTController {
             long idCustomer=c.getIdClient();
             customerService.deleteCustomer(idCustomer);
             updatedCustomer.setIdClient(idCustomer);
-            updatedCustomer.setPassword();
+            //updatedCustomer.setPassword(); -> dice gallego que no hace falta
             customerService.addUpdatedClient(updatedCustomer);
             return new ResponseEntity<>(updatedCustomer, HttpStatus.OK);
         } else {
