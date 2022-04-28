@@ -70,7 +70,7 @@ public class CustomSecurityConfiguration extends WebSecurityConfigurerAdapter{
         http.logout().logoutUrl("/logout");
         http.logout().logoutSuccessUrl("/");
 
-        http.csrf().disable();
+        //http.csrf().disable();
         //http.csrf().ignoringAntMatchers("/catalogo");
         //http.csrf().ignoringAntMatchers("/api/**");
 
