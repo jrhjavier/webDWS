@@ -32,7 +32,6 @@ public class EventController {
 
     @GetMapping("/events/new")
     public String newEvent(Model model, @RequestParam String name,@RequestParam String category, @RequestParam String description, @RequestParam int price) {
-
         Event e= new Event(name,category,description,price);
         eventService.addEvent(e);
         model.addAttribute("event",e);

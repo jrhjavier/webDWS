@@ -3,7 +3,7 @@
 
 <head>
     <title>Nuevo </title>
-
+    <meta id="_csrf_header" content="{{headerName}}"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="/js/customer.js"></script>
     <meta charset="UTF-8">
@@ -51,6 +51,7 @@
                 <button type="submit" class="btn btn-primary" id="btnNewCustomer">Registrarse</button>
                 <button class="btn-link" onclick="location.href = '/'"> Cancelar</button>
             </div>
+            <input type="hidden" name="_csrf" value="{{token}}"/>
         </form>
     </div>
 </div>

@@ -1,3 +1,4 @@
+
 package com.dws.web.Security;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,10 +28,11 @@ public class CSRFHandler implements WebMvcConfigurer {
             CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
             if(modelAndView != null){
                 modelAndView.addObject("token", token.getToken());
-                modelAndView.addObject("headerCSRF",token.getHeaderName());
+                modelAndView.addObject("headerName",token.getHeaderName());
             }
         }
 
     }
 
 }
+
