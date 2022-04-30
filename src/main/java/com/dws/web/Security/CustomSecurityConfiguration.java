@@ -20,22 +20,25 @@ import java.security.SecureRandom;
 public class CustomSecurityConfiguration extends WebSecurityConfigurerAdapter{
 
     @Autowired
-    RepositoryUserDetailsService userDetailsService;
+    private RepositoryUserDetailsService userDetailsService;
 
-    @Override
+    @Override //Autorization
     protected void configure(HttpSecurity http) throws Exception{
 
         //Public pages
-        http.authorizeRequests().antMatchers("/css/**").permitAll();
-        http.authorizeRequests().antMatchers("/js/**").permitAll();
-        http.authorizeRequests().antMatchers("/images/**").permitAll();
+        http.authorizeRequests().antMatchers(
+                "/css/**",
+                "/js/**",
+                "/images/**").permitAll();
         http.authorizeRequests().antMatchers("/").permitAll();
+        //http.authorizeRequests().antMatchers("/index").permitAll();
         http.authorizeRequests().antMatchers("/event/**").permitAll();
         http.authorizeRequests().antMatchers("/events/**").permitAll();
         http.authorizeRequests().antMatchers("/customer/**").permitAll();
         http.authorizeRequests().antMatchers("/planning/**").permitAll();
         http.authorizeRequests().antMatchers("/login").permitAll();
         http.authorizeRequests().antMatchers("/logout").permitAll();
+        http.authorizeRequests().antMatchers("/loginerror").permitAll();
         /*
         http.authorizeRequests().antMatchers("/events/all/**").permitAll();
         http.authorizeRequests().antMatchers("/events").permitAll();
@@ -63,7 +66,8 @@ public class CustomSecurityConfiguration extends WebSecurityConfigurerAdapter{
         http.formLogin().usernameParameter("email");
         http.formLogin().passwordParameter("password");
         http.formLogin().defaultSuccessUrl("/");
-        http.formLogin().failureUrl("/login?error=error");
+        //http.formLogin().failureUrl("/login?error=error");
+        http.formLogin().failureUrl("/loginerror");
 
 
         //Log out:
@@ -75,12 +79,12 @@ public class CustomSecurityConfiguration extends WebSecurityConfigurerAdapter{
         //http.csrf().ignoringAntMatchers("/api/**");
 
     }
-    @Bean
+    @Bean //Declaramos una instancia, que podemos llamarla mas tarde con @Autowired (constructor de Costumer)
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(10, new SecureRandom());
     }
 
-    @Override
+    @Override //Authentication
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }

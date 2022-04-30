@@ -64,9 +64,15 @@ public class CustomerService {
         customerRepository.save(c);
     }
 
-    public void addEventToPlanning(long idCustomer, Event e) {
-        Customer c = customerRepository.getById(idCustomer);
-        c.addToPlanning(e);
+    public boolean addEventToPlanning(long idCustomer, Event e) {
+        try {
+            Customer c = customerRepository.getById(idCustomer);
+            c.addToPlanning(e);
+            customerRepository.saveAndFlush(c);
+            return true;
+        }catch (Exception ex){
+            return false;
+        }
     }
 
 
@@ -87,7 +93,9 @@ public class CustomerService {
      */
 
     public Collection<Event> getAllEventsOfACustomer(Customer c) {
-        return c.getAllEvents();
+        //System.out.println("En el cotroler:" + eventRepository.getById((long) 1).getCustomers());
+        System.out.println("En el user:" + c.getAllEvents());
+        return eventRepository.findByCustomers(c);
     }
 
     public Event getAnEvent(Customer c, long idEvent) {

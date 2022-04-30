@@ -1,6 +1,7 @@
 package com.dws.web.Event;
 
 
+import com.dws.web.Customer.Customer;
 import com.dws.web.Review.Review;
 import com.dws.web.Review.ReviewRepository;
 import lombok.NoArgsConstructor;
@@ -33,6 +34,12 @@ public class EventService {
         event.setDescription(policy.sanitize(event.getDescription()));
 
         this.eventRepository.save(event);
+    }
+
+    public void asignCustomer (Customer customer, Event event){
+
+        event.assignCustomer(customer);
+        this.eventRepository.saveAndFlush(event);
     }
 
     public void addUpdatedEvent(long id,Event eUP ){

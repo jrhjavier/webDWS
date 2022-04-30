@@ -15,23 +15,26 @@
 <div class="card">
     <div class="card-block">
         <h2>Iniciar Sesi&oacuten</h2>
-        <form action="/" class="reveal-content" id="form"> <!-- falta para enviar los datos mas adelante method="post"-->
+        <form action="/login" class="reveal-content" id="form" method="POST"> <!-- falta para enviar los datos mas adelante method="post"-->
 
             <div class="form-group">
-                <input type="email" class="form-control" name="email" pattern="[A-Za-z0-9_-]{1,15}"required placeholder="Email">
+                <input type="email" class="form-control" name="email" required placeholder="Email">
                 <p id="emailFail" class="error"></p>
             </div>
 
             <div class="form-group">
-                <input type="password" class="form-control" name="password" pattern="[A-Za-z0-9_-]{1,15}" required placeholder="Password">
+                <input type="password" class="form-control" name="password"  required placeholder="Password">
                 <p id="passwordFail" class="error"></p>
             </div>
 
+            <input type="hidden" name="_csrf" value="{{token}}"/>
+
             <div class="form-group">
-                <button type="button" class="btn btn-primary" id="btnLogin" href="/">Iniciar Sesión</button>
+                <button type="submit" value="Sign In" class="btn btn-primary">Iniciar Sesión</button>
                 <button class="btn-link" onclick="location.href = '/'"> Cancelar</button>
             </div>
-            <input type="hidden" name="_csrf" value="{{token}}"/>
+
+
         </form>
     </div>
 </div>

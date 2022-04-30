@@ -94,6 +94,21 @@ public class Event {
         return idEvent;
     }
 
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public List<Customer> getCustomers() {
+        return customers;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public void setCustomers(List<Customer> customers) {
+        this.customers = customers;
+    }
 
     //REVIEW
 
@@ -151,7 +166,9 @@ public class Event {
     }
 
     public void assignCustomer(Customer c){
-        this.customers.add(c);
+        if(!this.customers.contains(c)){
+            this.customers.add(c);
+        }
     }
 
     public void unassignCustomer(Customer c){
