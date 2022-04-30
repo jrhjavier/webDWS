@@ -96,8 +96,8 @@ public class Customer {
         this.address = address;
     }
 
-    public void setPassword() {
-        this.passwd = new BCryptPasswordEncoder().encode(this.getPasswd());
+    public void setPassword(String password) {
+        this.passwd = new BCryptPasswordEncoder().encode(password);
     }
 
     public long getIdClient() {
