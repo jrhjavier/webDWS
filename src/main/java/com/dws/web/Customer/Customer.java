@@ -1,6 +1,8 @@
 package com.dws.web.Customer;
 
 import com.dws.web.Event.Event;
+import com.dws.web.Review.Review;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -37,6 +39,9 @@ public class Customer {
     //@JsonView(Basico.class)
     private String address;
 
+    @JsonIgnore
+    @OneToMany(cascade =CascadeType.ALL, mappedBy = "customer")
+    private List<Review> reviews;
 
     @ManyToMany(cascade =CascadeType.ALL, mappedBy = "customers")
     private List<Event> planning;
