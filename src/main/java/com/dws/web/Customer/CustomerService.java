@@ -2,6 +2,8 @@ package com.dws.web.Customer;
 
 import com.dws.web.Event.Event;
 import com.dws.web.Event.EventRepository;
+import com.dws.web.Review.Review;
+import com.dws.web.Review.ReviewRepository;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,9 @@ public class CustomerService {
 
     @Autowired
     private EventRepository eventRepository;
+
+    @Autowired
+    private ReviewRepository reviewRepository;
 
     public void addClient(Customer c) {
         c.setRole("USER");
@@ -94,9 +99,11 @@ public class CustomerService {
      */
 
     public Collection<Event> getAllEventsOfACustomer(Customer c) {
-        //System.out.println("En el cotroler:" + eventRepository.getById((long) 1).getCustomers());
-        System.out.println("En el user:" + c.getAllEvents());
         return eventRepository.findByCustomers(c);
+    }
+
+    public Collection<Review> getAllReviewsOfACustomer(Customer c){
+        return reviewRepository.findByCustomer(c);
     }
 
     public Event getAnEvent(Customer c, long idEvent) {

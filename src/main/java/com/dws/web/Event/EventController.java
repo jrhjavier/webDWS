@@ -1,14 +1,18 @@
 package com.dws.web.Event;
 
+import com.dws.web.Customer.Customer;
+import com.dws.web.Customer.CustomerService;
 import com.dws.web.Review.Review;
 import com.dws.web.Review.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
 
 @Controller
@@ -19,6 +23,9 @@ public class EventController {
 
     @Autowired
     private ReviewService reviewService;
+
+    @Autowired
+    private CustomerService customerService;
 
     //EVENT
 
@@ -101,8 +108,12 @@ public class EventController {
     //REVIEW
 
     @PostMapping("/event/{idEvent}/review/new")
-    public String newReview(Model model, @PathVariable long idEvent, Review r) {
+    public String newReview(Model model, @PathVariable long idEvent, Review r, Authentication auth) {
         Event e = eventService.getEvent(idEvent);
+        Customer c=customerService.getCustomer(auth.getName());
+        c.assignReviewToACustomer(r);
+        r.assignCustomer(c);
+        r.setUserName(auth.getName());
         reviewService.addReviewToThisEvent(e, r);
         model.addAttribute("review", r);
         model.addAttribute("event", e);
@@ -166,6 +177,12 @@ public class EventController {
         Event e = eventService.getEvent(idEvent);
         model.addAttribute("review", reviewService.getReview(e, idReview));
         return "review";
+    }
+
+    @GetMapping("/perfil")
+    public String getAllReviewsOfACustomer(Model model, Authentication auth, HttpServletRequest request){
+        model.addAttribute("reviews", customerService.getAllReviewsOfACustomer(customerService.getCustomer(auth.getName())));
+        return "perfil";
     }
 
 }

@@ -225,4 +225,8 @@ public class Customer {
         this.roles.add("ROLE_ADMIN");
     }
 
+    public void assignReviewToACustomer(Review r){
+        this.reviews.add(r);
+    }
+
 }

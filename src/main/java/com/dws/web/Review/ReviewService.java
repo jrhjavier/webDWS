@@ -36,7 +36,7 @@ public class ReviewService {
         PolicyFactory policy= Sanitizers.FORMATTING.and(Sanitizers.LINKS);
         r.setMessage(policy.sanitize(r.getMessage()));
 
-        this.reviewRepository.save(r);
+        this.reviewRepository.saveAndFlush(r);
     }
 
     public Review deleteReviewFromAnEvent(Event e, Review r){

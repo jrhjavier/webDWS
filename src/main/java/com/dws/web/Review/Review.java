@@ -34,8 +34,7 @@ public class Review {
     private Customer customer;
 
 
-    public Review(String userName, String message){
-        this.userName=userName;
+    public Review(String message){
         this.message=message;
     }
 
@@ -80,5 +79,12 @@ public class Review {
     public void assignEvent(Event e){
         this.event=e;
     }
+
+    public void assignCustomer(Customer c){
+        this.customer=c;
+    }
+
+
+
 
 }
