@@ -1,5 +1,6 @@
 package com.dws.web.Review;
 
+import com.dws.web.Customer.Customer;
 import com.dws.web.Event.Event;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
@@ -30,7 +31,7 @@ public class Review {
 
     @ManyToOne(cascade =CascadeType.ALL, fetch = FetchType.LAZY)
     //@JoinColumn(name = "customer_id", referencedColumnName = "id")
-    private Event customer;
+    private Customer customer;
 
 
     public Review(String userName, String message){
