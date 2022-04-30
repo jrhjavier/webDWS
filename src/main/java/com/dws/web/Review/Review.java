@@ -28,6 +28,10 @@ public class Review {
     //@JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Event event;
 
+    @ManyToOne(cascade =CascadeType.ALL, fetch = FetchType.LAZY)
+    //@JoinColumn(name = "customer_id", referencedColumnName = "id")
+    private Event customer;
+
 
     public Review(String userName, String message){
         this.userName=userName;
