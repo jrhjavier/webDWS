@@ -38,7 +38,7 @@ public class CustomerRESTController {
         }
     }
 
-    @PutMapping("/customer/update/{email}")
+    @PutMapping("/admin/customer/update/{email}")
     public ResponseEntity<Customer> updateCustomerAPI(@PathVariable String email, @RequestBody Customer updatedCustomer) {
         Customer c=customerService.getCustomer(email);
         if (c != null) {

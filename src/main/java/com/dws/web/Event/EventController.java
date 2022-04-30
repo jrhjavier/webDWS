@@ -38,7 +38,7 @@ public class EventController {
         return "addedEvent";
     }
 
-    @GetMapping("/admin/events/{idEvent}/delete")
+    @GetMapping("/admin/delete/events/{idEvent}")
     public String deleteEvent(Model model, @PathVariable long idEvent) {
         Event e=eventService.deleteEvent(idEvent);
         model.addAttribute("event", e);

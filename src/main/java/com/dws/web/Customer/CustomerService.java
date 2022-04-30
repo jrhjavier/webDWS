@@ -21,6 +21,7 @@ public class CustomerService {
     private EventRepository eventRepository;
 
     public void addClient(Customer c) {
+        c.setRole("USER");
         this.customerRepository.save(c);
     }
 

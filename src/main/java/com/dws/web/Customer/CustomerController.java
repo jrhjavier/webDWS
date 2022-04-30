@@ -42,37 +42,37 @@ public class CustomerController {
     }
 
     @GetMapping("/newEvent")
-    public String newEvent() {
+    public String newEvent(HttpServletRequest request) {
         return "newEvent";
     }
 
+    @GetMapping("/customer/newCustomer")
+    public String newClient(Model model, HttpServletRequest request) {
+        return "newCustomer";
+    }
 
     @GetMapping("/")
     public String privatePage(Model model, HttpServletRequest request) {
-
-
         model.addAttribute("username", request.isUserInRole("USER"));
         model.addAttribute("admin", request.isUserInRole("ADMIN"));
         return "index";
     }
 
-
-
     @PostMapping("/customer/new")
-    public String newCustomer(Model model, Customer c) {
+    public String newCustomer(Model model, Customer c, HttpServletRequest request) {
         customerService.addClient(c);
         model.addAttribute("customer",c);
         return "savedCustomer";
     }
 
-    @DeleteMapping("/admin/customer/delete")
+    @DeleteMapping("/admin/delete/customer")
     public String deleteCustomer(String email) {
         Customer c=customerService.getCustomer(email);
         customerService.deleteCustomer(c.getIdClient());
         return "deletedCustomer";
     }
 
-    @PutMapping("/customer/update")
+    @PutMapping("/admin/customer/update")
     public String updateCustomer(Model model, String email, Customer updatedCustomer) {
         Customer c=customerService.getCustomer(email);
         if (c != null) {
@@ -107,7 +107,7 @@ public class CustomerController {
         Customer c= customerService.getCustomer(auth.getName());
         Event e = eventService.getEventByName(name);
         if (customerService.addEventToPlanning(c.getIdClient(),e)){
-            eventService.asignCustomer(c,e);
+            eventService.assignCustomer(c,e);
             model.addAttribute("event",e);
             return "addedEvent";
         }
@@ -143,10 +143,6 @@ public class CustomerController {
     @GetMapping("/planning")
     public String planning(Model model, Authentication auth, HttpServletRequest request) {
         model.addAttribute("events", customerService.getAllEventsOfACustomer(customerService.getCustomer(auth.getName())));
-        System.out.println(customerService.getAllEventsOfACustomer(customerService.getCustomer(auth.getName())));
-        System.out.println(customerService.getCustomer(auth.getName()).getAllEvents());
-        System.out.println("Name" + customerService.getCustomer(auth.getName()));
-        System.out.println(auth.getName());
         return "planning";
     }
 

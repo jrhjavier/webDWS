@@ -34,6 +34,7 @@ public class Customer {
     private String phoneNumber;
 
     // @JsonView(Basico.class)
+    @JsonIgnore
     private String passwd;
 
     //@JsonView(Basico.class)
@@ -56,6 +57,7 @@ public class Customer {
         this.phoneNumber = phoneNumber;
         this.passwd = new BCryptPasswordEncoder().encode(passwd);
         this.address = address;
+        this.roles=new ArrayList<>();
     }
 
     public Customer(String name, String surname, String email, String phoneNumber, String passwd, String address, String... roles){
@@ -213,6 +215,10 @@ public class Customer {
             if(role.equals("ROLE_ADMIN"))return true;
         }
         return false;
+    }
+
+    public void setRole(String Role){
+        this.roles.add(Role);
     }
 
     public void makeAdmin(){

@@ -36,7 +36,7 @@ public class EventService {
         this.eventRepository.save(event);
     }
 
-    public void asignCustomer (Customer customer, Event event){
+    public void assignCustomer (Customer customer, Event event){
 
         event.assignCustomer(customer);
         this.eventRepository.saveAndFlush(event);
