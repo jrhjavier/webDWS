@@ -34,8 +34,9 @@ public class CustomSecurityConfiguration extends WebSecurityConfigurerAdapter{
         //http.authorizeRequests().antMatchers("/index").permitAll();
         http.authorizeRequests().antMatchers("/event/**").permitAll();
         http.authorizeRequests().antMatchers("/events/**").permitAll();
-        http.authorizeRequests().antMatchers("/user/**").permitAll();
-        http.authorizeRequests().antMatchers("/user/events/filtered").permitAll();
+        http.authorizeRequests().antMatchers("/user/**").hasRole("USER");
+        http.authorizeRequests().antMatchers("/customer/**").permitAll();
+        http.authorizeRequests().antMatchers("/query/events/filtered").permitAll();
         http.authorizeRequests().antMatchers("/login").permitAll();
         http.authorizeRequests().antMatchers("/logout").permitAll();
         http.authorizeRequests().antMatchers("/loginerror").permitAll();

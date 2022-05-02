@@ -36,7 +36,6 @@ public class CustomRestSecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.antMatcher("/api/**");
-        http.authorizeRequests().antMatchers("/api/login").authenticated();
 
         // Private endpoints
 
@@ -76,8 +75,6 @@ public class CustomRestSecurityConfig extends WebSecurityConfigurerAdapter{
 
         // Avoid creating session (because every request has credentials)
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-        http.logout().logoutSuccessHandler((rq, rs, a)->{});
 
     }
 

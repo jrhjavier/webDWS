@@ -65,26 +65,33 @@ public class CustomerController {
         return "savedCustomer";
     }
 
-    @DeleteMapping("/admin/delete/customer")
-    public String deleteCustomer(String email) {
+    @GetMapping("/admin/delete/customer/{email}")
+    public String deleteCustomer(@PathVariable String email, Model model) {
         Customer c=customerService.getCustomer(email);
+        eventService.removeCustomer(c);
         customerService.deleteCustomer(c.getIdClient());
-        return "deletedCustomer";
+        model.addAttribute("customers", customerService.getAllCustomers());
+        return "customers";
     }
 
-    @PutMapping("/admin/customer/update")
-    public String updateCustomer(Model model, String email, Customer updatedCustomer) {
+    @PostMapping("/admin/customer/update/{email}")
+    public String updateCustomer(Model model, @PathVariable String email, Customer updatedCustomer) {
         Customer c=customerService.getCustomer(email);
         if (c != null) {
-            long id=c.getIdClient();
-            customerService.deleteCustomer(id);
-            updatedCustomer.setIdClient(id);
+            updatedCustomer.setIdClient(c.getIdClient());
             customerService.addUpdatedClient(updatedCustomer);
             model.addAttribute("customer", c);
             return "savedCustomer";
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("/admin/customer/modify/{email}") //Para modificar evento
+    public String modifyAnEvent(Model model, @PathVariable String email) {
+        Customer c=customerService.getCustomer(email);
+        model.addAttribute("customer", c);
+        return "updateCustomer";
     }
 
     @GetMapping("/admin/customers")
@@ -117,8 +124,8 @@ public class CustomerController {
     }
 
     @GetMapping("/user/planning/delete/{idEvent}")
-    public String deleteEventFromPlanning(Model model, @PathVariable long idEvent) {
-        Customer c= customerService.getCustomer("admin@admin.es");
+    public String deleteEventFromPlanning(Model model, @PathVariable long idEvent, Authentication auth) {
+        Customer c= customerService.getCustomer(auth.getName());
         Event e = eventService.getEvent(idEvent);
         customerService.deleteEventFromPlanning(c,e);
         if (eventService.getEvent(idEvent)!=null) {

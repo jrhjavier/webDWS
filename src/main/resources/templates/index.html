@@ -77,7 +77,11 @@
                     <a class="nav-link" href="/user/perfil" >Tu Perfil</a>
                 </li>
                 {{/username}}
-
+                {{#admin}}
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/customers" >Usuarios</a>
+                </li>
+                {{/admin}}
             </ul>
         </nav>
     </div>

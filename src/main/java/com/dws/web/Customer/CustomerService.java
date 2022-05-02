@@ -33,6 +33,9 @@ public class CustomerService {
     }
 
     public void addUpdatedClient(Customer c) {
+        List<String> roles=new ArrayList<>();
+        roles.add("USER");
+        c.setRoles(roles);
         this.customerRepository.save(c);
     }
 

@@ -80,8 +80,14 @@ public class Review {
         this.event=e;
     }
 
+    public void unassignEvent(){this.event=null;}
+
     public void assignCustomer(Customer c){
         this.customer=c;
+    }
+
+    public void unassignCustomer(){
+        this.customer=null;
     }
 
 

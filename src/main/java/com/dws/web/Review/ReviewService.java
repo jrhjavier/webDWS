@@ -41,19 +41,20 @@ public class ReviewService {
 
     public Review deleteReviewFromAnEvent(Event e, Review r){
         e.deleteReviewOfThisEvent(r);
+        r.unassignEvent();
+        r.unassignCustomer();
         reviewRepository.delete(r);
         return r;
     }
 
-    public void addUpdatedReviewToThisEvent(Event e, Review r){
-        e.addUpdatedReviewToThisEvent(r);
-        r.assignEvent(e);
-
+    public void addUpdatedReviewToThisEvent(long idReview, Review r){
         //XSS//
-        PolicyFactory policy= Sanitizers.FORMATTING.and(Sanitizers.LINKS);
-        r.setMessage(policy.sanitize(r.getMessage()));
-
-        reviewRepository.save(r);
+        if (reviewRepository.findById(idReview).isPresent()) {
+            Review aux=reviewRepository.findById(idReview).get();
+            PolicyFactory policy = Sanitizers.FORMATTING.and(Sanitizers.LINKS);
+            aux.setMessage(policy.sanitize(r.getMessage()));
+            reviewRepository.save(aux);
+        }
     }
 
     public Collection<Review> getAllReviewsOfAnEvent(Event e){

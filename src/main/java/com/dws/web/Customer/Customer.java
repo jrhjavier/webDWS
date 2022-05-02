@@ -44,7 +44,7 @@ public class Customer {
     @OneToMany(cascade =CascadeType.ALL, mappedBy = "customer")
     private List<Review> reviews;
 
-    @ManyToMany(cascade =CascadeType.ALL, mappedBy = "customers")
+    @ManyToMany(mappedBy = "customers")
     private List<Event> planning;
 
     @ElementCollection(fetch = FetchType.EAGER)

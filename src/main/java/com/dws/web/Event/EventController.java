@@ -7,6 +7,7 @@ import com.dws.web.Review.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -107,7 +108,7 @@ public class EventController {
         return "newReview";
     }
 
-    @PostMapping("/user/events/filtered")
+    @PostMapping("/query/events/filtered")
     public String filterBy(Model model, float priceMin, float priceMax){
         Collection<Event> l = this.eventService.filterEvents(priceMin,priceMax);
         model.addAttribute("events", l);
@@ -125,7 +126,6 @@ public class EventController {
         r.setUserName(auth.getName());
         reviewService.addReviewToThisEvent(e, r);
         model.addAttribute("review", r);
-        model.addAttribute("event", e);
         return "addedReview";
     }
 
@@ -147,7 +147,7 @@ public class EventController {
         return "deletedReview";
     }
 
-    @GetMapping("/events/{idEvent}/review/{idReview}/modify") //Para modificar review
+    @GetMapping("/user/events/{idEvent}/review/{idReview}/modify") //Para modificar review
     public String getAnEvent3(Model model, @PathVariable long idEvent, @PathVariable long idReview) {
         Event e = eventService.getEvent(idEvent);
         Review r=e.getReview(idReview);
@@ -160,14 +160,12 @@ public class EventController {
     public String updateReview(Model model,@PathVariable long idEvent,@PathVariable long idReview, Review updatedReview) {
         Event e = eventService.getEvent(idEvent);
         Review r = e.getReview(idReview);
+        var sec= SecurityContextHolder.getContext().getAuthentication();
+        updatedReview.setUserName(sec.getName());
         if (r != null) {
-            this.reviewService.deleteReviewFromAnEvent(e, r);
-            updatedReview.setIdReview(idReview);
-            e.addUpdatedReviewToThisEvent(updatedReview);
-            reviewService.addReviewToThisEvent(e, updatedReview);
-            model.addAttribute("event", e);
-            model.addAttribute("review",updatedReview);
-            return "savedReview";
+            reviewService.addUpdatedReviewToThisEvent(idReview, updatedReview);
+            model.addAttribute("r",reviewService.getReview(e,idReview));
+            return "review";
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }

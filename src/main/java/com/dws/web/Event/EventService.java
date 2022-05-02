@@ -118,6 +118,13 @@ public class EventService {
         return query.setParameter("priceMin", priceMin).setParameter("priceMax", priceMax).getResultList();
     }
 
+    public void removeCustomer(Customer c){
+        for (Event e:eventRepository.findAll()){
+            if (e.containsCustomer(c)){
+                e.getCustomers().remove(c);
+            }
+        }
+    }
 
     /*
     public Event getEventByName(String name){
