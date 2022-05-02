@@ -26,7 +26,9 @@ public class CustomerService {
     private ReviewRepository reviewRepository;
 
     public void addClient(Customer c) {
-        c.setRole("USER");
+        List<String> roles=new ArrayList<>();
+        roles.add("USER");
+        c.setRoles(roles);
         this.customerRepository.save(c);
     }
 

@@ -42,7 +42,7 @@ public class EventService {
         this.eventRepository.saveAndFlush(event);
     }
 
-    public void addUpdatedEvent(long id,Event eUP ){
+    public void addUpdatedEvent(Event eUP ){
 
         //XSS//
         PolicyFactory policy= Sanitizers.FORMATTING.and(Sanitizers.LINKS);
@@ -62,8 +62,13 @@ public class EventService {
     }
 
     public Event getEvent(long idEvent){
-        TypedQuery<Event> query= entityManager.createQuery("SELECT e FROM Event e WHERE e.idEvent = :idEvent", Event.class);
-        return query.setParameter("idEvent", idEvent).getSingleResult();
+        Optional<Event> e=eventRepository.findById(idEvent);
+        if (e.isPresent()){
+            return e.get();
+        }
+        else{
+            return null;
+        }
     }
 
     /*
@@ -82,13 +87,19 @@ public class EventService {
         return e.getId();
     }
 
-    public Event deleteEvent(long idEvent){
+    public boolean deleteEvent(long idEvent){
         Event e=this.eventRepository.getById(idEvent);
-        e.cleanReviews();
-        List<Review> reviewsDelete=this.reviewRepository.findByEvent(e);
-        this.reviewRepository.deleteAll(reviewsDelete);
-        this.eventRepository.delete(e);
-        return e;
+        if (e!=null) {
+            e.cleanReviews();
+            List<Review> reviewsDelete = this.reviewRepository.findByEvent(e);
+            this.reviewRepository.deleteAll(reviewsDelete);
+            this.eventRepository.delete(e);
+            return true;
+        }
+        else{
+            return false;
+        }
+
     }
 
     public List<Event> getEventsFilteredByCategory(String category){  //Events filtered by category

@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class RepositoryUserDetailsService implements UserDetailsService, AuthenticationProvider {
+public class RepositoryUserDetailsService implements UserDetailsService{
 
     @Autowired
     private CustomerRepository customerRepository;
@@ -37,15 +37,5 @@ public class RepositoryUserDetailsService implements UserDetailsService, Authent
 
         return new org.springframework.security.core.userdetails.User(c.getEmail(),
                 c.getPasswd(), roles);
-    }
-
-    @Override
-    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        return null;
-    }
-
-    @Override
-    public boolean supports(Class<?> authentication) {
-        return authentication.equals(UsernamePasswordAuthenticationToken.class);
     }
 }

@@ -19,7 +19,7 @@
 <main class="content-wrapper">
     <div class="text-center">
 
-        <form action="/events/filtered" class="reveal-content" method="post" id="form">
+        <form action="/user/events/filtered" class="reveal-content" method="post" id="form">
             <div class="form-group">
 
                 <div class="text-center">
@@ -53,8 +53,10 @@
                         <div class="text-center" style="margin-left: 20px; margin-right: 20px; margin-bottom: 20px">
                             <p>{{{description}}}</p><br>
                             <h4>Precio: {{price}}</h4><br>
-                            <button class="btn btn-primary" onclick="location.href = '/planning/new/{{name}}'">Agregar a tu planning</button>
+                            {{#username}}
+                            <button class="btn btn-primary" onclick="location.href = '/user/planning/new/{{name}}'">Agregar a tu planning</button>
                             <button class="btn btn-primary" onclick="location.href = '/events/{{idEvent}}'">A&ntildeadir review</button>
+                            {{/username}}
                             <button class="btn btn-primary" onclick="location.href = '/event/{{idEvent}}/reviews'">Reviews</button>
                             {{#admin}}
                                 <button class="btn btn-primary" onclick="location.href = '/delete/events/{{idEvent}}'">Borrar evento</button>

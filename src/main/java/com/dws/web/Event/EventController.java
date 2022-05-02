@@ -47,14 +47,16 @@ public class EventController {
 
     @GetMapping("/admin/delete/events/{idEvent}")
     public String deleteEvent(Model model, @PathVariable long idEvent) {
-        Event e=eventService.deleteEvent(idEvent);
-        model.addAttribute("event", e);
-        return "deletedEvent";
+        boolean e=eventService.deleteEvent(idEvent);
+        model.addAttribute("events", eventService.getEvents());
+        return "events";
     }
 
     @PostMapping("/admin/events/{idEvent}/update")
     public String updateEvent(Model model, @PathVariable long idEvent, Event updatedEvent) {
-        this.eventService.addUpdatedEvent(idEvent,updatedEvent);
+        Event event = eventService.getEvent(idEvent);
+        updatedEvent.setIdEvent(event.getIdEvent());
+        this.eventService.addUpdatedEvent(updatedEvent);
         model.addAttribute("event",updatedEvent);
         return "updatedEvent";
     }
@@ -67,26 +69,34 @@ public class EventController {
     }
 
     @GetMapping("/events/all/restaurants")
-    public String getRestaurants(Model model) {
+    public String getRestaurants(Model model, Authentication auth, HttpServletRequest request) {
         model.addAttribute("events", eventService.getEventsFilteredByCategory("restaurante"));
+        model.addAttribute("username", request.isUserInRole("USER"));
+        model.addAttribute("admin", request.isUserInRole("ADMIN"));
         return "events";
     }
 
     @GetMapping("/events/all/leisure")
-    public String getLeisure(Model model) {
+    public String getLeisure(Model model, Authentication auth, HttpServletRequest request) {
         model.addAttribute("events", eventService.getEventsFilteredByCategory("ocio"));
+        model.addAttribute("username", request.isUserInRole("USER"));
+        model.addAttribute("admin", request.isUserInRole("ADMIN"));
         return "events";
     }
 
     @GetMapping("/events/all/tourism")
-    public String getTourism(Model model) {
+    public String getTourism(Model model, Authentication auth, HttpServletRequest request) {
         model.addAttribute("events", eventService.getEventsFilteredByCategory("turismo"));
+        model.addAttribute("username", request.isUserInRole("USER"));
+        model.addAttribute("admin", request.isUserInRole("ADMIN"));
         return "events";
     }
 
     @GetMapping("/events")
-    public String catalogue(Model model) {
+    public String catalogue(Model model, HttpServletRequest request) {
         model.addAttribute("events", eventService.getEvents());
+        model.addAttribute("username", request.isUserInRole("USER"));
+        model.addAttribute("admin", request.isUserInRole("ADMIN"));
         return "events";
     }
 
@@ -97,9 +107,8 @@ public class EventController {
         return "newReview";
     }
 
-    @PostMapping("/events/filtered")
+    @PostMapping("/user/events/filtered")
     public String filterBy(Model model, float priceMin, float priceMax){
-
         Collection<Event> l = this.eventService.filterEvents(priceMin,priceMax);
         model.addAttribute("events", l);
         return "events";
@@ -107,7 +116,7 @@ public class EventController {
 
     //REVIEW
 
-    @PostMapping("/event/{idEvent}/review/new")
+    @PostMapping("/user/event/{idEvent}/review/new")
     public String newReview(Model model, @PathVariable long idEvent, Review r, Authentication auth) {
         Event e = eventService.getEvent(idEvent);
         Customer c=customerService.getCustomer(auth.getName());
@@ -129,7 +138,7 @@ public class EventController {
         return "reviews";
     }
 
-    @GetMapping("/event/{idEvent}/review/{idReview}/delete")
+    @GetMapping("/user/event/{idEvent}/review/{idReview}/delete")
     public String deleteReview(Model model, @PathVariable long idEvent, @PathVariable long idReview) {
         Event e = eventService.getEvent(idEvent);
         Review r=e.getReview(idReview);
@@ -147,7 +156,7 @@ public class EventController {
         return "updateReview";
     }
 
-    @PostMapping("/event/{idEvent}/review/{idReview}/update")
+    @PostMapping("/user/event/{idEvent}/review/{idReview}/update")
     public String updateReview(Model model,@PathVariable long idEvent,@PathVariable long idReview, Review updatedReview) {
         Event e = eventService.getEvent(idEvent);
         Review r = e.getReview(idReview);
@@ -179,7 +188,7 @@ public class EventController {
         return "review";
     }
 
-    @GetMapping("/perfil")
+    @GetMapping("/user/perfil")
     public String getAllReviewsOfACustomer(Model model, Authentication auth, HttpServletRequest request){
         model.addAttribute("reviews", customerService.getAllReviewsOfACustomer(customerService.getCustomer(auth.getName())));
         return "perfil";

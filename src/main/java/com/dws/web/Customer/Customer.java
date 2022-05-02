@@ -217,8 +217,8 @@ public class Customer {
         return false;
     }
 
-    public void setRole(String Role){
-        this.roles.add(Role);
+    public void setRoles(List<String> roles){
+        this.roles=roles;
     }
 
     public void makeAdmin(){

@@ -10,13 +10,13 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.security.SecureRandom;
 
 
 @Configuration
 @EnableWebSecurity
-@Order(value = 1)
 public class CustomSecurityConfiguration extends WebSecurityConfigurerAdapter{
 
     @Autowired
@@ -34,8 +34,8 @@ public class CustomSecurityConfiguration extends WebSecurityConfigurerAdapter{
         //http.authorizeRequests().antMatchers("/index").permitAll();
         http.authorizeRequests().antMatchers("/event/**").permitAll();
         http.authorizeRequests().antMatchers("/events/**").permitAll();
-        http.authorizeRequests().antMatchers("/customer/**").permitAll();
-        http.authorizeRequests().antMatchers("/planning/**").permitAll();
+        http.authorizeRequests().antMatchers("/user/**").permitAll();
+        http.authorizeRequests().antMatchers("/user/events/filtered").permitAll();
         http.authorizeRequests().antMatchers("/login").permitAll();
         http.authorizeRequests().antMatchers("/logout").permitAll();
         http.authorizeRequests().antMatchers("/loginerror").permitAll();
@@ -71,9 +71,13 @@ public class CustomSecurityConfiguration extends WebSecurityConfigurerAdapter{
 
 
         //Log out:
-        http.logout().logoutUrl("/logout");
-        http.logout().logoutSuccessUrl("/");
-
+        http
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/")
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID");
         //http.csrf().disable();
         //http.csrf().ignoringAntMatchers("/catalogo");
         //http.csrf().ignoringAntMatchers("/api/**");

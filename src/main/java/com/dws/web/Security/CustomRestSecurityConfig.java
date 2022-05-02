@@ -17,7 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.security.SecureRandom;
 
 @Configuration
-@Order(value = 2)
+@Order(1)
 public class CustomRestSecurityConfig extends WebSecurityConfigurerAdapter{
 
     @Autowired
@@ -35,29 +35,31 @@ public class CustomRestSecurityConfig extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
+        http.antMatcher("/api/**");
         http.authorizeRequests().antMatchers("/api/login").authenticated();
 
         // Private endpoints
 
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/admin/events/new").hasRole("ADMIN");
-        http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/event/{idEvent}/review/new").hasRole("USER");
-        http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/customer/new").hasRole("USER");
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/event/{idEvent}/review/new").hasAnyRole("USER", "ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/customer/new").hasAnyRole("USER", "ADMIN");
 
         //Como hacer para que el admin pueda editar los usuarios pero que los usuarios solo puedan editar su perfil
         //Si pongo que el USER pueda crear usuarios hace falta que tambien ponga que los puede crear el admin
 
-        http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/admin/customer/update").hasRole("ADMIN");
-        http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/admin/customer/update/{email}").hasRole("ADMIN");
-        http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/event/{idEvent}/review/update/{idReview}").hasRole("USER");
+        http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/admin/events/{idEvent}/update").hasRole("ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/admin/customer/update/{email}").hasAnyRole("ADMIN", "USER");
+        http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/event/{idEvent}/review/update/{idReview}").hasAnyRole("USER", "ADMIN");
 
-        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/admin/delete/**").hasRole("ADMIN");
-        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/planning/delete/{idEvent}").hasRole("USER");
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/admin/events/{idEvent}/delete").hasRole("ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/planning/delete/{idEvent}").hasAnyRole("USER", "ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/admin/customer/delete/{email}").hasRole("ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/user/event/{idEvent}/review/{idReview}/delete").hasAnyRole("ADMIN", "USER");
 
-        http.authorizeRequests().antMatchers("/api/customer/**").hasRole("USER");
+        http.authorizeRequests().antMatchers("/api/user/**").hasRole("USER");
         http.authorizeRequests().antMatchers("/api/event/**").hasRole("USER");
         http.authorizeRequests().antMatchers("/api/events/**").hasRole("USER");
-        http.authorizeRequests().antMatchers("/api/planning/**").hasRole("USER");
+        http.authorizeRequests().antMatchers("/api/user/**").hasRole("USER");
         http.authorizeRequests().antMatchers("/").hasRole("USER");
 
         // Other endpoints are public

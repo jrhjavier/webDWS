@@ -93,7 +93,7 @@ public class CustomerController {
         return "customers";
     }
 
-    @GetMapping("/customer")
+    @GetMapping("/user/customer")
     public String getACustomer(Model model, @RequestParam String email) {
         Customer c=customerService.getCustomer(email);
         model.addAttribute("customer", c);
@@ -102,7 +102,7 @@ public class CustomerController {
 
     //PLANNING
 
-    @GetMapping("/planning/new/{name}")
+    @GetMapping("/user/planning/new/{name}")
     public String newEvent2(Model model, @PathVariable String name, Authentication auth) {
         Customer c= customerService.getCustomer(auth.getName());
         Event e = eventService.getEventByName(name);
@@ -116,7 +116,7 @@ public class CustomerController {
         }
     }
 
-    @GetMapping("/planning/delete/{idEvent}")
+    @GetMapping("/user/planning/delete/{idEvent}")
     public String deleteEventFromPlanning(Model model, @PathVariable long idEvent) {
         Customer c= customerService.getCustomer("admin@admin.es");
         Event e = eventService.getEvent(idEvent);
@@ -128,7 +128,7 @@ public class CustomerController {
         return "redirect:/planning";
     }
 
-    @PostMapping("/planning/new")
+    @PostMapping("/user/planning/new")
     public String addEventToPlanning(Model model, String email, Event e){
         Customer c= customerService.getCustomer(email);
         if (c.addToPlanning(e)){
@@ -140,13 +140,13 @@ public class CustomerController {
         }
     }
 
-    @GetMapping("/planning")
+    @GetMapping("/user/planning")
     public String planning(Model model, Authentication auth, HttpServletRequest request) {
         model.addAttribute("events", customerService.getAllEventsOfACustomer(customerService.getCustomer(auth.getName())));
         return "planning";
     }
 
-    @GetMapping("/planning/{category}")
+    @GetMapping("/user/planning/{category}")
     public String catalogueFilteredByCategory(Model model, @RequestBody Customer c, @PathVariable String category) {
         if (category.equalsIgnoreCase("ocio")||category.equalsIgnoreCase("restauracion")||category.equalsIgnoreCase("turismo")) {
             model.addAttribute("events", eventService.getEventsFilteredByCategory(category));
