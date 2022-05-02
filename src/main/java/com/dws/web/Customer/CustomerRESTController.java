@@ -32,7 +32,7 @@ public class CustomerRESTController {
         Customer customer= customerService.getCustomer(email);
         Customer c=customerService.deleteCustomer(customer.getIdClient());
         if (c != null) {
-            return new ResponseEntity<>(c, HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -42,10 +42,7 @@ public class CustomerRESTController {
     public ResponseEntity<Customer> updateCustomerAPI(@PathVariable String email, @RequestBody Customer updatedCustomer) {
         Customer c=customerService.getCustomer(email);
         if (c != null) {
-            long idCustomer=c.getIdClient();
-            customerService.deleteCustomer(idCustomer);
-            updatedCustomer.setIdClient(idCustomer);
-            //updatedCustomer.setPassword(); -> dice gallego que no hace falta
+            updatedCustomer.setIdClient(c.getIdClient());
             customerService.addUpdatedClient(updatedCustomer);
             return new ResponseEntity<>(updatedCustomer, HttpStatus.OK);
         } else {
@@ -63,7 +60,7 @@ public class CustomerRESTController {
         }
     }
 
-    @GetMapping("/customer/{email}")
+    @GetMapping("/admin/customer/{email}")
     public ResponseEntity<Customer> getCustomerAPI(@PathVariable String email){
         Customer c=customerService.getCustomer(email);
         if (c!=null){
@@ -87,7 +84,7 @@ public class CustomerRESTController {
         return new ResponseEntity<>(e, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/planning/{email}/delete/{idEvent}")
+    @DeleteMapping("/user/planning/{email}/delete/{idEvent}")
     public ResponseEntity<Event> deleteEventAPI(@PathVariable String email, @PathVariable long idEvent) {
         Customer c= customerService.getCustomer(email);
         Event e=eventService.getEvent(idEvent);
@@ -114,7 +111,7 @@ public class CustomerRESTController {
     }
      */
 
-    @GetMapping("/planning/{email}")
+    @GetMapping("/user/planning/{email}")
     public ResponseEntity<Collection> getAllEventOfACustomerAPI(@PathVariable String email) {
         Customer c=customerService.getCustomer(email);
         Collection<Event> events = customerService.getAllEventsOfACustomer(c);
@@ -125,7 +122,7 @@ public class CustomerRESTController {
         }
     }
 
-    @GetMapping("/events/{email}/{idEvent}")  //Products by id
+    @GetMapping("/user/events/{email}/{idEvent}")  //Products by id
     public ResponseEntity<Event> getEventAPI(@PathVariable String email, @PathVariable long idEvent){
         Customer c= customerService.getCustomer(email);
         Event e= customerService.getAnEvent(c, idEvent);
@@ -137,9 +134,9 @@ public class CustomerRESTController {
         }
     }
 
-    @GetMapping("/planning/{email}/category/{category}")
+    @GetMapping("/user/planning/{email}/category/{category}")
     public ResponseEntity<Collection> planningFilteredByCategoryAPI(@PathVariable String email, @PathVariable String category) {
-        if (category.equalsIgnoreCase("ocio")||category.equalsIgnoreCase("restauracion")||category.equalsIgnoreCase("turismo")) {
+        if (category.equalsIgnoreCase("ocio")||category.equalsIgnoreCase("restaurante")||category.equalsIgnoreCase("turismo")) {
             Customer c=customerService.getCustomer(email);
             return new ResponseEntity<>(eventService.getEventsFilteredByCategory(category), HttpStatus.OK);
         }

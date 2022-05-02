@@ -44,9 +44,11 @@ public class Customer {
     @OneToMany(cascade =CascadeType.ALL, mappedBy = "customer")
     private List<Review> reviews;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "customers")
     private List<Event> planning;
 
+    @JsonIgnore
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles;
 

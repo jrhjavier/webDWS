@@ -34,6 +34,7 @@ public class Event {
     @OneToMany(cascade =CascadeType.ALL, mappedBy = "event")
     private List<Review> reviews;
 
+    @JsonIgnore
     @ManyToMany
     private List<Customer> customers;
 
