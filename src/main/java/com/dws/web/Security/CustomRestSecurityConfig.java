@@ -39,21 +39,45 @@ public class CustomRestSecurityConfig extends WebSecurityConfigurerAdapter{
 
         // Private endpoints
 
+        //createAnEvent
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/admin/events/new").hasRole("ADMIN");
+        //createAReview
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/event/{idEvent}/review/new").hasAnyRole("USER", "ADMIN");
+        //createACustomer
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/customer/new").hasAnyRole("USER", "ADMIN");
 
         //Como hacer para que el admin pueda editar los usuarios pero que los usuarios solo puedan editar su perfil
         //Si pongo que el USER pueda crear usuarios hace falta que tambien ponga que los puede crear el admin
 
+        //modifyAnEvent
         http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/admin/events/{idEvent}/update").hasRole("ADMIN");
+        //modifyACustomer
         http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/admin/customer/update/{email}").hasAnyRole("ADMIN", "USER");
+        //modifyAReview
         http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/event/{idEvent}/review/update/{idReview}").hasAnyRole("USER", "ADMIN");
 
+        //deleteAnEvent
         http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/admin/events/{idEvent}/delete").hasRole("ADMIN");
+        //deleteEventFromPlanning
         http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/planning/delete/{idEvent}").hasAnyRole("USER", "ADMIN");
+        //deleteCustomer
         http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/admin/customer/delete/{email}").hasRole("ADMIN");
+        //deleteReview
         http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/user/event/{idEvent}/review/{idReview}/delete").hasAnyRole("ADMIN", "USER");
+
+        //getAllEvents
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/admin/events").hasRole("ADMIN");
+        //getAnEvent
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/admin/events/{idEvent}").hasRole("ADMIN");
+        //getEventsFilteredByCategory
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/admin/events/category/{category}").hasRole("ADMIN");
+
+        //getAllReviewsOfAnEvent
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/event/{idEvent}/reviews").hasAnyRole("ADMIN", "USER");
+        //getAReview
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/event/{idEvent}/review/{idReview}").hasAnyRole("ADMIN", "USER");
+        //getAllReviewsOfACustomer (HAY QUE IMPLEMENTARLO)
+        //http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/admin/events/category/{category}").hasRole("ADMIN");
 
         http.authorizeRequests().antMatchers("/api/user/**").hasRole("USER");
         http.authorizeRequests().antMatchers("/api/event/**").hasRole("USER");

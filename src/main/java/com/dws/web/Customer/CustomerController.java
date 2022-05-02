@@ -88,7 +88,7 @@ public class CustomerController {
     }
 
     @GetMapping("/admin/customer/modify/{email}") //Para modificar evento
-    public String modifyAnEvent(Model model, @PathVariable String email) {
+    public String modifyACustomer(Model model, @PathVariable String email) {
         Customer c=customerService.getCustomer(email);
         model.addAttribute("customer", c);
         return "updateCustomer";
@@ -177,5 +177,27 @@ public class CustomerController {
     }
 
      */
+
+    //MODIFICAR MI USUARIO
+
+    @GetMapping("/user/customer/modify")
+    public String modifyMyCustomer(Model model, Authentication auth) {
+        Customer c=customerService.getCustomer(auth.getName());
+        model.addAttribute("customer", c);
+        return "updateMyCustomer";
+    }
+
+    @PostMapping("/user/customer/update")
+    public String updateMyCustomer(Model model, Customer updatedCustomer, Authentication auth) {
+        Customer c=customerService.getCustomer(auth.getName());
+        if (c != null) {
+            updatedCustomer.setIdClient(c.getIdClient());
+            customerService.addUpdatedClient(updatedCustomer);
+            model.addAttribute("customer", c);
+            return "savedCustomer";
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
 
 }

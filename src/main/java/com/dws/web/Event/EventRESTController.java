@@ -1,10 +1,13 @@
 package com.dws.web.Event;
 
+import com.dws.web.Customer.Customer;
 import com.dws.web.Review.Review;
 import com.dws.web.Review.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -50,7 +53,7 @@ public class EventRESTController {
         }
     }
 
-    @GetMapping("/events")
+    @GetMapping("/admin/events")
     public ResponseEntity<Collection> getAllEventAPI() {
         Collection<Event> events = eventService.getEvents();
         if (events != null) {
@@ -60,7 +63,7 @@ public class EventRESTController {
         }
     }
 
-    @GetMapping("/events/{idEvent}")  //Products by id
+    @GetMapping("/admin/events/{idEvent}")
     public ResponseEntity<Event> getEventAPI(@PathVariable long idEvent){
 
         Event e= eventService.getEvent(idEvent);
@@ -74,9 +77,9 @@ public class EventRESTController {
 
     }
 
-    @GetMapping("/events/category/{category}")
-    public ResponseEntity<Collection> eventsFilteredByCategoryAPI(@PathVariable String category) {
-        if (category.equalsIgnoreCase("ocio")||category.equalsIgnoreCase("restauracion")||category.equalsIgnoreCase("turismo")) {
+    @GetMapping("/admin/events/category/{category}")
+    public ResponseEntity<Collection> getEventsFilteredByCategoryAPI(@PathVariable String category) {
+        if (category.equalsIgnoreCase("ocio")||category.equalsIgnoreCase("restaurante")||category.equalsIgnoreCase("turismo")) {
             return new ResponseEntity<>(eventService.getEventsFilteredByCategory(category), HttpStatus.OK);
         }
         else{
@@ -93,28 +96,27 @@ public class EventRESTController {
         return new ResponseEntity<>(r, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/event/{idEvent}/review/delete/{idReview}")
+    @DeleteMapping("/user/event/{idEvent}/review/{idReview}/delete")
     public ResponseEntity<Review> deleteReviewAPI(@PathVariable long idEvent, @PathVariable long idReview) {
         Event e = eventService.getEvent(idEvent);
         Review r=e.getReview(idReview);
         r=reviewService.deleteReviewFromAnEvent(e, r);
         if (r != null) {
-            return new ResponseEntity<>(r, HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     @PutMapping("/event/{idEvent}/review/update/{idReview}")
-    public ResponseEntity<Review> updateReviewAPI(@PathVariable long idEvent, @PathVariable long idReview, @RequestBody Review updatedReview) {
+    public ResponseEntity<Review> updateReviewAPI(@PathVariable long idEvent, @PathVariable long idReview, @RequestBody Review updatedReview, Authentication auth) {
         Event e = eventService.getEvent(idEvent);
         Review r=e.getReview(idReview);
+        var sec= SecurityContextHolder.getContext().getAuthentication();
+        updatedReview.setUserName(sec.getName());
         if (r != null) {
-            this.reviewService.deleteReviewFromAnEvent(e, r);
-            updatedReview.setIdReview(idReview);
-            e.addUpdatedReviewToThisEvent(updatedReview);
-            reviewService.addReviewToThisEvent(e, updatedReview);
-            return new ResponseEntity<>(updatedReview, HttpStatus.OK);
+            reviewService.addUpdatedReviewToThisEvent(idReview, updatedReview);
+            return new ResponseEntity<>(reviewService.getReview(e, idReview), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
