@@ -67,8 +67,16 @@ public class EventRESTController {
         }
     }
 
-    @GetMapping("/events/{idEvent}")
-    public ResponseEntity<Event> getEventAPI(@PathVariable long idEvent) {
+    //Y la otra aqui:
+    @GetMapping("/events/filtered")
+    public ResponseEntity<Collection> filterBy(float priceMin, float priceMax){
+
+        Collection<Event> l = this.eventService.filterEvents(priceMin,priceMax);
+        return new ResponseEntity<>(l, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/admin/events/{idEvent}")  //Products by id
+    public ResponseEntity<Event> getEventAPI(@PathVariable long idEvent){
 
         Event e = eventService.getEvent(idEvent);
 
