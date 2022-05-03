@@ -54,11 +54,11 @@ public class CustomRestSecurityConfig extends WebSecurityConfigurerAdapter{
         //modifyAnEvent
         http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/admin/events/{idEvent}/update").hasRole("ADMIN");
         //modifyACustomer
-        http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/admin/customer/update/{email}").hasAnyRole("ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/admin/customer/update/{email}").hasRole("USER");
         //modifyYourOwnCustomer (HAY QUE IMPLEMENTARLO TODAVIA)
         //http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/admin/customer/update/{email}").hasAnyRole("ADMIN", "USER");
         //modifyAReview
-        http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/event/{idEvent}/review/update/{idReview}").hasAnyRole("USER", "ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/event/{idEvent}/review/update/{idReview}").hasRole("USER");
 
         //deleteAnEvent
         http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/admin/events/{idEvent}/delete").hasRole("ADMIN");
