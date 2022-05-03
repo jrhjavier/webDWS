@@ -208,7 +208,7 @@ public class CustomerController {
             updatedCustomer.setIdClient(c.getIdClient());
             customerService.addUpdatedClient(updatedCustomer);
             model.addAttribute("customer", c);
-            return "savedCustomer";
+            return "modifiedCustomer";
 
         }else if (customerService.containsCustomer(updatedCustomer)){
                 return "updateMyCustomer";

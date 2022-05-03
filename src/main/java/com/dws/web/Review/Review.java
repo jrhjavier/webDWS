@@ -2,6 +2,7 @@ package com.dws.web.Review;
 
 import com.dws.web.Customer.Customer;
 import com.dws.web.Event.Event;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -29,6 +30,7 @@ public class Review {
     //@JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Event event;
 
+    @JsonIgnore
     @ManyToOne(cascade =CascadeType.ALL, fetch = FetchType.LAZY)
     //@JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
@@ -90,6 +92,9 @@ public class Review {
         this.customer=null;
     }
 
+    public Customer getCustomer(){
+        return this.customer;
+    }
 
 
 

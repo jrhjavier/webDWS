@@ -6,6 +6,7 @@ import com.dws.web.Review.Review;
 import com.dws.web.Review.ReviewRepository;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -29,6 +30,8 @@ public class CustomerService {
         List<String> roles=new ArrayList<>();
         roles.add("USER");
         c.setRoles(roles);
+        //BCryptPasswordEncoder  encoder = new BCryptPasswordEncoder();
+        //c.setPassword(encoder.encode(c.getPasswd()));
         this.customerRepository.save(c);
     }
 
@@ -155,5 +158,14 @@ public class CustomerService {
             }
         }
         return false;
+    }
+
+    public boolean esAdmin(Customer c){
+        if (c.getRoles().contains("ADMIN")){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }

@@ -83,6 +83,7 @@ public class CustomSecurityConfiguration extends WebSecurityConfigurerAdapter{
         //http.csrf().ignoringAntMatchers("/catalogo");
         //http.csrf().ignoringAntMatchers("/api/**");
 
+
     }
     @Bean //Declaramos una instancia, que podemos llamarla mas tarde con @Autowired (constructor de Costumer)
     public PasswordEncoder passwordEncoder() {
