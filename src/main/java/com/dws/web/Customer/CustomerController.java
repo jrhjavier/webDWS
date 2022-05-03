@@ -12,6 +12,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Optional;
 
 
@@ -66,14 +68,19 @@ public class CustomerController {
     }
 
     @GetMapping("/admin/delete/customer/{email}")
-    public String deleteCustomer(@PathVariable String email, Model model) {
-        Customer c=customerService.getCustomer(email);
-        eventService.removeCustomer(c);
-        customerService.deleteCustomer(c.getIdClient());
-        model.addAttribute("customers", customerService.getAllCustomers());
-        return "customers";
+    public String deleteCustomer(@PathVariable String email, Model model, Authentication auth) {
+        Customer admin=customerService.getCustomer(auth.getName());
+        if (admin.getRoles().contains("ADMIN")) {
+            Customer c = customerService.getCustomer(email);
+            eventService.removeCustomer(c);
+            customerService.deleteCustomer(c.getIdClient());
+            model.addAttribute("customers", customerService.getAllCustomers());
+            return "customers";
+        }
+        return "redirect:/";
     }
 
+    /*
     @PostMapping("/admin/customer/update/{email}")
     public String updateCustomer(Model model, @PathVariable String email, Customer updatedCustomer) {
         Customer c=customerService.getCustomer(email);
@@ -93,10 +100,17 @@ public class CustomerController {
         model.addAttribute("customer", c);
         return "updateCustomer";
     }
+     */
 
     @GetMapping("/admin/customers")
     public String getAllCustomers(Model model) {
-        model.addAttribute("customers", customerService.getAllCustomers());
+        Collection<Customer> customersWithoutAdmin=new HashSet<>();
+        for (Customer c:this.customerService.getAllCustomers()){
+            if (!c.getRoles().contains("ADMIN")){
+                customersWithoutAdmin.add(c);
+            }
+        }
+        model.addAttribute("customers", customersWithoutAdmin);
         return "customers";
     }
 
@@ -190,12 +204,15 @@ public class CustomerController {
     @PostMapping("/user/customer/update")
     public String updateMyCustomer(Model model, Customer updatedCustomer, Authentication auth) {
         Customer c=customerService.getCustomer(auth.getName());
-        if (c != null) {
+        if (c != null&&!customerService.containsCustomer(updatedCustomer)) {
             updatedCustomer.setIdClient(c.getIdClient());
             customerService.addUpdatedClient(updatedCustomer);
             model.addAttribute("customer", c);
             return "savedCustomer";
-        } else {
+
+        }else if (customerService.containsCustomer(updatedCustomer)){
+                return "updateMyCustomer";
+            } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }

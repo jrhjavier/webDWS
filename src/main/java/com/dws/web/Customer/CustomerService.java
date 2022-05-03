@@ -147,4 +147,13 @@ public class CustomerService {
             return null;
         }
     }
+
+    public boolean containsCustomer(Customer customer){
+        for (Customer c:this.customerRepository.findAll()){
+            if (customer.getEmail().equals(c.getEmail())){
+                return true;
+            }
+        }
+        return false;
+    }
 }
