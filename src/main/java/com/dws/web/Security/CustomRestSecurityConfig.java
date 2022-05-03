@@ -42,11 +42,11 @@ public class CustomRestSecurityConfig extends WebSecurityConfigurerAdapter{
         //createAnEvent
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/admin/events/new").hasRole("ADMIN");
         //createAReview
-        http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/event/{idEvent}/review/new").hasAnyRole("USER", "ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/event/{idEvent}/review/new").hasRole("USER");
         //createACustomer
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/customer/new").hasAnyRole("USER", "ADMIN");
         //addEventsToPlanning
-        http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/customer/new").hasRole("USER");
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/events/{idEvent}/new/{email}").hasRole("USER");
 
         //Como hacer para que el admin pueda editar los usuarios pero que los usuarios solo puedan editar su perfil
         //Si pongo que el USER pueda crear usuarios hace falta que tambien ponga que los puede crear el admin
@@ -54,7 +54,7 @@ public class CustomRestSecurityConfig extends WebSecurityConfigurerAdapter{
         //modifyAnEvent
         http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/admin/events/{idEvent}/update").hasRole("ADMIN");
         //modifyACustomer
-        http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/admin/customer/update/{email}").hasRole("USER");
+        http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/user/customer/update/{email}").hasRole("USER");
         //modifyYourOwnCustomer (HAY QUE IMPLEMENTARLO TODAVIA)
         //http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/admin/customer/update/{email}").hasAnyRole("ADMIN", "USER");
         //modifyAReview
@@ -67,14 +67,14 @@ public class CustomRestSecurityConfig extends WebSecurityConfigurerAdapter{
         //deleteCustomer
         http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/admin/customer/delete/{email}").hasRole("ADMIN");
         //deleteReview
-        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/user/event/{idEvent}/review/{idReview}/delete").hasAnyRole("ADMIN", "USER");
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/user/event/{idEvent}/review/{idReview}/delete").hasRole("USER");
 
         //getAllEvents
-        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/admin/events").hasRole("ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/events").hasAnyRole("ADMIN", "USER");
         //getAnEvent
-        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/admin/events/{idEvent}").hasRole("ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/events/{idEvent}").hasAnyRole("ADMIN", "USER");
         //getEventsFilteredByCategory
-        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/admin/events/category/{category}").hasRole("ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/events/category/{category}").hasAnyRole("ADMIN", "USER");
 
         //getAllReviewsOfAnEvent
         http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/event/{idEvent}/reviews").hasAnyRole("ADMIN", "USER");
@@ -88,11 +88,11 @@ public class CustomRestSecurityConfig extends WebSecurityConfigurerAdapter{
         //getACustomer
         http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/admin/customer/{email}").hasRole("ADMIN");
 
-        //getAllEventsOfACustomer
+        //getAllEventsFromPlanning
         http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/user/planning/{email}").hasRole("USER");
-        //getAnEventOfACustomer
+        //getAnEventFromPlanning
         http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/user/events/{email}/{idEvent}").hasRole("USER");
-        //getAnEventOfACustomer
+        //getAnEventsFilteredByCategoryPlanning
         http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/user/planning/{email}/category/{category}").hasRole("USER");
 
         http.authorizeRequests().antMatchers("/api/user/**").hasRole("USER");
@@ -100,9 +100,6 @@ public class CustomRestSecurityConfig extends WebSecurityConfigurerAdapter{
         http.authorizeRequests().antMatchers("/api/events/**").hasRole("USER");
         http.authorizeRequests().antMatchers("/api/user/**").hasRole("USER");
         http.authorizeRequests().antMatchers("/").hasRole("USER");
-
-        // Other endpoints are public
-        http.authorizeRequests().antMatchers("/api/admin/**").hasRole("ADMIN");
 
         // Disable CSRF protection (it is difficult to implement in REST APIs)
         http.csrf().disable();
