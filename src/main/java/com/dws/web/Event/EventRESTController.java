@@ -63,14 +63,14 @@ public class EventRESTController {
         }
     }
 
-    @PostMapping("/events/filtered")
+    @GetMapping("/events/filtered")
     public ResponseEntity<Collection> filterBy(float priceMin, float priceMax){
 
         Collection<Event> l = this.eventService.filterEvents(priceMin,priceMax);
         return new ResponseEntity<>(l, HttpStatus.CREATED);
     }
 
-    @GetMapping("/events/{idEvent}")  //Products by id
+    @GetMapping("/admin/events/{idEvent}")  //Products by id
     public ResponseEntity<Event> getEventAPI(@PathVariable long idEvent){
 
         Event e= eventService.getEvent(idEvent);
@@ -81,7 +81,6 @@ public class EventRESTController {
         else{
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
     }
 
     @GetMapping("/admin/events/category/{category}")
@@ -104,8 +103,8 @@ public class EventRESTController {
     }
 
 
-    @PostMapping("/event/{idEvent}/review/filtered")
-    public ResponseEntity<Collection> filterReview(@PathVariable long idEvent, String userName){
+    @GetMapping("/event/{idEvent}/review/filtered")
+    public ResponseEntity<Collection> filterReview(@PathVariable long idEvent, @RequestParam String userName){
 
         Event event = eventService.getEvent(idEvent);
         Collection<Review> c = this.reviewService.filterReview(event, userName);

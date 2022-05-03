@@ -47,6 +47,10 @@ public class CustomRestSecurityConfig extends WebSecurityConfigurerAdapter{
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/customer/new").hasAnyRole("USER", "ADMIN");
         //addEventsToPlanning
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/customer/new").hasRole("USER");
+        //queryPriceEvents
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/events/filtered").hasAnyRole("USER", "ADMIN");
+        //queryUserNameReviews
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/event/{idEvent}/review/filtered").hasAnyRole("USER", "ADMIN");
 
         //Como hacer para que el admin pueda editar los usuarios pero que los usuarios solo puedan editar su perfil
         //Si pongo que el USER pueda crear usuarios hace falta que tambien ponga que los puede crear el admin
