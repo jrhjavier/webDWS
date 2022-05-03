@@ -112,6 +112,7 @@ public class EventController {
     public String filterBy(Model model, float priceMin, float priceMax){
         Collection<Event> l = this.eventService.filterEvents(priceMin,priceMax);
         model.addAttribute("events", l);
+        System.out.println("MINIMO" + priceMin);
         return "events";
     }
 
