@@ -67,7 +67,6 @@ public class EventRESTController {
         }
     }
 
-    //Y la otra aqui:
     @GetMapping("/events/filtered")
     public ResponseEntity<Collection> filterBy(float priceMin, float priceMax){
 
@@ -162,5 +161,14 @@ public class EventRESTController {
         else{
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("/event/{idEvent}/review/filtered")
+    public ResponseEntity<Collection> filterReview(@PathVariable long idEvent, String userName){
+
+        Event event = eventService.getEvent(idEvent);
+        Collection<Review> c = this.reviewService.filterReview(event, userName);
+
+        return new ResponseEntity<>(c, HttpStatus.CREATED);
     }
 }

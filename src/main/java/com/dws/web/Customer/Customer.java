@@ -34,7 +34,6 @@ public class Customer {
     private String phoneNumber;
 
     // @JsonView(Basico.class)
-    @JsonIgnore
     private String passwd;
 
     //@JsonView(Basico.class)

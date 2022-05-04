@@ -69,6 +69,11 @@ public class CustomRestSecurityConfig extends WebSecurityConfigurerAdapter{
         //deleteReview
         http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/user/event/{idEvent}/review/{idReview}/delete").hasRole("USER");
 
+        //QueryPriceMinPriceMax
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/events/filtered").hasAnyRole("ADMIN", "USER");
+        //QuerySearchReview
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/event/{idEvent}/review/filtered").hasAnyRole("ADMIN", "USER");
+
         //getAllEvents
         http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/events").hasAnyRole("ADMIN", "USER");
         //getAnEvent
