@@ -42,6 +42,13 @@ public class CustomerService {
         this.customerRepository.save(c);
     }
 
+    public void addUpdatedClientADMIN(Customer c) {
+        List<String> roles=new ArrayList<>();
+        roles.add("ADMIN");
+        c.setRoles(roles);
+        this.customerRepository.save(c);
+    }
+
     public Customer getClient(long id) {
         Optional<Customer> c = customerRepository.findById(id);
         if (c.isPresent()) {

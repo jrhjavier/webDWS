@@ -12,9 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Optional;
+import java.util.*;
 
 
 @Controller
@@ -206,7 +204,12 @@ public class CustomerController {
         Customer c=customerService.getCustomer(auth.getName());
         if (c != null&&!customerService.containsCustomer(updatedCustomer)) {
             updatedCustomer.setIdClient(c.getIdClient());
-            customerService.addUpdatedClient(updatedCustomer);
+            if (customerService.esAdmin(c)){
+                customerService.addUpdatedClientADMIN(updatedCustomer);
+            }
+            else{
+                customerService.addUpdatedClient(updatedCustomer);
+            }
             model.addAttribute("customer", c);
             return "modifiedCustomer";
 

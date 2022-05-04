@@ -35,7 +35,7 @@ public class DataBaseUsersLoader {
 
         customerRepository.save(new Customer("user2","surname","user2@user2.es","666-666-666","pass2","calle 2","USER" ));
         customerRepository.save(new Customer("user","surname","user@user.es","666-666-666","pass","calle 1","USER" ));
-        customerRepository.save(new Customer("admin","admin","admin@admin.es","666-666-666","adminpass","calle A","USER","ADMIN"));
+        customerRepository.save(new Customer("admin","admin","admin@admin.es","666-666-666","adminpass","calle A","ADMIN"));
 
         /*
         if (customerRepository.findByEmail("admin@admin.com") == null) {
