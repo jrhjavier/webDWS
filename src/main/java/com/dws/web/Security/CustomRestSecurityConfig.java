@@ -1,7 +1,6 @@
 
 package com.dws.web.Security;
 
-import com.dws.web.Security.RepositoryUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.security.SecureRandom;
 
 @Configuration
-@Order(1)
+@Order(2)
 public class CustomRestSecurityConfig extends WebSecurityConfigurerAdapter{
 
     @Autowired

@@ -121,6 +121,8 @@ public class EventController {
     public String newReview(Model model, @PathVariable long idEvent, Review r, Authentication auth) {
         Event e = eventService.getEvent(idEvent);
         Customer c=customerService.getCustomer(auth.getName());
+        System.out.println(c);                  //prueba
+        System.out.println(auth.getName());     //prueba
         c.assignReviewToACustomer(r);
         r.assignCustomer(c);
         r.setUserName(auth.getName());

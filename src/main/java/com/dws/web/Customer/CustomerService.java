@@ -7,6 +7,7 @@ import com.dws.web.Review.ReviewRepository;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -26,12 +27,13 @@ public class CustomerService {
     @Autowired
     private ReviewRepository reviewRepository;
 
+
     public void addClient(Customer c) {
         List<String> roles=new ArrayList<>();
         roles.add("USER");
         c.setRoles(roles);
-        //BCryptPasswordEncoder  encoder = new BCryptPasswordEncoder();
-        //c.setPassword(encoder.encode(c.getPasswd()));
+        BCryptPasswordEncoder  encoder = new BCryptPasswordEncoder();
+        c.setPassword(encoder.encode(c.getPasswd()));
         this.customerRepository.save(c);
     }
 
@@ -173,6 +175,36 @@ public class CustomerService {
         }
         else{
             return false;
+        }
+    }
+/*
+    public void processOAuthPostLogin(String email) {
+        Customer existUser = customerRepository.getCustomerByEmail(email);
+
+        if (existUser == null) {
+            Customer newCustomer = new Customer();
+            newCustomer.setEmail(email);
+            newCustomer.setName("default Google");
+            newCustomer.setSurname("default Google");
+            newCustomer.setAddress("default Google");
+            newCustomer.setPhoneNumber("default Google");
+            newCustomer.setPassword("default Google");
+            List<String> roles=new ArrayList<>();
+            roles.add("USER");
+            newCustomer.setRoles(roles);
+            customerRepository.saveAndFlush(newCustomer);
+        }
+
+    }*/
+
+    public void processOAuthPostLogin(DefaultOidcUser customer) {
+        BCryptPasswordEncoder aux = new BCryptPasswordEncoder();
+        if (customerRepository.findByEmail(customer.getEmail()).isEmpty()) {
+            Customer newUser = new Customer();
+            newUser.setName(customer.getName());
+            newUser.setPassword(aux.encode(customer.getAccessTokenHash()));
+            newUser.setEmail(customer.getEmail());
+            customerRepository.save(newUser);
         }
     }
 }

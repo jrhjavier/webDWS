@@ -1,5 +1,8 @@
 package com.dws.web.Security;
 
+import com.dws.web.Customer.CustomOAuth2User;
+import com.dws.web.Customer.CustomOAuth2UserService;
+import com.dws.web.Customer.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,19 +11,31 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.security.SecureRandom;
 
 
 @Configuration
+@Order(1)
 @EnableWebSecurity
 public class CustomSecurityConfiguration extends WebSecurityConfigurerAdapter{
 
     @Autowired
     private RepositoryUserDetailsService userDetailsService;
+    @Autowired
+    private CustomerService userService;
+    @Autowired
+    private CustomOAuth2UserService oauthUserService;
 
     @Override //Autorization
     protected void configure(HttpSecurity http) throws Exception{
@@ -40,6 +55,8 @@ public class CustomSecurityConfiguration extends WebSecurityConfigurerAdapter{
         http.authorizeRequests().antMatchers("/login").permitAll();
         http.authorizeRequests().antMatchers("/logout").permitAll();
         http.authorizeRequests().antMatchers("/loginerror").permitAll();
+        http.authorizeRequests().antMatchers("/oauth/**").permitAll();
+
         /*
         http.authorizeRequests().antMatchers("/events/all/**").permitAll();
         http.authorizeRequests().antMatchers("/events").permitAll();
@@ -84,6 +101,35 @@ public class CustomSecurityConfiguration extends WebSecurityConfigurerAdapter{
         //http.csrf().ignoringAntMatchers("/api/**");
 
 
+        /*http.authorizeRequests()
+                .antMatchers("/", "/login", "/oauth/**").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin().permitAll()
+                .and()
+                .oauth2Login()
+                .loginPage("/login")
+                .userInfoEndpoint()
+                .userService(oauthUserService);
+*/
+        http.oauth2Login()
+                .loginPage("/login")
+                .userInfoEndpoint()
+                .userService(oauthUserService)
+                .and()
+                .successHandler(new AuthenticationSuccessHandler() {
+
+                    @Override
+                    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+                                                        Authentication authentication) throws IOException, ServletException {
+
+                        DefaultOidcUser oauthUser = (DefaultOidcUser) authentication.getPrincipal();
+
+                        userService.processOAuthPostLogin(oauthUser);
+
+                        response.sendRedirect("/");
+                    }
+                });
     }
     @Bean //Declaramos una instancia, que podemos llamarla mas tarde con @Autowired (constructor de Costumer)
     public PasswordEncoder passwordEncoder() {
