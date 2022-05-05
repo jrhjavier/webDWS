@@ -25,7 +25,10 @@ public class CustomerRESTController {
 
     @PostMapping("/customer/new")
     public ResponseEntity<Customer> newCustomerAPI(@RequestBody Customer c) {
+        String password=c.getPasswd();
+        c.setPassword(password);
         customerService.addClient(c);
+        System.out.println(c);
         return new ResponseEntity<>(c, HttpStatus.CREATED);
     }
 
@@ -45,10 +48,12 @@ public class CustomerRESTController {
     @PutMapping("/user/customer/update/{email}")
     public ResponseEntity<Customer> updateCustomerAPI(@PathVariable String email, @RequestBody Customer updatedCustomer, Authentication auth) {
         Customer c=customerService.getCustomer(email);
-        var sec= SecurityContextHolder.getContext().getAuthentication();
-        Customer c2 = customerService.getCustomer(sec.getName());
+        Customer c2 = customerService.getCustomer(auth.getName());
+        System.out.println(c2.getEmail().equals(email));
         if (c != null && c2.getEmail().equals(email) && !customerService.containsCustomer(updatedCustomer)) {
             updatedCustomer.setIdClient(c.getIdClient());
+            String password=updatedCustomer.getPasswd();
+            updatedCustomer.setPassword(password);
             customerService.addUpdatedClient(updatedCustomer);
             return new ResponseEntity<>(updatedCustomer, HttpStatus.OK);
         } else {

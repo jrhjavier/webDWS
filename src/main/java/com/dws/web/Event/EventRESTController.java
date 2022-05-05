@@ -101,14 +101,14 @@ public class EventRESTController {
     //REVIEW
 
     @PostMapping("/event/{idEvent}/review/new")
-    public ResponseEntity<Review> newReviewAPI(@PathVariable long idEvent, @RequestBody Review r) {
+    public ResponseEntity<Review> newReviewAPI(@PathVariable long idEvent, @RequestBody Review r, Authentication auth) {
         Event e = eventService.getEvent(idEvent);
-        var sec= SecurityContextHolder.getContext().getAuthentication();
-        Customer c = customerService.getCustomer(sec.getName());
+        String email=customerService.getEmailByCustomer(auth);
+        Customer c= customerService.getCustomer(email);
         if (!customerService.esAdmin(c)&&e!=null) {
             c.assignReviewToACustomer(r);
             r.assignCustomer(c);
-            r.setUserName(sec.getName());
+            r.setUserName(c.getEmail());
             reviewService.addReviewToThisEvent(e, r);
             return new ResponseEntity<>(r, HttpStatus.CREATED);
         }

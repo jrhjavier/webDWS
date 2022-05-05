@@ -27,6 +27,7 @@ public class CustomerController {
 
     @Autowired
     CustomerRepository customerRepository;
+
     private Model model;
     private HttpServletRequest request;
 
@@ -67,15 +68,15 @@ public class CustomerController {
             return "savedCustomer";
         }
         else{
-            return "newCustomer";       //CAMBIAR ESTO
+            return "newCustomer";
         }
 
     }
 
     @GetMapping("/admin/delete/customer/{email}")
     public String deleteCustomer(@PathVariable String email, Model model, Authentication auth) {
-
-        Customer admin=customerService.getCustomer(auth.getName());
+        String mail=customerService.getEmailByCustomer(auth);
+        Customer admin=customerService.getCustomer(mail);
         if (admin.getRoles().contains("ADMIN")) {
             Customer c = customerService.getCustomer(email);
             eventService.removeCustomer(c);
@@ -112,7 +113,7 @@ public class CustomerController {
     public String getAllCustomers(Model model) {
         Collection<Customer> customersWithoutAdmin=new HashSet<>();
         for (Customer c:this.customerService.getAllCustomers()){
-            if (!c.getRoles().contains("ADMIN")){
+            if (!customerService.esAdmin(c)){
                 customersWithoutAdmin.add(c);
             }
         }
@@ -206,14 +207,16 @@ public class CustomerController {
 
     @GetMapping("/user/customer/modify")
     public String modifyMyCustomer(Model model, Authentication auth) {
-        Customer c=customerService.getCustomer(auth.getName());
+        String email=customerService.getEmailByCustomer(auth);
+        Customer c=customerService.getCustomer(email);
         model.addAttribute("customer", c);
         return "updateMyCustomer";
     }
 
     @PostMapping("/user/customer/update")
     public String updateMyCustomer(Model model, Customer updatedCustomer, Authentication auth) {
-        Customer c=customerService.getCustomer(auth.getName());
+        String email=customerService.getEmailByCustomer(auth);
+        Customer c=customerService.getCustomer(email);
         if (c != null&&!customerService.containsCustomer(updatedCustomer)) {
             updatedCustomer.setIdClient(c.getIdClient());
             if (customerService.esAdmin(c)){

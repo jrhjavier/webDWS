@@ -29,8 +29,6 @@ public class CustomerService {
     @Autowired
     private ReviewRepository reviewRepository;
 
-    private final BCryptPasswordEncoder encoder=new BCryptPasswordEncoder();
-
 
     public void addClient(Customer c) {
         List<String> roles=new ArrayList<>();

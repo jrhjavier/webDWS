@@ -70,7 +70,7 @@ public class EventController {
     }
 
     @GetMapping("/events/all/restaurants")
-    public String getRestaurants(Model model, Authentication auth, HttpServletRequest request) {
+    public String getRestaurants(Model model, HttpServletRequest request) {
         model.addAttribute("events", eventService.getEventsFilteredByCategory("restaurante"));
         model.addAttribute("username", request.isUserInRole("USER"));
         model.addAttribute("admin", request.isUserInRole("ADMIN"));
@@ -78,7 +78,7 @@ public class EventController {
     }
 
     @GetMapping("/events/all/leisure")
-    public String getLeisure(Model model, Authentication auth, HttpServletRequest request) {
+    public String getLeisure(Model model, HttpServletRequest request) {
         model.addAttribute("events", eventService.getEventsFilteredByCategory("ocio"));
         model.addAttribute("username", request.isUserInRole("USER"));
         model.addAttribute("admin", request.isUserInRole("ADMIN"));
@@ -86,7 +86,7 @@ public class EventController {
     }
 
     @GetMapping("/events/all/tourism")
-    public String getTourism(Model model, Authentication auth, HttpServletRequest request) {
+    public String getTourism(Model model, HttpServletRequest request) {
         model.addAttribute("events", eventService.getEventsFilteredByCategory("turismo"));
         model.addAttribute("username", request.isUserInRole("USER"));
         model.addAttribute("admin", request.isUserInRole("ADMIN"));
@@ -158,11 +158,12 @@ public class EventController {
     }
 
     @PostMapping("/user/event/{idEvent}/review/{idReview}/update")
-    public String updateReview(Model model,@PathVariable long idEvent,@PathVariable long idReview, Review updatedReview) {
+    public String updateReview(Model model,@PathVariable long idEvent,@PathVariable long idReview, Review updatedReview, Authentication auth) {
         Event e = eventService.getEvent(idEvent);
         Review r = e.getReview(idReview);
-        var sec= SecurityContextHolder.getContext().getAuthentication();
-        updatedReview.setUserName(sec.getName());
+        String email=customerService.getEmailByCustomer(auth);
+        Customer c=customerService.getCustomer(email);
+        updatedReview.setUserName(c.getEmail());
         if (r != null) {
             reviewService.addUpdatedReviewToThisEvent(idReview, updatedReview);
             model.addAttribute("r",reviewService.getReview(e,idReview));
@@ -189,7 +190,7 @@ public class EventController {
 
     @GetMapping("/user/perfil")
     public String getAllReviewsOfACustomer(Model model, Authentication auth, HttpServletRequest request){
-        String email=customerService.getEmailByCustomer(auth.getName());
+        String email=customerService.getEmailByCustomer(auth);
         model.addAttribute("reviews", customerService.getAllReviewsOfACustomer(customerService.getCustomer(email)));
         return "perfil";
     }

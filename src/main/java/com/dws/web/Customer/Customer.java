@@ -54,8 +54,8 @@ public class Customer {
         this.surname = surname;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        //this.passwd = new BCryptPasswordEncoder().encode(passwd);
-        this.passwd = passwd;
+        this.passwd = new BCryptPasswordEncoder().encode(passwd);
+        //this.passwd = passwd;
         this.address = address;
         this.roles=new ArrayList<>();
     }
@@ -65,8 +65,8 @@ public class Customer {
         this.surname = surname;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        //this.passwd = new BCryptPasswordEncoder().encode(passwd);
-        this.passwd = passwd;
+        this.passwd = new BCryptPasswordEncoder().encode(passwd);
+        //this.passwd = passwd;
         this.address = address;
         this.roles= List.of(roles);
     }
