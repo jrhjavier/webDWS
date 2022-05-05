@@ -55,8 +55,8 @@ public class CustomerController {
 
     @GetMapping("/")
     public String privatePage(Model model, HttpServletRequest request) {
-        model.addAttribute("username", request.isUserInRole("USER"));
-        model.addAttribute("admin", request.isUserInRole("ADMIN"));
+        model.addAttribute("usernameee", request.isUserInRole("USER"));
+        model.addAttribute("adminnn", request.isUserInRole("ADMIN"));
         return "index";
     }
 

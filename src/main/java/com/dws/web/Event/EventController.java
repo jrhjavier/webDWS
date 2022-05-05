@@ -72,32 +72,33 @@ public class EventController {
     @GetMapping("/events/all/restaurants")
     public String getRestaurants(Model model, HttpServletRequest request) {
         model.addAttribute("events", eventService.getEventsFilteredByCategory("restaurante"));
-        model.addAttribute("username", request.isUserInRole("USER"));
-        model.addAttribute("admin", request.isUserInRole("ADMIN"));
+        model.addAttribute("usernameee", request.isUserInRole("USER"));
+        model.addAttribute("adminnn", request.isUserInRole("ADMIN"));
         return "events";
     }
 
     @GetMapping("/events/all/leisure")
     public String getLeisure(Model model, HttpServletRequest request) {
         model.addAttribute("events", eventService.getEventsFilteredByCategory("ocio"));
-        model.addAttribute("username", request.isUserInRole("USER"));
-        model.addAttribute("admin", request.isUserInRole("ADMIN"));
+        model.addAttribute("usernameee", request.isUserInRole("USER"));
+        model.addAttribute("adminnn", request.isUserInRole("ADMIN"));
         return "events";
     }
 
     @GetMapping("/events/all/tourism")
     public String getTourism(Model model, HttpServletRequest request) {
         model.addAttribute("events", eventService.getEventsFilteredByCategory("turismo"));
-        model.addAttribute("username", request.isUserInRole("USER"));
-        model.addAttribute("admin", request.isUserInRole("ADMIN"));
+        model.addAttribute("usernameee", request.isUserInRole("USER"));
+        model.addAttribute("adminnn", request.isUserInRole("ADMIN"));
         return "events";
     }
 
     @GetMapping("/events")
     public String catalogue(Model model, HttpServletRequest request) {
         model.addAttribute("events", eventService.getEvents());
-        model.addAttribute("username", request.isUserInRole("USER"));
-        model.addAttribute("admin", request.isUserInRole("ADMIN"));
+        System.out.println(request.isUserInRole("USER"));
+        model.addAttribute("usernameee", request.isUserInRole("USER"));
+        model.addAttribute("adminnn", request.isUserInRole("ADMIN"));
         return "events";
     }
 

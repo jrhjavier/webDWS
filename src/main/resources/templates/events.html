@@ -54,10 +54,11 @@
                                 <div class="text-center" style="margin-left: 20px; margin-right: 20px; margin-bottom: 20px">
                                     <p>{{{description}}}</p><br>
                                     <h4>Precio: {{price}}</h4><br>
-                                    {{#username}}
+                                    {{#usernameee}}
                                     <button class="btn btn-primary" onclick="location.href = '/user/planning/new/{{id}}'">Agregar a tu planning</button>
                                     <button class="btn btn-primary" onclick="location.href = '/events/{{idEvent}}'">A&ntildeadir review</button>
-                                    {{/username}}
+                                    {{/usernameee}}
+                                    {{username}}
                                     <button class="btn btn-primary" onclick="location.href = '/event/{{idEvent}}/reviews'">Reviews</button>
                                     {{#admin}}
                                         <button class="btn btn-primary" onclick="location.href = '/admin/delete/events/{{idEvent}}'">Borrar evento</button>
