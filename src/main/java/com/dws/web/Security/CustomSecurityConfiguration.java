@@ -26,7 +26,7 @@ import java.security.SecureRandom;
 
 
 @Configuration
-@Order(1)
+//@Order(1)
 @EnableWebSecurity
 public class CustomSecurityConfiguration extends WebSecurityConfigurerAdapter{
 

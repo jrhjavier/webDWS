@@ -32,10 +32,9 @@ public class DataBaseUsersLoader {
     private void initDatabase() {
 
         eventRepository.save(new Event("e1","Restaurante","e1",34));
-/*
-        customerRepository.save(new Customer("user2","surname","user2@user2.es","666-666-666","pass2","calle 2","USER" ));
+        /*customerRepository.save(new Customer("user2","surname","user2@user2.es","666-666-666","pass2","calle 2","USER" ));
         customerRepository.save(new Customer("user","surname","user@user.es","666-666-666","pass","calle 1","USER" ));
-        customerRepository.save(new Customer("admin","admin","admin@admin.es","666-666-666","adminpass","calle A","ADMIN"));
+        customerRepository.save(new Customer("admin","admin","admin@admin.es","666-666-666","adminpass","calle A","ADMIN"));*/
 
 
         if (customerRepository.findByEmail("admin@admin.com") == null) {
@@ -44,7 +43,7 @@ public class DataBaseUsersLoader {
             customerRepository.save(ad);
         }
 
-         */
+
         //customerRepository.save(new Customer("user", "user", "user@user.es", "626-206-725",  passwordEncoder.encode("pass"), "CasaUser", "USER"));
         //customerRepository.save(new Customer("admin", "admin", "admin@admin.es", "626-206-725", passwordEncoder.encode("adminpass"), "CasaAdmin", "USER", "ADMIN"));
     }

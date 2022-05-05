@@ -27,12 +27,13 @@ public class CustomerService {
     @Autowired
     private ReviewRepository reviewRepository;
 
+    private final BCryptPasswordEncoder encoder=new BCryptPasswordEncoder();
+
 
     public void addClient(Customer c) {
         List<String> roles=new ArrayList<>();
         roles.add("USER");
         c.setRoles(roles);
-        BCryptPasswordEncoder  encoder = new BCryptPasswordEncoder();
         c.setPassword(encoder.encode(c.getPasswd()));
         this.customerRepository.save(c);
     }
@@ -200,11 +201,21 @@ public class CustomerService {
     public void processOAuthPostLogin(DefaultOidcUser customer) {
         BCryptPasswordEncoder aux = new BCryptPasswordEncoder();
         if (customerRepository.findByEmail(customer.getEmail()).isEmpty()) {
-            Customer newUser = new Customer();
-            newUser.setName(customer.getName());
-            newUser.setPassword(aux.encode(customer.getAccessTokenHash()));
-            newUser.setEmail(customer.getEmail());
-            customerRepository.save(newUser);
+            Customer newCustomer = new Customer();
+            newCustomer.setName(customer.getName());
+            newCustomer.setPassword(aux.encode(customer.getAccessTokenHash()));
+            newCustomer.setEmail(customer.getEmail());
+            customerRepository.save(newCustomer);
+        }
+    }
+
+    public String getEmailByCustomer(String customerName){
+        Optional<Customer> c=customerRepository.findByName(customerName);
+        if(c.isPresent()){
+            return c.get().getEmail();
+        }
+        else{
+            return "No existe este usuario";
         }
     }
 }

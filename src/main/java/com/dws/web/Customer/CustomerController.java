@@ -60,9 +60,15 @@ public class CustomerController {
 
     @PostMapping("/customer/new")
     public String newCustomer(Model model, Customer c, HttpServletRequest request) {
-        customerService.addClient(c);
-        model.addAttribute("customer",c);
-        return "savedCustomer";
+        if (!customerService.containsCustomer(c)){
+            customerService.addClient(c);
+            model.addAttribute("customer",c);
+            return "savedCustomer";
+        }
+        else{
+            return "newCustomer";       //CAMBIAR ESTO
+        }
+
     }
 
     @GetMapping("/admin/delete/customer/{email}")
@@ -121,10 +127,11 @@ public class CustomerController {
 
     //PLANNING
 
-    @GetMapping("/user/planning/new/{name}")
-    public String newEvent2(Model model, @PathVariable String name, Authentication auth) {
-        Customer c= customerService.getCustomer(auth.getName());
-        Event e = eventService.getEventByName(name);
+    @GetMapping("/user/planning/new/{id}")
+    public String newEvent2(Model model, @PathVariable long id, Authentication auth) {
+        String email=customerService.getEmailByCustomer(auth.getName());
+        Customer c= customerService.getCustomer(email);
+        Event e = eventService.getEvent(id);
         if (customerService.addEventToPlanning(c.getIdClient(),e)){
             eventService.assignCustomer(c,e);
             model.addAttribute("event",e);
@@ -137,7 +144,8 @@ public class CustomerController {
 
     @GetMapping("/user/planning/delete/{idEvent}")
     public String deleteEventFromPlanning(Model model, @PathVariable long idEvent, Authentication auth) {
-        Customer c= customerService.getCustomer(auth.getName());
+        String email=customerService.getEmailByCustomer(auth.getName());
+        Customer c= customerService.getCustomer(email);
         Event e = eventService.getEvent(idEvent);
         customerService.deleteEventFromPlanning(c,e);
         if (eventService.getEvent(idEvent)!=null) {
@@ -161,7 +169,8 @@ public class CustomerController {
 
     @GetMapping("/user/planning")
     public String planning(Model model, Authentication auth, HttpServletRequest request) {
-        model.addAttribute("events", customerService.getAllEventsOfACustomer(customerService.getCustomer(auth.getName())));
+        String email=customerService.getEmailByCustomer(auth.getName());
+        model.addAttribute("events", customerService.getAllEventsOfACustomer(customerService.getCustomer(email)));
         return "planning";
     }
 

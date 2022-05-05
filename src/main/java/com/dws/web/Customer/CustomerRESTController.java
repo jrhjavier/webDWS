@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -31,7 +32,8 @@ public class CustomerRESTController {
     @DeleteMapping("/admin/customer/delete/{email}")
     public ResponseEntity<Customer> deleteCustomerAPI(@PathVariable String email, Authentication auth) {
         Customer customer= customerService.getCustomer(email);
-        Customer admin= customerService.getCustomer(auth.getName());
+        var sec= SecurityContextHolder.getContext().getAuthentication();
+        Customer admin= customerService.getCustomer(sec.getName());
         if (customer != null&&customerService.esAdmin(admin)) {
             Customer c=customerService.deleteCustomer(customer.getIdClient());
             return new ResponseEntity<>(HttpStatus.OK);
@@ -43,7 +45,9 @@ public class CustomerRESTController {
     @PutMapping("/user/customer/update/{email}")
     public ResponseEntity<Customer> updateCustomerAPI(@PathVariable String email, @RequestBody Customer updatedCustomer, Authentication auth) {
         Customer c=customerService.getCustomer(email);
-        if (c != null&&auth.getName().equals(email)&&!customerService.containsCustomer(updatedCustomer)) {
+        var sec= SecurityContextHolder.getContext().getAuthentication();
+        Customer c2 = customerService.getCustomer(sec.getName());
+        if (c != null && c2.getEmail().equals(email) && !customerService.containsCustomer(updatedCustomer)) {
             updatedCustomer.setIdClient(c.getIdClient());
             customerService.addUpdatedClient(updatedCustomer);
             return new ResponseEntity<>(updatedCustomer, HttpStatus.OK);
@@ -79,7 +83,9 @@ public class CustomerRESTController {
     public ResponseEntity<Event> newEventAPI(@PathVariable long idEvent, @PathVariable String email, Authentication auth) {
         Customer c= customerService.getCustomer(email);
         Event e=eventService.getEvent(idEvent);
-        if (c.addToPlanning(e)&&auth.getName().equals(email)&&e!=null){
+        var sec= SecurityContextHolder.getContext().getAuthentication();
+        Customer c2 = customerService.getCustomer(sec.getName());
+        if (c.addToPlanning(e) && c2.getEmail().equals(email) && e!=null){
             e.assignCustomer(c);
             eventService.addEvent(e);
             return new ResponseEntity<>(e, HttpStatus.CREATED);
@@ -94,7 +100,9 @@ public class CustomerRESTController {
     public ResponseEntity<Event> deleteEventAPI(@PathVariable String email, @PathVariable long idEvent, Authentication auth) {
         Customer c= customerService.getCustomer(email);
         Event e=eventService.getEvent(idEvent);
-        if (e != null&&auth.getName().equals(email)) {
+        var sec= SecurityContextHolder.getContext().getAuthentication();
+        Customer c2 = customerService.getCustomer(sec.getName());
+        if (e != null && c2.getEmail().equals(email)) {
             Event event = customerService.deleteEventFromPlanning(c, e);
             return new ResponseEntity<>(event, HttpStatus.OK);
         } else {
@@ -121,7 +129,9 @@ public class CustomerRESTController {
     public ResponseEntity<Collection> getAllEventOfACustomerAPI(@PathVariable String email, Authentication auth) {
         Customer c=customerService.getCustomer(email);
         Collection<Event> events = customerService.getAllEventsOfACustomer(c);
-        if (!events.isEmpty()&&auth.getName().equals(email)) {
+        var sec= SecurityContextHolder.getContext().getAuthentication();
+        Customer c2 = customerService.getCustomer(sec.getName());
+        if (!events.isEmpty() && c2.getEmail().equals(email)) {
             return new ResponseEntity<>(events, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -132,7 +142,9 @@ public class CustomerRESTController {
     public ResponseEntity<Event> getEventAPI(@PathVariable String email, @PathVariable long idEvent, Authentication auth){
         Customer c= customerService.getCustomer(email);
         Event e= customerService.getAnEvent(c, idEvent);
-        if (e!=null&&auth.getName().equals(email)){
+        var sec= SecurityContextHolder.getContext().getAuthentication();
+        Customer c2 = customerService.getCustomer(sec.getName());
+        if (e!=null && c2.getEmail().equals(email)){
             return new ResponseEntity<>(e, HttpStatus.OK);
         }
         else{
@@ -142,7 +154,9 @@ public class CustomerRESTController {
 
     @GetMapping("/user/planning/{email}/category/{category}")
     public ResponseEntity<Collection> planningFilteredByCategoryAPI(@PathVariable String email, @PathVariable String category, Authentication auth) {
-        if ((category.equalsIgnoreCase("ocio")||category.equalsIgnoreCase("restaurante")||category.equalsIgnoreCase("turismo"))&&auth.getName().equals(email)) {
+        var sec= SecurityContextHolder.getContext().getAuthentication();
+        Customer c2 = customerService.getCustomer(sec.getName());
+        if ((category.equalsIgnoreCase("ocio") || category.equalsIgnoreCase("restaurante") || category.equalsIgnoreCase("turismo")) && c2.getEmail().equals(email)) {
             Customer c=customerService.getCustomer(email);
             return new ResponseEntity<>(eventService.getEventsFilteredByCategory(category), HttpStatus.OK);
         }

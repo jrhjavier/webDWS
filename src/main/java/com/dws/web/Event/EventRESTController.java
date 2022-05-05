@@ -76,7 +76,7 @@ public class EventRESTController {
         return new ResponseEntity<>(l, HttpStatus.CREATED);
     }
 
-    @GetMapping("/admin/events/{idEvent}")  //Products by id
+    @GetMapping("/events/{idEvent}")  //Products by id
     public ResponseEntity<Event> getEventAPI(@PathVariable long idEvent){
 
         Event e = eventService.getEvent(idEvent);
@@ -101,13 +101,14 @@ public class EventRESTController {
     //REVIEW
 
     @PostMapping("/event/{idEvent}/review/new")
-    public ResponseEntity<Review> newReviewAPI(@PathVariable long idEvent, @RequestBody Review r, Authentication auth) {
+    public ResponseEntity<Review> newReviewAPI(@PathVariable long idEvent, @RequestBody Review r) {
         Event e = eventService.getEvent(idEvent);
-        Customer c = customerService.getCustomer(auth.getName());
+        var sec= SecurityContextHolder.getContext().getAuthentication();
+        Customer c = customerService.getCustomer(sec.getName());
         if (!customerService.esAdmin(c)&&e!=null) {
             c.assignReviewToACustomer(r);
             r.assignCustomer(c);
-            r.setUserName(auth.getName());
+            r.setUserName(sec.getName());
             reviewService.addReviewToThisEvent(e, r);
             return new ResponseEntity<>(r, HttpStatus.CREATED);
         }
@@ -121,8 +122,9 @@ public class EventRESTController {
     public ResponseEntity<Review> deleteReviewAPI(@PathVariable long idEvent, @PathVariable long idReview, Authentication auth) {
         Event e = eventService.getEvent(idEvent);
         Review r=e.getReview(idReview);
-        Customer c=customerService.getCustomer(auth.getName());
-        if (r != null&&!customerService.esAdmin(c)&&r.getCustomer().getEmail().equals(auth.getName())) {
+        var sec= SecurityContextHolder.getContext().getAuthentication();
+        Customer c = customerService.getCustomer(sec.getName());
+        if (r != null && !customerService.esAdmin(c) && r.getCustomer().getEmail().equals(sec.getName())) {
             reviewService.deleteReviewFromAnEvent(e, r);
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
@@ -134,7 +136,9 @@ public class EventRESTController {
     public ResponseEntity<Review> updateReviewAPI(@PathVariable long idEvent, @PathVariable long idReview, @RequestBody Review updatedReview, Authentication auth) {
         Event e = eventService.getEvent(idEvent);
         Review r=e.getReview(idReview);
-        if (r != null&&r.getCustomer().getEmail().equals(auth.getName())) {
+        var sec= SecurityContextHolder.getContext().getAuthentication();
+        Customer c = customerService.getCustomer(sec.getName());
+        if (r != null && r.getCustomer().getEmail().equals(sec.getName())) {
             reviewService.addUpdatedReviewToThisEvent(idReview, updatedReview);
             return new ResponseEntity<>(reviewService.getReview(e, idReview), HttpStatus.OK);
         } else {

@@ -120,12 +120,11 @@ public class EventController {
     @PostMapping("/user/event/{idEvent}/review/new")
     public String newReview(Model model, @PathVariable long idEvent, Review r, Authentication auth) {
         Event e = eventService.getEvent(idEvent);
-        Customer c=customerService.getCustomer(auth.getName());
-        System.out.println(c);                  //prueba
-        System.out.println(auth.getName());     //prueba
+        String email = customerService.getEmailByCustomer(auth.getName());
+        Customer c = customerService.getCustomer(email);
         c.assignReviewToACustomer(r);
         r.assignCustomer(c);
-        r.setUserName(auth.getName());
+        r.setUserName(email);
         reviewService.addReviewToThisEvent(e, r);
         model.addAttribute("review", r);
         return "addedReview";
@@ -190,7 +189,8 @@ public class EventController {
 
     @GetMapping("/user/perfil")
     public String getAllReviewsOfACustomer(Model model, Authentication auth, HttpServletRequest request){
-        model.addAttribute("reviews", customerService.getAllReviewsOfACustomer(customerService.getCustomer(auth.getName())));
+        String email=customerService.getEmailByCustomer(auth.getName());
+        model.addAttribute("reviews", customerService.getAllReviewsOfACustomer(customerService.getCustomer(email)));
         return "perfil";
     }
 
