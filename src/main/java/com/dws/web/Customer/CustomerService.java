@@ -6,6 +6,8 @@ import com.dws.web.Review.Review;
 import com.dws.web.Review.ReviewRepository;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.stereotype.Service;
@@ -34,7 +36,6 @@ public class CustomerService {
         List<String> roles=new ArrayList<>();
         roles.add("USER");
         c.setRoles(roles);
-        c.setPassword(encoder.encode(c.getPasswd()));
         this.customerRepository.save(c);
     }
 
@@ -200,11 +201,13 @@ public class CustomerService {
 
     public void processOAuthPostLogin(DefaultOidcUser customer) {
         BCryptPasswordEncoder aux = new BCryptPasswordEncoder();
+        Map<String, Object> m1 = customer.getClaims();
         if (customerRepository.findByEmail(customer.getEmail()).isEmpty()) {
             Customer newCustomer = new Customer();
-            newCustomer.setName(customer.getName());
+            newCustomer.setName(m1.get("given_name").toString());
             newCustomer.setPassword(aux.encode(customer.getAccessTokenHash()));
-            newCustomer.setEmail(customer.getEmail());
+            newCustomer.setEmail(m1.get("email").toString());
+            newCustomer.setSurname(m1.get("family_name").toString());
             customerRepository.save(newCustomer);
         }
     }
@@ -218,4 +221,28 @@ public class CustomerService {
             return "No existe este usuario";
         }
     }
+
+
+    public String getEmailByCustomer(Authentication auth){
+
+        if(auth.getPrincipal().getClass()== User.class){ //Interfaz
+            return auth.getName();
+        }
+
+        if(auth.getPrincipal().getClass()== DefaultOidcUser.class){ //Oauth
+            Optional<Customer> c=customerRepository.findByEmail((String) ((Map<String, Object>)((DefaultOidcUser)auth.getPrincipal()).getClaims()).get("email"));
+            if(c.isPresent()){
+                return c.get().getEmail();
+            }
+            else{
+                return "No existe este usuario";
+            }
+
+        }
+        return null;
+    }
+
+
+
+
 }

@@ -120,7 +120,7 @@ public class EventController {
     @PostMapping("/user/event/{idEvent}/review/new")
     public String newReview(Model model, @PathVariable long idEvent, Review r, Authentication auth) {
         Event e = eventService.getEvent(idEvent);
-        String email = customerService.getEmailByCustomer(auth.getName());
+        String email = customerService.getEmailByCustomer(auth);
         Customer c = customerService.getCustomer(email);
         c.assignReviewToACustomer(r);
         r.assignCustomer(c);

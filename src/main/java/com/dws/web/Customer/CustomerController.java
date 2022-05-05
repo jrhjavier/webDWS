@@ -5,6 +5,7 @@ import com.dws.web.Event.EventService;
 import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -73,6 +74,7 @@ public class CustomerController {
 
     @GetMapping("/admin/delete/customer/{email}")
     public String deleteCustomer(@PathVariable String email, Model model, Authentication auth) {
+
         Customer admin=customerService.getCustomer(auth.getName());
         if (admin.getRoles().contains("ADMIN")) {
             Customer c = customerService.getCustomer(email);
@@ -129,7 +131,7 @@ public class CustomerController {
 
     @GetMapping("/user/planning/new/{id}")
     public String newEvent2(Model model, @PathVariable long id, Authentication auth) {
-        String email=customerService.getEmailByCustomer(auth.getName());
+        String email=customerService.getEmailByCustomer(auth);
         Customer c= customerService.getCustomer(email);
         Event e = eventService.getEvent(id);
         if (customerService.addEventToPlanning(c.getIdClient(),e)){
@@ -144,7 +146,7 @@ public class CustomerController {
 
     @GetMapping("/user/planning/delete/{idEvent}")
     public String deleteEventFromPlanning(Model model, @PathVariable long idEvent, Authentication auth) {
-        String email=customerService.getEmailByCustomer(auth.getName());
+        String email=customerService.getEmailByCustomer(auth);
         Customer c= customerService.getCustomer(email);
         Event e = eventService.getEvent(idEvent);
         customerService.deleteEventFromPlanning(c,e);
@@ -169,9 +171,10 @@ public class CustomerController {
 
     @GetMapping("/user/planning")
     public String planning(Model model, Authentication auth, HttpServletRequest request) {
-        String email=customerService.getEmailByCustomer(auth.getName());
+        String email=customerService.getEmailByCustomer(auth);
         model.addAttribute("events", customerService.getAllEventsOfACustomer(customerService.getCustomer(email)));
         return "planning";
+
     }
 
     @GetMapping("/user/planning/{category}")

@@ -133,7 +133,7 @@ public class CustomSecurityConfiguration extends WebSecurityConfigurerAdapter{
     }
     @Bean //Declaramos una instancia, que podemos llamarla mas tarde con @Autowired (constructor de Costumer)
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(10, new SecureRandom());
+        return new BCryptPasswordEncoder();
     }
 
     @Override //Authentication
