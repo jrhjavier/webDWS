@@ -42,16 +42,17 @@
                         <a href="https://www.instagram.com/madrid/?hl=es"><i class="fab fa-instagram"></i></a>
                     </li>
                     <li class="nav-item"><br>
-                        <a class="navbar-right" href="/customer/newCustomer">Reg&iacutestrate</a>
+                        <a class="navbar-right" href="/customer/newCustomer" id="reg">Reg&iacutestrate</a>
                     </li>
                     <li class="nav-item"><br>
-                        <a class="navbar-right" href="/login">Inicia sesi&oacuten</a>
+                        <a class="navbar-right" href="/login" id="log">Inicia sesi&oacuten</a>
                     </li>
                     {{#usernameee}}
                     <li class="nav-item"><br>
                         <a class="navbar-right" href="/logout">Logout</a>
                     </li>
-
+                    <script>document.getElementById("reg").style.display='none'</script>
+                    <script>document.getElementById("log").style.display='none'</script>
                     <li class="nav-item"><br>
                         <a class="navbar-right" href="/user/customer/modify">Modificar mi usuario</a>
                     </li>
