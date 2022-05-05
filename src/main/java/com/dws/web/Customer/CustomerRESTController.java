@@ -28,7 +28,6 @@ public class CustomerRESTController {
         String password=c.getPasswd();
         c.setPassword(password);
         customerService.addClient(c);
-        System.out.println(c);
         return new ResponseEntity<>(c, HttpStatus.CREATED);
     }
 
@@ -49,7 +48,7 @@ public class CustomerRESTController {
     public ResponseEntity<Customer> updateCustomerAPI(@PathVariable String email, @RequestBody Customer updatedCustomer, Authentication auth) {
         Customer c=customerService.getCustomer(email);
         Customer c2 = customerService.getCustomer(auth.getName());
-        System.out.println(c2.getEmail().equals(email));
+        //System.out.println(c2.getEmail().equals(email));
         if (c != null && c2.getEmail().equals(email) && !customerService.containsCustomer(updatedCustomer)) {
             updatedCustomer.setIdClient(c.getIdClient());
             String password=updatedCustomer.getPasswd();

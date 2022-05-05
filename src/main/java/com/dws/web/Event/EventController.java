@@ -7,7 +7,6 @@ import com.dws.web.Review.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -96,7 +95,7 @@ public class EventController {
     @GetMapping("/events")
     public String catalogue(Model model, HttpServletRequest request) {
         model.addAttribute("events", eventService.getEvents());
-        System.out.println(request.isUserInRole("USER"));
+        //System.out.println(request.isUserInRole("USER"));
         model.addAttribute("usernameee", request.isUserInRole("USER"));
         model.addAttribute("adminnn", request.isUserInRole("ADMIN"));
         return "events";

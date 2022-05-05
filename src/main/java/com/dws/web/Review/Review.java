@@ -4,8 +4,6 @@ import com.dws.web.Customer.Customer;
 import com.dws.web.Event.Event;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 

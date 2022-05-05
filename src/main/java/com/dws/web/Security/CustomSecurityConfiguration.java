@@ -57,26 +57,9 @@ public class CustomSecurityConfiguration extends WebSecurityConfigurerAdapter{
         http.authorizeRequests().antMatchers("/loginerror").permitAll();
         http.authorizeRequests().antMatchers("/oauth/**").permitAll();
 
-        /*
-        http.authorizeRequests().antMatchers("/events/all/**").permitAll();
-        http.authorizeRequests().antMatchers("/events").permitAll();
-        http.authorizeRequests().antMatchers("/events/{idEvent}").permitAll();
-        http.authorizeRequests().antMatchers("/events/filtered").permitAll();
-        http.authorizeRequests().antMatchers("/register").permitAll();
-        http.authorizeRequests().antMatchers(HttpMethod.GET, "/catalogo/**").permitAll();
-        http.authorizeRequests().antMatchers(HttpMethod.POST, "/catalogo/**").permitAll();
-        http.authorizeRequests().antMatchers(HttpMethod.GET, "/producto/**").permitAll();
-        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/cart/items").permitAll();
-        */
-
         // Reject the others
         http.authorizeRequests().antMatchers("/admin/**").hasAnyRole("ADMIN");
         http.authorizeRequests().anyRequest().authenticated();
-        /*
-        http.authorizeRequests().antMatchers("/customer/delete").hasAnyRole("ADMIN");
-        http.authorizeRequests().antMatchers("/customers").hasAnyRole("ADMIN");
-        http.authorizeRequests().antMatchers("/events/**").hasAnyRole("ADMIN");
-        */
 
 
         //Log in:

@@ -2,7 +2,6 @@ package com.dws.web.Event;
 
 import com.dws.web.Customer.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.security.authentication.CachingUserDetailsService;
 
 import java.util.List;
 

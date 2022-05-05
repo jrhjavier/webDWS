@@ -16,7 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.security.SecureRandom;
 
 @Configuration
-@Order(1)   //2
+@Order(1)
 public class CustomRestSecurityConfig extends WebSecurityConfigurerAdapter{
 
     @Autowired
@@ -46,9 +46,6 @@ public class CustomRestSecurityConfig extends WebSecurityConfigurerAdapter{
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/customer/new").hasAnyRole("USER", "ADMIN");
         //addEventsToPlanning
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/events/{idEvent}/new/{email}").hasRole("USER");
-
-        //Como hacer para que el admin pueda editar los usuarios pero que los usuarios solo puedan editar su perfil
-        //Si pongo que el USER pueda crear usuarios hace falta que tambien ponga que los puede crear el admin
 
         //modifyAnEvent
         http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/admin/events/{idEvent}/update").hasRole("ADMIN");
@@ -118,6 +115,5 @@ public class CustomRestSecurityConfig extends WebSecurityConfigurerAdapter{
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
     }
-
 
 }

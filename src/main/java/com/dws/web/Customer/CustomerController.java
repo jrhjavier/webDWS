@@ -5,13 +5,11 @@ import com.dws.web.Event.EventService;
 import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
@@ -203,7 +201,7 @@ public class CustomerController {
 
      */
 
-    //MODIFICAR MI USUARIO
+    //MODIFY MY USER
 
     @GetMapping("/user/customer/modify")
     public String modifyMyCustomer(Model model, Authentication auth) {
